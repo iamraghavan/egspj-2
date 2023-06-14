@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -16,7 +15,7 @@
     <link rel="stylesheet" href="./vendors/perfect-scrollbar/perfect-scrollbar.css">
     <link rel="stylesheet" href="./vendors/bootstrap-icons/bootstrap-icons.css">
     <link rel="stylesheet" href="./css/app.css">
-    <link rel="shortcut icon" href="./images/favicon.svg" type="image/x-icon">
+    <link rel="shortcut icon" href="./image.htmls/favicon.svg" type="image/x-icon">
 </head>
 
 
@@ -59,19 +58,19 @@
                             </a>
                         </li>
                         <li class="sidebar-item  ">
-                            <a href="./image.html" class='sidebar-link'>
+                            <a href="./event.html" class='sidebar-link'>
                                 <i class="bi bi-image-alt"></i>
-                                <span>Upload Image</span>
+                                <span>Event</span>
                             </a>
                         </li>
                         <!-- <li class="sidebar-item  ">
-                            <a href="./index.html" class='sidebar-link'>
+                            <a href="./index" class='sidebar-link'>
                                 <i class="bi bi-chat-quote-fill"></i>
                                 <span>Chitram</span>
                             </a>
                         </li>
                         <li class="sidebar-item  ">
-                            <a href="./index.html" class='sidebar-link'>
+                            <a href="./index" class='sidebar-link'>
                                 <i class="bi bi-option"></i>
                                 <span>Family Tree</span>
                             </a>
@@ -133,13 +132,13 @@
                                     </li>
 
                                     <!-- <li class="sidebar-item  ">
-                                        <a href="./index.html" class='sidebar-link'>
+                                        <a href="./index" class='sidebar-link'>
                                             <i class="bi bi-chat-quote-fill"></i>
                                             <span>Foreroom</span>
                                         </a>
                                     </li>
                                     <li class="sidebar-item  ">
-                                        <a href="./index.html" class='sidebar-link'>
+                                        <a href="./index" class='sidebar-link'>
                                             <i class="bi bi-option"></i>
                                             <span>Family Tree</span>
                                         </a>
@@ -180,7 +179,7 @@
                             <div class="col-12 col-md-6 order-md-2 order-first">
                                 <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
                                     <ol class="breadcrumb">
-                                        <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
+                                        <li class="breadcrumb-item"><a href="index">Dashboard</a></li>
                                         <li class="breadcrumb-item active" aria-current="page">Events
                                         </li>
                                     </ol>
@@ -191,7 +190,7 @@
                     <section class="section">
                         <div class="card">
                             <div class="card-header">
-                                <h4 class="card-title">Create Event | <span style="color: #000000;">
+                                <h4 class="card-title"><i class="bi bi-upload" style="padding-right: 10px;"></i> <span style="padding-right: 5px;"> Upload Image </span> | <span style="color: #000000;">
                                         < Bumble Bees oAuth />
                                     </span> </h4>
                             </div>
@@ -200,43 +199,22 @@
 
 
                             <div class="card-body">
-                                <form class="form" action="" method="POST" id="createEventForm">
+                                <form class="form" action="" id="imageForm" enctype="multipart/form-data">
 
                                     <div class="row">
                                         <div class="col-md-6 col-12">
                                             <div class="form-group">
                                                 <label for="first-name-column ">Title</label>
-                                                <input type="text" inputmode="text" id="title" class="form-control"
-                                                    placeholder="Title" name="name">
+                                                <input  class="form-control" type="file" id="imageInput" name="images[]" multiple>
                                             </div>
                                         </div>
-                                        <div class="col-md-6 col-12">
-                                            <div class="form-group">
-                                                <label for="last-name-column">Description</label>
-                                                <input inputmode="text" type="text" id="description"
-                                                    class="form-control " placeholder="Description" name="email">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6 col-12">
-                                            <div class="form-group">
-                                                <label for="last-name-column">Place / Location</label>
-                                                <input inputmode="text" value="EGSPJ SCHOOL" type="text" id="place"
-                                                    class="form-control " placeholder="Description" name="email">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6 col-12">
-                                            <div class="form-group">
-                                                <label for="last-name-column">Date & Time</label>
-                                                <input type="date" id="date" class="form-control " name="email">
-                                            </div>
-                                        </div>
+                                      
                                         <div class="col-12 d-flex justify-content-end">
-                                            <button class="btn btn-primary me-1 mb-1" type="submit">Submit</button>
+                                            <button class="btn btn-primary me-1 mb-1" type="submit" value="Upload">Submit</button>
 
 
 
-                                            <button type="reset"
-                                                class="btn btn-light-secondary me-1 mb-1">Reset</button>
+                                           
                                         </div>
                                     </div>
                             </div>
@@ -260,22 +238,23 @@
                         </tr>
                       </thead>
                     </table> -->
-                    <div class="container">
-                        <table id="eventTable" class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th>Title</th>
-                                    <th>Description</th>
-                                    <th>Date</th>
-                                    <th>Place</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody id="eventList"></tbody>
-                        </table>
-                    </div>
 
 
+
+                <div class="container">
+                  <table id="imageTable" class="table table-striped">
+                    <thead>
+                      <tr>
+                        <th>Image</th>
+                        <th>File Name</th>
+                        <th>Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <!-- Image file names will be dynamically generated here -->
+                    </tbody>
+                  </table>
+                </div>
             </div>
             <!--                 
         <button onclick="swalelement">submit</button>
@@ -311,6 +290,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-storage.js"></script>
     <script>
         // Initialize Firebase
         const firebaseConfig = {
@@ -325,86 +305,94 @@
         };
 
         firebase.initializeApp(firebaseConfig);
-        const database = firebase.database();
 
-        // Handle form submission
-        $('#createEventForm').submit(function (e) {
-            e.preventDefault();
+const storage = firebase.storage();
+const storageRef = storage.ref();
 
-            // Get form values
-            const title = $('#title').val();
-            const description = $('#description').val();
-            const date = $('#date').val();
-            const place = $('#place').val();
+// Listen for form submission
+$('#imageForm').on('submit', function (e) {
+  e.preventDefault();
+  const files = $('#imageInput')[0].files;
+  uploadImages(files);
+});
 
-            // Save event to Firebase
-            const eventRef = database.ref('events').push();
-            eventRef.set({
-                title: title,
-                description: description,
-                date: date,
-                place: place
-            });
+// Upload images to Firebase Storage
+function uploadImages(files) {
+  Array.from(files).forEach(function (file) {
+    const fileName = file.name;
+    const fileRef = storageRef.child(fileName);
 
-            // Reset form
-            $('#title').val('');
-            $('#description').val('');
-            $('#date').val('');
-            $('#place').val('');
-        });
+    fileRef.put(file).then(function (snapshot) {
+      console.log('Uploaded a file:', fileName);
+      displayImage(fileName);
+    });
+  });
+}
 
-        // Retrieve events from Firebase and display in table
-        const eventList = $('#eventList');
-        database.ref('events').on('value', function (snapshot) {
-            eventList.empty();
-
-            snapshot.forEach(function (childSnapshot) {
-                const event = childSnapshot.val();
-                const eventRow = $('<tr>');
-
-                eventRow.append($('<td>').text(event.title));
-                eventRow.append($('<td>').text(event.description));
-                eventRow.append($('<td>').text(event.date));
-                eventRow.append($('<td>').text(event.place));
+// Display images in the gallery
+function displayImage(fileName) {
+  storageRef
+    .child(fileName)
+    .getDownloadURL()
+    .then(function (url) {
+      const image = $('<img>').attr('src', url).addClass('gallery-image');
+      $('#gallery').append(image);
+    });
+}
 
 
-                // Add delete button
-                const deleteButton = $('<button>').text('Delete').html('<i class="fas fa-trash"></i> Delete').addClass('btn', 'btn-outline-primary');
+ // Get the reference to the imageTable tbody
+ var imageTable = document.getElementById("imageTable").getElementsByTagName("tbody")[0];
 
+// Retrieve the image file names from Firebase Storage
+storageRef.listAll().then(function(result) {
+  result.items.forEach(function(itemRef) {
+    var fileName = itemRef.name;
 
-                deleteButton.click(function () {
-                    deleteEvent(childSnapshot.key);
-                });
-                eventRow.append($('<td>').append(deleteButton));
+    // Create the HTML elements
+    var row = document.createElement("tr");
 
-                eventList.append(eventRow);
-            });
-        });
+    var imageCell = document.createElement("td");
+    var fileCell = document.createElement("td");
+    var actionCell = document.createElement("td");
 
-        // Delete event
-        function deleteEvent(eventId) {
-            database.ref('events/' + eventId).remove();
-        }
+    var image = document.createElement("img");
+    image.src = "https://via.placeholder.com/100"; // Placeholder image URL
+    image.alt = "Image";
+    imageCell.appendChild(image);
 
+    var fileNameText = document.createTextNode(fileName);
+    fileCell.appendChild(fileNameText);
 
-        // Retrieve events from Firebase and display in <h1> and <p> tags
-        const eventDisplay = $('#eventDisplay');
-        database.ref('events').on('value', function (snapshot) {
-            eventDisplay.empty();
+    // var deleteButton = document.createElement("button");
+    // deleteButton.innerText = "Delete";
+    var deleteButton = document.createElement("button");
+      deleteButton.innerHTML = '<i class="fas fa-trash-alt"></i> Delete';
+      deleteButton.classList.add("btn", "btn-outline-danger");
+    
+    deleteButton.addEventListener("click", function() {
+      // Delete the image from Firebase Storage
+      itemRef.delete().then(function() {
+        // Remove the row from the table
+        row.remove();
+        console.log("Image deleted successfully.");
+      }).catch(function(error) {
+        console.log("Error deleting image:", error);
+      });
+    });
+    actionCell.appendChild(deleteButton);
 
-            snapshot.forEach(function (childSnapshot) {
-                const event = childSnapshot.val();
+    // Append the elements to the table row
+    row.appendChild(imageCell);
+    row.appendChild(fileCell);
+    row.appendChild(actionCell);
 
-                // Create <h1> and <p> elements for title and description
-                const eventTitle = $('<h1>').text(event.title);
-                const eventDescription = $('<p>').text(event.description);
-                const eventDate = $('<p>').text(event.date);
-                const eventPlace = $('<p>').text(event.place);
-                // Append title and description to the event display container
-                eventDisplay.append(eventTitle, eventDescription, eventPlace, eventDate);
-            });
-        });
-
+    // Append the row to the table
+    imageTable.appendChild(row);
+  });
+}).catch(function(error) {
+  alert("Error retrieving image file names:", error);
+});
     </script>
 
     <script>

@@ -584,6 +584,36 @@
   </section>
   <!-- /section -->
 
+
+
+  
+  <section class="wrapper bg-light mb-22">
+    <div class="container py-14 py-md-16 text-center">
+      <div class="row">
+        <div class="col-lg-10 col-xl-8 col-xxl-7 mx-auto mb-8">
+          <h2 class="display-5 mb-3">My Selected Shots</h2>
+          <p class="lead fs-lg">Photography is my passion and I love to turn ideas into beautiful things.</p>
+        </div>
+        <!-- /column -->
+      </div>
+      <!-- /.row -->
+      <div class="grid grid-view projects-masonry">
+  
+        <div class="row gx-md-6 gy-6 isotope" id="imageGallery">
+          <!-- Image tags will be dynamically generated here -->
+        </div>
+
+        <!-- /.row -->
+      </div>
+      <!-- /.grid -->
+    </div>
+    <!-- /.container -->
+  </section>
+  <!-- /section -->
+
+
+  <!-- --------------------------------- -->
+
   <section class="wrapper bg-gray">
     <div class="container py-13 py-md-15">
       <div class="d-lg-flex flex-row align-items-lg-center">
@@ -694,6 +724,8 @@
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-database.js"></script>
+  
+  <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-storage.js"></script>
   <script>
     const firebaseConfig = {
       apiKey: "AIzaSyC7EsiaYH-tJj-wNEQl8ZrrmdvKCWS7ztY",
@@ -708,6 +740,53 @@
 
     firebase.initializeApp(firebaseConfig);
     const database = firebase.database();
+
+     // Get a reference to the Firebase Storage
+  var storage = firebase.storage();
+  var storageRef = storage.ref();
+  // Get the reference to the imageGallery container
+  var imageGallery = document.getElementById("imageGallery");
+
+  // Retrieve the image URLs from Firebase Storage
+  storageRef.listAll().then(function(result) {
+    var rowIndex = 0;
+    result.items.forEach(function(itemRef, index) {
+      if (rowIndex >= 2) {
+        return; // Exit the loop if we have reached the desired number of rows
+      }
+
+      itemRef.getDownloadURL().then(function(url) {
+        // Create the HTML elements
+        var projectItem = document.createElement("div");
+        projectItem.classList.add("project", "item", "col-md-6", "col-xl-4", "drinks", "events");
+
+        var figure = document.createElement("figure");
+        figure.classList.add("overlay", "overlay-1", "rounded");
+
+        var link = document.createElement("a");
+        link.href = url;
+        link.setAttribute("data-glightbox", "");
+        link.setAttribute("data-gallery", "shots-group");
+
+        var image = document.createElement("img");
+        image.src = url;
+        image.alt = "";
+
+        // Append the elements to the DOM
+        link.appendChild(image);
+        figure.appendChild(link);
+        projectItem.appendChild(figure);
+        imageGallery.appendChild(projectItem);
+
+        // Increment the row index
+        if (index % 3 === 2) {
+          rowIndex++;
+        }
+      });
+    });
+  }).catch(function(error) {
+    console.log("Error retrieving images:", error);
+  });
 
 
     // Retrieve events from Firebase and display latest two updates

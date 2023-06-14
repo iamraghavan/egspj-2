@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="./vendors/perfect-scrollbar/perfect-scrollbar.css">
     <link rel="stylesheet" href="./vendors/bootstrap-icons/bootstrap-icons.css">
     <link rel="stylesheet" href="./css/app.css">
-    <link rel="shortcut icon" href="./images/favicon.svg" type="image/x-icon">
+    <link rel="shortcut icon" href="./image.htmls/favicon.svg" type="image/x-icon">
 </head>  
 
 
@@ -55,19 +55,19 @@
                                 <span>Events</span>
                             </a>
                         </li>
-                        <!-- <li class="sidebar-item  ">
-                            <a href="./index.html" class='sidebar-link'>
-                                <i class="bi bi-chat-quote-fill"></i>
-                                <span>Chitram</span>
+                        <li class="sidebar-item  ">
+                            <a href="./image.html" class='sidebar-link'>
+                                <i class="bi bi-image-alt"></i>
+                                <span>Upload Image</span>
                             </a>
                         </li>
-                        <li class="sidebar-item  ">
-                            <a href="./index.html" class='sidebar-link'>
+                        <!-- <li class="sidebar-item  ">
+                            <a href="./index" class='sidebar-link'>
                                 <i class="bi bi-option"></i>
                                 <span>Family Tree</span>
                             </a>
-                        </li> -->
- 
+                        </li>
+  -->
                      
                     </ul>
                 </div>
@@ -123,13 +123,13 @@
                                     </li>
 
                                     <!-- <li class="sidebar-item  ">
-                                        <a href="./index.html" class='sidebar-link'>
+                                        <a href="./index" class='sidebar-link'>
                                             <i class="bi bi-chat-quote-fill"></i>
                                             <span>Foreroom</span>
                                         </a>
                                     </li>
                                     <li class="sidebar-item  ">
-                                        <a href="./index.html" class='sidebar-link'>
+                                        <a href="./index" class='sidebar-link'>
                                             <i class="bi bi-option"></i>
                                             <span>Family Tree</span>
                                         </a>
@@ -170,7 +170,7 @@
                             <!-- <div class="col-12 col-md-6 order-md-2 order-first">
                                 <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
                                     <ol class="breadcrumb">
-                                        <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
+                                        <li class="breadcrumb-item"><a href="index">Dashboard</a></li>
                                         <li class="breadcrumb-item active" aria-current="page">Layout Vertical Navbar
                                         </li>
                                     </ol>
@@ -249,7 +249,7 @@
 
   firebase.auth().onAuthStateChanged((user)=>{
     if(!user){
-        location.replace("../index.html")
+        location.replace("../index")
     }else{
         document.getElementById("user").innerHTML = "Hello, "+user.email    
     }
