@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Create Event</title>
+  <style>
+    form {
+  max-width: 300px;
+  margin: 0 auto;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+input[type="text"],
+textarea {
+  width: 100%;
+  padding: 5px;
+  margin-bottom: 10px;
+}
+
+button[type="submit"] {
+  padding: 10px 15px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+  </style>
+</head>
+<body>
+  <h1>Create Event</h1>
+  <form id="createEventForm">
+    <label for="title">Title:</label>
+    <input type="text" id="title" name="title" required>
+    <br>
+    <label for="description">Description:</label>
+    <textarea id="description" name="description" required></textarea>
+    <br>
+    <button type="submit">Create Event</button>
+  </form>
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-database.js"></script>
+  <script>
+// Initialize Firebase
+const firebaseConfig = {
+    apiKey: "AIzaSyC7EsiaYH-tJj-wNEQl8ZrrmdvKCWS7ztY",
+    authDomain: "egspj-bumblebees.firebaseapp.com",
+    databaseURL: "https://egspj-bumblebees-default-rtdb.firebaseio.com",
+    projectId: "egspj-bumblebees",
+    storageBucket: "egspj-bumblebees.appspot.com",
+    messagingSenderId: "3531307553",
+    appId: "1:3531307553:web:162f525f3ed82d7830c160",
+    measurementId: "G-6W931XY0SQ"
+};
+
+firebase.initializeApp(firebaseConfig);
+const database = firebase.database();
+
+// Handle form submission
+$('#createEventForm').submit(function(e) {
+  e.preventDefault();
+
+  // Get form values
+  const title = $('#title').val();
+  const description = $('#description').val();
+
+  // Save event to Firebase
+  const eventRef = database.ref('events').push();
+  eventRef.set({
+    title: title,
+    description: description
+  });
+
+  // Reset form
+  $('#title').val('');
+  $('#description').val('');
+});
+
+  </script>
+</body>
+</html>

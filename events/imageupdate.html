@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Image Gallery</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+  <input type="file" id="imageInput">
+  <div id="imageContainer"></div>
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.6/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.6/firebase-storage.js"></script>
+  <script>
+    // Firebase configuration
+var firebaseConfig = {
+    apiKey: "AIzaSyC7EsiaYH-tJj-wNEQl8ZrrmdvKCWS7ztY",
+    authDomain: "egspj-bumblebees.firebaseapp.com",
+    databaseURL: "https://egspj-bumblebees-default-rtdb.firebaseio.com",
+    projectId: "egspj-bumblebees",
+    storageBucket: "egspj-bumblebees.appspot.com",
+    messagingSenderId: "3531307553",
+    appId: "1:3531307553:web:162f525f3ed82d7830c160",
+    measurementId: "G-6W931XY0SQ"
+};
+
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+
+// Function to upload image
+function uploadImage(event) {
+  var file = event.target.files[0];
+  var folder = new Date().toISOString().split('T')[0]; // Use the date as the folder name
+  var timestamp = new Date().getTime();
+
+  var storageRef = firebase.storage().ref(folder + '/' + timestamp + '_' + file.name);
+  storageRef.put(file).then(function (snapshot) {
+    console.log('Image uploaded successfully!');
+  });
+}
+
+// Add an event listener to the file input element
+$('#imageInput').change(uploadImage);
+
+// Function to display the images
+function displayImages() {
+  var storageRef = firebase.storage().ref();
+  var folder = new Date().toISOString().split('T')[0]; // Use the date as the folder name
+
+  storageRef.child(folder).listAll().then(function (result) {
+    result.items.forEach(function (itemRef) {
+      itemRef.getDownloadURL().then(function (url) {
+        var img = $('<img>').attr('src', url);
+        $('#displayContainer').append(img);
+      });
+    });
+  });
+}
+
+// Call the displayImages function when the page loads
+$(document).ready(displayImages);
+
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <table id="eventTable">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody id="eventList"></tbody>
+  </table>
+
+                      
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-database.js"></script>
+    <script>
+      // Initialize Firebase
+  const firebaseConfig = {
+      apiKey: "AIzaSyC7EsiaYH-tJj-wNEQl8ZrrmdvKCWS7ztY",
+      authDomain: "egspj-bumblebees.firebaseapp.com",
+      databaseURL: "https://egspj-bumblebees-default-rtdb.firebaseio.com",
+      projectId: "egspj-bumblebees",
+      storageBucket: "egspj-bumblebees.appspot.com",
+      messagingSenderId: "3531307553",
+      appId: "1:3531307553:web:162f525f3ed82d7830c160",
+      measurementId: "G-6W931XY0SQ"
+  };
+  
+  firebase.initializeApp(firebaseConfig);
+  const database = firebase.database();
+  
+  // Handle form submission
+  $('#createEventForm').submit(function(e) {
+    e.preventDefault();
+  
+    // Get form values
+    const title = $('#title').val();
+    const description = $('#description').val();
+    const date = $('#date').val();
+  
+    // Save event to Firebase
+    const eventRef = database.ref('events').push();
+    eventRef.set({
+      title: title,
+      description: description,
+      date : date
+    });
+  
+    // Reset form
+    $('#title').val('');
+    $('#description').val('');
+    $('#date').val('');
+  });
+  
+  // Retrieve events from Firebase and display in table
+  const eventList = $('#eventList');
+  database.ref('events').on('value', function(snapshot) {
+    eventList.empty();
+  
+    snapshot.forEach(function(childSnapshot) {
+      const event = childSnapshot.val();
+      const eventRow = $('<tr>');
+  
+      eventRow.append($('<td>').text(event.title));
+      eventRow.append($('<td>').text(event.description));
+      eventRow.append($('<td>').text(event.date));
+  
+      // Add delete button
+      const deleteButton = $('<button>').text('Delete');
+      deleteButton.click(function() {
+        deleteEvent(childSnapshot.key);
+      });
+      eventRow.append($('<td>').append(deleteButton));
+  
+      eventList.append(eventRow);
+    });
+  });
+  
+  // Delete event
+  function deleteEvent(eventId) {
+    database.ref('events/' + eventId).remove();
+  }
+  
+  
+  // Retrieve events from Firebase and display in <h1> and <p> tags
+      const eventDisplay = $('#eventDisplay');
+  database.ref('events').on('value', function(snapshot) {
+    eventDisplay.empty();
+  
+    snapshot.forEach(function(childSnapshot) {
+      const event = childSnapshot.val();
+  
+      // Create <h1> and <p> elements for title and description
+      const eventTitle = $('<h1>').text(event.title);
+      const eventDescription = $('<p>').text(event.description);
+      const eventDate = $('<p>').text(event.date);
+      // Append title and description to the event display container
+      eventDisplay.append(eventTitle, eventDescription, eventDate);
+    });
+  });
+  
+    </script>
+     
+<script>
+    // Get the current year
+var currentYear = new Date().getFullYear();
+
+// Set the current year in the HTML element with the specified ID
+var currentYearElement = document.getElementById('current-year');
+currentYearElement.textContent = currentYear.toString();
+
+</script>
+
+            
+
+</body>
+</html>

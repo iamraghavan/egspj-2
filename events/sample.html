@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- <h1 id="titleDisplay"></h1>
+<p id="descriptionDisplay"></p> -->
+
+<div id="eventDisplay"></div>
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-database.js"></script>
+<script>
+const firebaseConfig = {
+    apiKey: "AIzaSyC7EsiaYH-tJj-wNEQl8ZrrmdvKCWS7ztY",
+    authDomain: "egspj-bumblebees.firebaseapp.com",
+    databaseURL: "https://egspj-bumblebees-default-rtdb.firebaseio.com",
+    projectId: "egspj-bumblebees",
+    storageBucket: "egspj-bumblebees.appspot.com",
+    messagingSenderId: "3531307553",
+    appId: "1:3531307553:web:162f525f3ed82d7830c160",
+    measurementId: "G-6W931XY0SQ"
+};
+
+firebase.initializeApp(firebaseConfig);
+const database = firebase.database();
+
+
+// Retrieve events from Firebase and display latest two updates
+const eventDisplay = document.getElementById('eventDisplay');
+
+database.ref('events').orderByChild('timestamp').limitToLast(2).on('value', function(snapshot) {
+  eventDisplay.innerHTML = ''; // Clear the event display
+
+  snapshot.forEach(function(childSnapshot) {
+    const event = childSnapshot.val();
+
+    // Create <h1> and <p> elements for title and description
+    const eventTitle = document.createElement('h1');
+    eventTitle.textContent = event.title;
+
+    const eventDescription = document.createElement('p');
+    eventDescription.textContent = event.description;
+
+    // Append title and description to the event display container
+    eventDisplay.appendChild(eventTitle);
+    eventDisplay.appendChild(eventDescription);
+  });
+});
+
+
+</script>
+</body>
+</html>
