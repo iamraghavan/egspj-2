@@ -525,7 +525,7 @@
 
 
   <section class="wrapper bg-light">
-    <div class="container py-14 py-md-16">
+    <div class="container py-md-16">
       <div class="row">
         <div class="col-lg-8 col-xl-7 col-xxl-6">
           <!-- <h2 class="fs-15 text-uppercase text-muted mb-3">What We Do?</h2> -->
@@ -584,23 +584,60 @@
 
 
 
-  
-  <section class="wrapper bg-light mb-22">
-    <div class="container py-14 py-md-16 text-center">
+
+
+
+  <section class="wrapper bg-light">
+    <div class="container py-md-16 text-center">
       <div class="row">
         <div class="col-lg-10 col-xl-8 col-xxl-7 mx-auto mb-8">
-          <h2 class="display-5 mb-3">My Selected Shots</h2>
-          <p class="lead fs-lg">Photography is my passion and I love to turn ideas into beautiful things.</p>
+          <h2 class="display-5 mb-3">School Gallery</h2>
+          <!-- <p class="lead fs-lg">Photography is my passion and I love to turn ideas into beautiful things.</p> -->
         </div>
         <!-- /column -->
       </div>
       <!-- /.row -->
       <div class="grid grid-view projects-masonry">
-  
-        <div class="row gx-md-6 gy-6 isotope" id="imageGallery">
-          <!-- Image tags will be dynamically generated here -->
+     
+        <div class="row gx-md-6 gy-6 isotope">
+          <div class="project item col-md-6 col-xl-4 drinks events">
+            <figure class="overlay overlay-1 rounded"><a href="https://firebasestorage.googleapis.com/v0/b/egspj-bumblebees.appspot.com/o/about5.webp?alt=media&token=d7bf2d7a-1f79-4a0f-8ce2-dd83db2df000" data-glightbox data-gallery="shots-group"> <img src="https://firebasestorage.googleapis.com/v0/b/egspj-bumblebees.appspot.com/o/about5.webp?alt=media&token=d7bf2d7a-1f79-4a0f-8ce2-dd83db2df000" alt="" /></a>
+             
+            </figure>
+          </div>
+          <!-- /.project -->
+          <div class="project item col-md-6 col-xl-4 events">
+            <figure class="overlay overlay-1 rounded"><a href="https://firebasestorage.googleapis.com/v0/b/egspj-bumblebees.appspot.com/o/ART18921.JPG?alt=media&token=90609f26-9e1a-4769-818c-88f0aea71323g" data-glightbox data-gallery="shots-group"> <img src="https://firebasestorage.googleapis.com/v0/b/egspj-bumblebees.appspot.com/o/ART18921.JPG?alt=media&token=90609f26-9e1a-4769-818c-88f0aea71323" alt="" /></a>
+           
+            </figure>
+          </div>
+          <!-- /.project -->
+          <div class="project item col-md-6 col-xl-4 drinks foods">
+            <figure class="overlay overlay-1 rounded"><a href="https://firebasestorage.googleapis.com/v0/b/egspj-bumblebees.appspot.com/o/S5D3949.webp?alt=media&token=851c0325-7452-4b95-843d-75819e01bd3a" data-glightbox data-gallery="shots-group"> <img src="https://firebasestorage.googleapis.com/v0/b/egspj-bumblebees.appspot.com/o/S5D3949.webp?alt=media&token=851c0325-7452-4b95-843d-75819e01bd3a" alt="" /></a>
+              
+            </figure>
+          </div>
+          <!-- /.project -->
+          <div class="project item col-md-6 col-xl-4 events">
+            <figure class="overlay overlay-1 rounded"><a href="https://firebasestorage.googleapis.com/v0/b/egspj-bumblebees.appspot.com/o/_S5D3766.jpg?alt=media&token=fc1f681d-7c7c-4174-9ddb-b1855117f4ac" data-glightbox data-gallery="shots-group"> <img src="https://firebasestorage.googleapis.com/v0/b/egspj-bumblebees.appspot.com/o/_S5D3766.jpg?alt=media&token=fc1f681d-7c7c-4174-9ddb-b1855117f4ac" alt="" /></a>
+           
+            </figure>
+          </div>
+          <!-- /.project -->
+          <div class="project item col-md-6 col-xl-4 events">
+            <figure class="overlay overlay-1 rounded"><a href="https://firebasestorage.googleapis.com/v0/b/egspj-bumblebees.appspot.com/o/_S5D3861.jpg?alt=media&token=fc817554-129a-4e30-8d2f-3b61d4252f6c" data-glightbox data-gallery="shots-group"> <img src="https://firebasestorage.googleapis.com/v0/b/egspj-bumblebees.appspot.com/o/_S5D3861.jpg?alt=media&token=fc817554-129a-4e30-8d2f-3b61d4252f6c" alt="" /></a>
+             
+            </figure>
+          </div>
+          <!-- /.project -->
+          <div class="project item col-md-6 col-xl-4 events">
+            <figure class="overlay overlay-1 rounded"><a href="https://firebasestorage.googleapis.com/v0/b/egspj-bumblebees.appspot.com/o/about1.webp?alt=media&token=16b96742-2c70-4851-ae7b-34da3fdfb9a7" data-glightbox data-gallery="shots-group"> <img src="https://firebasestorage.googleapis.com/v0/b/egspj-bumblebees.appspot.com/o/about1.webp?alt=media&token=16b96742-2c70-4851-ae7b-34da3fdfb9a7" alt="" /></a>
+             
+            </figure>
+          </div>
+          <!-- /.project -->
+        
         </div>
-
         <!-- /.row -->
       </div>
       <!-- /.grid -->
@@ -742,49 +779,50 @@
      // Get a reference to the Firebase Storage
   var storage = firebase.storage();
   var storageRef = storage.ref();
-  // Get the reference to the imageGallery container
-  var imageGallery = document.getElementById("imageGallery");
 
-  // Retrieve the image URLs from Firebase Storage
+  // Get the reference to the imageRow element
+  var imageRow = document.getElementById("imageRow");
+
+  // Retrieve the images from Firebase Storage
   storageRef.listAll().then(function(result) {
-    var rowIndex = 0;
-    result.items.forEach(function(itemRef, index) {
-      if (rowIndex >= 2) {
-        return; // Exit the loop if we have reached the desired number of rows
-      }
+    result.items.forEach(function(itemRef) {
+      var fileName = itemRef.name;
 
+      // Create the HTML elements
+      var projectCol = document.createElement("div");
+      projectCol.classList.add("project", "item", "col-md-6", "col-xl-4");
+
+      var figure = document.createElement("figure");
+      figure.classList.add("overlay", "overlay-1", "rounded");
+
+      var link = document.createElement("a");
+      link.href = "#" + fileName; // Add your desired link here
+
+      var image = document.createElement("img");
       itemRef.getDownloadURL().then(function(url) {
-        // Create the HTML elements
-        var projectItem = document.createElement("div");
-        projectItem.classList.add("project", "item", "col-md-6", "col-xl-4", "drinks", "events");
-
-        var figure = document.createElement("figure");
-        figure.classList.add("overlay", "overlay-1", "rounded");
-
-        var link = document.createElement("a");
-        link.href = url;
-        link.setAttribute("data-glightbox", "");
-        link.setAttribute("data-gallery", "shots-group");
-
-        var image = document.createElement("img");
-        image.src = url;
-        image.alt = "";
-
-        // Append the elements to the DOM
-        link.appendChild(image);
-        figure.appendChild(link);
-        projectItem.appendChild(figure);
-        imageGallery.appendChild(projectItem);
-
-        // Increment the row index
-        if (index % 3 === 2) {
-          rowIndex++;
-        }
+        image.src = url; // Use the download URL as the image source
+      }).catch(function(error) {
+        console.log("Error getting download URL:", error);
       });
+      image.alt = "Image";
+
+      var figcaption = document.createElement("figcaption");
+      var captionText = document.createTextNode(fileName.split(".")[0]); // Extract the file name without extension
+      figcaption.appendChild(captionText);
+
+      // Append the elements
+      link.appendChild(image);
+      figure.appendChild(link);
+      figure.appendChild(figcaption);
+      projectCol.appendChild(figure);
+      imageRow.appendChild(projectCol);
     });
   }).catch(function(error) {
     console.log("Error retrieving images:", error);
   });
+
+
+  
 
 
     // Retrieve events from Firebase and display latest two updates
