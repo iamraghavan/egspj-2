@@ -1,129 +1,156 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Firebase Storage Image Gallery</title>
+  <title>Image Gallery</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap4.min.css">
+<style>
+  .container {
+  margin-top: 30px;
+}
 
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-  <style>
-    .gallery-container {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
+.img-thumbnail {
+  width: 100%;
+  height: auto;
+}
 
-    .gallery-item {
-      margin: 10px;
-      width: 300px;
-      height: 300px;
-      overflow: hidden;
-      position: relative;
-    }
+.isotope-filter.filter {
+  margin-bottom: 20px;
+}
 
-    .gallery-item img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: transform 0.3s ease;
-    }
+#gallery .item {
+  display: none;
+}
 
-    .gallery-item:hover img {
-      transform: scale(1.1);
-    }
+#gallery .col-md-4,
+#gallery .col-lg-3 {
+  flex-basis: calc(33.33% - 15px);
+  margin-bottom: 30px;
+}
 
-    .gallery-item::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0, 0, 0, 0.5);
-      opacity: 0;
-      transition: opacity 0.3s ease;
-    }
+@media (max-width: 767px) {
+  #gallery .col-md-4,
+  #gallery .col-lg-3 {
+    flex-basis: calc(50% - 15px);
+  }
+}
 
-    .gallery-item:hover::before {
-      opacity: 1;
-    }
+@media (max-width: 575px) {
+  #gallery .col-md-4,
+  #gallery .col-lg-3 {
+    flex-basis: 100%;
+  }
+}
 
-    .gallery-item h3 {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      color: #fff;
-      font-size: 24px;
-      text-align: center;
-      opacity: 0;
-      transition: opacity 0.3s ease;
-    }
-
-    .gallery-item:hover h3 {
-      opacity: 1;
-    }
-  </style>
-
+</style>
 </head>
 <body>
   <div class="container">
-    <h1 class="text-center mt-5">Firebase Storage Image Gallery</h1>
-    <div class="gallery-container" id="galleryContainer"></div>
+    <h1>Image Gallery</h1>
+
+    <div class="isotope-filter filter mb-10">
+      <ul>
+        <li><a class="filter-item active" data-filter="*">All</a></li>
+        <li><a class="filter-item" data-filter=".Colors Day">Colors Day</a></li>
+        <li><a class="filter-item" data-filter=".Annual Day">Annual Day</a></li>
+        <li><a class="filter-item" data-filter=".school-infrastructure">School Infrastructure</a></li>
+        <li><a class="filter-item" data-filter=".thirukkural-recitation">Thirukkural Recitation</a></li>
+      </ul>
+    </div>
+
+    <div id="gallery" class="row"></div>
   </div>
 
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.10.25/js/dataTables.bootstrap4.min.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-storage.js"></script>
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-  <script>
-    // Initialize Firebase
-    var firebaseConfig = {
-      apiKey: "AIzaSyC7EsiaYH-tJj-wNEQl8ZrrmdvKCWS7ztY",
-      authDomain: "egspj-bumblebees.firebaseapp.com",
+<script>
+ // Initialize Firebase
+var firebaseConfig = {
+  authDomain: "egspj-bumblebees.firebaseapp.com",
       databaseURL: "https://egspj-bumblebees-default-rtdb.firebaseio.com",
       projectId: "egspj-bumblebees",
       storageBucket: "egspj-bumblebees.appspot.com",
       messagingSenderId: "3531307553",
       appId: "1:3531307553:web:162f525f3ed82d7830c160",
       measurementId: "G-6W931XY0SQ"
-    };
+};
 
-    firebase.initializeApp(firebaseConfig);
+firebase.initializeApp(firebaseConfig);
 
-// Get a reference to the Firebase Storage
+// Create a reference to the Firebase Storage
 var storage = firebase.storage();
-var storageRef = storage.ref();
 
-// Get a reference to the gallery container
-var galleryContainer = document.getElementById('galleryContainer');
+// Retrieve images from the specified Firebase Storage folder
+function getImages(folderName) {
+  var gallery = document.getElementById("gallery");
+  gallery.innerHTML = ""; // Clear existing images
 
-// Retrieve all images from Firebase Storage
-storageRef.listAll().then(function(result) {
-  result.items.forEach(function(itemRef) {
-    // Get the download URL for each image
-    itemRef.getDownloadURL().then(function(url) {
-      // Create the HTML elements for each image
-      var galleryItem = document.createElement('div');
-      galleryItem.classList.add('gallery-item');
+  // Get a reference to the specified folder in Firebase Storage
+  var folderRef = storage.ref(folderName);
 
-      var image = document.createElement('img');
-      image.src = url;
+  // Get all files in the folder
+  folderRef.listAll().then(function(result) {
+    result.items.forEach(function(itemRef) {
+      // Get the download URL for each file
+      itemRef.getDownloadURL().then(function(url) {
+        // Create a new image element
+        var img = document.createElement("img");
+        img.src = url;
+        img.className = "img-thumbnail";
 
-      var caption = document.createElement('h3');
-      caption.innerText = itemRef.name;
+        // Create a new gallery item
+        var galleryItem = document.createElement("div");
+        galleryItem.className = "col-md-4 col-lg-3 mb-4 item";
+        galleryItem.appendChild(img);
 
-      // Append the elements
-      galleryItem.appendChild(image);
-      galleryItem.appendChild(caption);
-      galleryContainer.appendChild(galleryItem);
-    }).catch(function(error) {
-      console.log(error);
+        // Add the gallery item to the gallery container
+        gallery.appendChild(galleryItem);
+      });
     });
+  }).catch(function(error) {
+    console.error(error);
   });
-}).catch(function(error) {
-  console.log(error);
-});
-  </script>
+}
+
+// Filter images based on the selected category
+function filterImages(category) {
+  var items = document.getElementsByClassName("item");
+
+  for (var i = 0; i < items.length; i++) {
+    var item = items[i];
+    var itemCategories = item.classList;
+
+    if (category === "*" || itemCategories.contains(category)) {
+      item.style.display = "block";
+    } else {
+      item.style.display = "none";
+    }
+  }
+}
+
+// Initialize the image gallery
+getImages();
+
+// Add event listener to the filter items
+var filterItems = document.getElementsByClassName("filter-item");
+
+for (var i = 0; i < filterItems.length; i++) {
+  var filterItem = filterItems[i];
+
+  filterItem.addEventListener("click", function() {
+    var selectedCategory = this.getAttribute("data-filter");
+    filterImages(selectedCategory);
+
+    // Update the active filter item
+    var activeItem = document.querySelector(".filter-item.active");
+    activeItem.classList.remove("active");
+    this.classList.add("active");
+  });
+}
+
+</script>
 </body>
 </html>

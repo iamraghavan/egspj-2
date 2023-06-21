@@ -199,15 +199,30 @@
 
 
                             <div class="card-body">
-                                <form class="form" action="" id="imageForm" enctype="multipart/form-data">
+                                <form class="form" id="uploadForm" enctype="multipart/form-data">
 
                                     <div class="row">
                                         <div class="col-md-6 col-12">
                                             <div class="form-group">
                                                 <label for="first-name-column ">Title</label>
-                                                <input  class="form-control" type="file" id="imageInput" name="images[]" multiple>
+                                                <input  class="form-control" type="file" name="images" multiple>
                                             </div>
                                         </div>
+
+                                        <div class="col-md-6 col-12">
+                                            <div class="form-group">
+                                                <label for="first-name-column ">Select a Folder</label>
+                                                <select class="form-control" name="folderName" id="folderSelect">
+                                                    <option value="Colors Day">Colors Day</option>
+                                                    <option value="Annual Day">Annual Day</option>
+                                                    <option value="School Infrastructure">School Infrastructure</option>
+                                                    <option value="Thirukkural Recitation">Thirukkural Recitation</option>
+                                                  </select>
+                                            </div>
+                                        </div>
+
+
+                                     
                                       
                                         <div class="col-12 d-flex justify-content-end">
                                             <button class="btn btn-primary me-1 mb-1" type="submit" value="Upload">Submit</button>
@@ -217,45 +232,44 @@
                                            
                                         </div>
                                     </div>
+                                    </form>
                             </div>
-                            </form>
+                         
+
 
 
 
                         </div>
-                </div>
+               
 
+
+       
 
                 </section>
-                <!-- 
-                    <table class="table table-striped" id="eventTable">
-                      <thead>
-                        <tr>
-                          <th>Title</th>
-                          <th>Description</th>
-                          <th>Date</th>
-                          <th>Actions</th>
-                        </tr>
-                      </thead>
-                    </table> -->
 
-
-
-                <div class="container">
-                  <table id="imageTable" class="table table-striped">
-                    <thead>
-                      <tr>
-                        <th>Image</th>
-                        <th>File Name</th>
-                        <th>Actions</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <!-- Image file names will be dynamically generated here -->
-                    </tbody>
-                  </table>
-                </div>
-            </div>
+               
+                <!-- <form id="folderForm">
+                    <label for="folderSelect">Select Folder:</label>
+                    <select id="folderSelect">
+                      <option value="Colors Day">Colors Day</option>
+                      <option value="">Annual Day</option>
+                      <option value="">School Infrastructure</option>
+                      <option value="">Thirukkural Recitation</option>
+                    </select>
+                    <button type="submit">Submit</button>
+                  </form>
+                
+                  <table id="imageTable">
+                    <tr>
+                      <th>S.No</th>
+                      <th>File Name</th>
+                      <th>File Type</th>
+                      <th>Folder Location</th>
+                      <th>Actions</th>
+                    </tr>
+                  </table> -->
+                
+                 
             <!--                 
         <button onclick="swalelement">submit</button>
 
@@ -285,12 +299,11 @@
 
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-
-
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-database.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-storage.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-database.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
     <script>
         // Initialize Firebase
         const firebaseConfig = {
@@ -306,105 +319,112 @@
 
         firebase.initializeApp(firebaseConfig);
 
-const storage = firebase.storage();
-const storageRef = storage.ref();
+// Get a reference to the Firebase Storage
+var storage = firebase.storage();
+var storageRef = storage.ref();
 
-// Listen for form submission
-$('#imageForm').on('submit', function (e) {
-  e.preventDefault();
-  const files = $('#imageInput')[0].files;
-  uploadImages(files);
+
+
+// Handle form submission
+var form = document.getElementById('uploadForm');
+form.addEventListener('submit', function(event) {
+  event.preventDefault();
+
+  // Get the selected images
+  var fileInput = document.querySelector('input[name="images"]');
+  var files = fileInput.files;
+
+  // Get the selected folder name
+  var folderSelect = document.getElementById('folderSelect');
+  var folderName = folderSelect.value;
+
+  // Upload each image to the selected folder
+  for (var i = 0; i < files.length; i++) {
+    var file = files[i];
+    var filePath = folderName + '/' + file.name;
+    var fileRef = storageRef.child(filePath);
+    var uploadTask = fileRef.put(file);
+
+    // Monitor the upload progress
+    uploadTask.on('state_changed', null, null, function() {
+      alert('Image uploaded successfully!');
+    });
+  }
 });
 
-// Upload images to Firebase Storage
-function uploadImages(files) {
-  Array.from(files).forEach(function (file) {
-    const fileName = file.name;
-    const fileRef = storageRef.child(fileName);
+//     // Function to display the image details in the table
+//     function displayImageDetails(sno, fileName, fileType, folderLocation) {
+//       var table = document.getElementById("imageTable");
+//       var row = table.insertRow();
+//       var cell1 = row.insertCell();
+//       var cell2 = row.insertCell();
+//       var cell3 = row.insertCell();
+//       var cell4 = row.insertCell();
+//       var cell5 = row.insertCell();
 
-    fileRef.put(file).then(function (snapshot) {
-      console.log('Uploaded a file:', fileName);
-      displayImage(fileName);
-    });
-  });
-}
+//       cell1.innerHTML = sno;
+//       cell2.innerHTML = fileName;
+//       cell3.innerHTML = fileType;
+//       cell4.innerHTML = folderLocation;
+//       cell5.innerHTML = '<button onclick="deleteImage(\'' + fileName + '\', \'' + folderLocation + '\')">Delete</button>';
+//     }
 
-// Display images in the gallery
-function displayImage(fileName) {
-  storageRef
-    .child(fileName)
-    .getDownloadURL()
-    .then(function (url) {
-      const image = $('<img>').attr('src', url).addClass('gallery-image');
-      $('#gallery').append(image);
-    });
-}
+//     // Function to delete an image
+//     function deleteImage(fileName, folderLocation) {
+//   var storageRef = storage.ref(folderLocation + "/" + fileName);
+//   storageRef.delete().then(function() {
+//     var table = document.getElementById("imageTable");
+//     var rows = table.rows;
+
+//     // Find the row with the matching fileName and folderLocation
+//     for (var i = 1; i < rows.length; i++) {
+//       var row = rows[i];
+//       if (row.cells[1].innerHTML === fileName && row.cells[3].innerHTML === folderLocation) {
+//         table.deleteRow(i);
+//         break;
+//       }
+//     }
+//     alert("Image deleted successfully.");
+//   }).catch(function(error) {
+//     alert("Error deleting image:", error.message);
+//   });
+// }
+
+//     // Folder form submit event listener
+//     document.getElementById("folderForm").addEventListener("submit", function(event) {
+//       event.preventDefault();
+//       var folderName = document.getElementById("folderSelect").value;
+//       var table = document.getElementById("imageTable");
+//       // Clear existing table rows
+//       while (table.rows.length > 1) {
+//         table.deleteRow(1);
+//       }
 
 
- // Get the reference to the imageTable tbody
- var imageTable = document.getElementById("imageTable").getElementsByTagName("tbody")[0];
 
-// Retrieve the image file names from Firebase Storage
-storageRef.listAll().then(function(result) {
-  result.items.forEach(function(itemRef) {
-    var fileName = itemRef.name;
 
-    // Create the HTML elements
-    var row = document.createElement("tr");
+//       // Get a reference to the selected folder
+//       var folderRef = storage.ref(folderName);
 
-    var imageCell = document.createElement("td");
-    var fileCell = document.createElement("td");
-    var actionCell = document.createElement("td");
+//       // List all images in the selected folder
+//       folderRef.listAll().then(function(result) {
+//         result.items.forEach(function(item, index) {
+//           item.getMetadata().then(function(metadata) {
+//             var fileName = item.name;
+//             var fileType = metadata.contentType;
+//             var folderLocation = metadata.fullPath;
+//             displayImageDetails(index + 1, fileName, fileType, folderLocation);
+//           }).catch(function(error) {
+//             console.log("Error getting image metadata:", error);
+//           });
+//         });
+//       }).catch(function(error) {
+//         console.log("Error listing images in folder:", error);
+//       });
 
-    var image = document.createElement("img");
-    image.src = "https://via.placeholder.com/100"; // Placeholder image URL
-    image.alt = "Image";
-    imageCell.appendChild(image);
-
-    var fileNameText = document.createTextNode(fileName);
-    fileCell.appendChild(fileNameText);
-
-    // var deleteButton = document.createElement("button");
-    // deleteButton.innerText = "Delete";
-    var deleteButton = document.createElement("button");
-      deleteButton.innerHTML = '<i class="fas fa-trash-alt"></i> Delete';
-      deleteButton.classList.add("btn", "btn-outline-danger");
-    
-    deleteButton.addEventListener("click", function() {
-      // Delete the image from Firebase Storage
-      itemRef.delete().then(function() {
-        // Remove the row from the table
-        row.remove();
-        console.log("Image deleted successfully.");
-      }).catch(function(error) {
-        console.log("Error deleting image:", error);
-      });
-    });
-    actionCell.appendChild(deleteButton);
-
-    // Append the elements to the table row
-    row.appendChild(imageCell);
-    row.appendChild(fileCell);
-    row.appendChild(actionCell);
-
-    // Append the row to the table
-    imageTable.appendChild(row);
-  });
-}).catch(function(error) {
-  alert("Error retrieving image file names:", error);
-});
-    </script>
-
-    <script>
-        // Get the current year
-        var currentYear = new Date().getFullYear();
-
-        // Set the current year in the HTML element with the specified ID
-        var currentYearElement = document.getElementById('current-year');
-        currentYearElement.textContent = currentYear.toString();
-
-    </script>
-
+      
+//     });
+  </script>
 
 
 

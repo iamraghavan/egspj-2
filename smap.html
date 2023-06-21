@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Image Gallery</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    .container {
+  margin-top: 30px;
+}
+
+.folder-thumbnail {
+  width: 100%;
+  height: auto;
+}
+
+.isotope-filter.filter {
+  margin-bottom: 20px;
+}
+
+#gallery .item {
+  display: none;
+}
+
+#gallery .col-md-4,
+#gallery .col-lg-3 {
+  flex-basis: calc(33.33% - 15px);
+  margin-bottom: 30px;
+}
+
+@media (max-width: 767px) {
+  #gallery .col-md-4,
+  #gallery .col-lg-3 {
+    flex-basis: calc(50% - 15px);
+  }
+}
+
+@media (max-width: 575px) {
+  #gallery .col-md-4,
+  #gallery .col-lg-3 {
+    flex-basis: 100%;
+  }
+}
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Image Gallery</h1>
+
+    <div class="isotope-filter filter mb-10">
+      <ul>
+        <li><a class="filter-item active" data-filter="*">All</a></li>
+        <li><a class="filter-item" data-filter=".folder1">Folder 1</a></li>
+        <li><a class="filter-item" data-filter=".folder2">Folder 2</a></li>
+        <li><a class="filter-item" data-filter=".folder3">Folder 3</a></li>
+      </ul>
+    </div>
+
+    <div id="gallery" class="row"></div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/isotope-layout/dist/isotope.pkgd.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-storage.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-database.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+  <script>
+    // Initialize Firebase
+var firebaseConfig = {
+  authDomain: "egspj-bumblebees.firebaseapp.com",
+      databaseURL: "https://egspj-bumblebees-default-rtdb.firebaseio.com",
+      projectId: "egspj-bumblebees",
+      storageBucket: "egspj-bumblebees.appspot.com",
+      messagingSenderId: "3531307553",
+      appId: "1:3531307553:web:162f525f3ed82d7830c160",
+      measurementId: "G-6W931XY0SQ"
+};
+
+firebase.initializeApp(firebaseConfig);
+
+// Create a reference to the Firebase Storage
+var storage = firebase.storage();
+
+// Retrieve all images from Firebase Storage
+function getAllImages() {
+  var gallery = document.getElementById("gallery");
+  gallery.innerHTML = ""; // Clear existing images
+
+  // Get a reference to the root folder in Firebase Storage
+  var rootRef = storage.ref();
+
+  // Get all files in the root folder
+  rootRef.listAll().then(function(result) {
+    result.prefixes.forEach(function(folderRef) {
+      // Get the name of the folder
+      var folderName = folderRef.name;
+
+      // Create a new image element for the folder
+      var folderImg = document.createElement("img");
+      folderImg.src = "folder-icon.png"; // Replace with the path to your folder icon
+      folderImg.className = "folder-thumbnail";
+      folderImg.setAttribute("data-filter", "." + folderName);
+
+      // Create a new gallery item for the folder
+      var galleryItem = document.createElement("div");
+      galleryItem.className = "col-md-4 col-lg-3 mb-4 item";
+      galleryItem.appendChild(folderImg);
+
+      // Add the gallery item to the gallery container
+      gallery.appendChild(galleryItem);
+    });
+  }).catch(function(error) {
+    alert(error);
+  });
+}
+
+// Filter images based on the selected category
+function filterImages(category) {
+  var iso = new Isotope("#gallery", {
+    itemSelector: ".item",
+    layoutMode: "fitRows"
+  });
+
+  iso.arrange({ filter: category });
+}
+
+// Initialize the image gallery
+getAllImages();
+filterImages("*");
+
+// Add event listener to the filter items
+var filterItems = document.getElementsByClassName("filter-item");
+
+for (var i = 0; i < filterItems.length; i++) {
+  filterItems[i].addEventListener("click", function() {
+    var category = this.getAttribute("data-filter");
+    filterImages(category);
+  });
+}
+
+  </script>
+</body>
+</html>
