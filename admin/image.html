@@ -283,7 +283,16 @@
                     <div class="float-start">
                         <p style="margin-left: 40px;"> <span id="current-year"></span> &copy;
                             < Bumble Bees oAuth />
-                        </p>
+                        </p>    <script>
+                            // Get the current year
+                            var currentYear = new Date().getFullYear();
+                    
+                            // Set the current year in the HTML element with the specified ID
+                            var currentYearElement = document.getElementById('current-year');
+                            currentYearElement.textContent = currentYear.toString();
+                    
+                        </script>
+                    
                     </div>
 
                 </div>

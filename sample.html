@@ -1,75 +1,59 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Image Gallery</title>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap4.min.css">
-<style>
-  .container {
-  margin-top: 30px;
-}
+    <title>Contact Form</title>
 
-.img-thumbnail {
-  width: 100%;
-  height: auto;
-}
-
-.isotope-filter.filter {
-  margin-bottom: 20px;
-}
-
-#gallery .item {
-  display: none;
-}
-
-#gallery .col-md-4,
-#gallery .col-lg-3 {
-  flex-basis: calc(33.33% - 15px);
-  margin-bottom: 30px;
-}
-
-@media (max-width: 767px) {
-  #gallery .col-md-4,
-  #gallery .col-lg-3 {
-    flex-basis: calc(50% - 15px);
-  }
-}
-
-@media (max-width: 575px) {
-  #gallery .col-md-4,
-  #gallery .col-lg-3 {
-    flex-basis: 100%;
-  }
-}
-
-</style>
 </head>
 <body>
-  <div class="container">
-    <h1>Image Gallery</h1>
+    <h1>Contact Form</h1>
+    <form id="contactForm">
+        <label for="name">Name</label>
+        <input type="text" id="name" name="name" required>
 
-    <div class="isotope-filter filter mb-10">
-      <ul>
-        <li><a class="filter-item active" data-filter="*">All</a></li>
-        <li><a class="filter-item" data-filter=".Colors Day">Colors Day</a></li>
-        <li><a class="filter-item" data-filter=".Annual Day">Annual Day</a></li>
-        <li><a class="filter-item" data-filter=".school-infrastructure">School Infrastructure</a></li>
-        <li><a class="filter-item" data-filter=".thirukkural-recitation">Thirukkural Recitation</a></li>
-      </ul>
-    </div>
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" required>
 
-    <div id="gallery" class="row"></div>
-  </div>
+        <label for="message">Message</label>
+        <textarea id="message" name="message" required></textarea>
 
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
-  <script src="https://cdn.datatables.net/1.10.25/js/dataTables.bootstrap4.min.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-storage.js"></script>
+        <input type="submit" value="Submit">
+    </form>
+
+    <style>
+h1 {
+    text-align: center;
+}
+
+form {
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+label, input, textarea {
+    display: block;
+    margin-bottom: 10px;
+}
+
+input[type="submit"] {
+    margin-top: 10px;
+}
+
+textarea {
+    height: 100px;
+    resize: vertical;
+}
+
+    </style>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.6.7/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.6.7/firebase-database.js"></script>
+    
+<script src="https://cdn.emailjs.com/dist/email.min.js"></script>
 <script>
- // Initialize Firebase
+// Initialize Firebase
 var firebaseConfig = {
-  authDomain: "egspj-bumblebees.firebaseapp.com",
+  apiKey: "AIzaSyC7EsiaYH-tJj-wNEQl8ZrrmdvKCWS7ztY",
+      authDomain: "egspj-bumblebees.firebaseapp.com",
       databaseURL: "https://egspj-bumblebees-default-rtdb.firebaseio.com",
       projectId: "egspj-bumblebees",
       storageBucket: "egspj-bumblebees.appspot.com",
@@ -80,75 +64,63 @@ var firebaseConfig = {
 
 firebase.initializeApp(firebaseConfig);
 
-// Create a reference to the Firebase Storage
-var storage = firebase.storage();
+// Reference to Firebase Realtime Database
+var database = firebase.database();
 
-// Retrieve images from the specified Firebase Storage folder
-function getImages(folderName) {
-  var gallery = document.getElementById("gallery");
-  gallery.innerHTML = ""; // Clear existing images
+// Handle form submission
+var contactForm = document.getElementById('contactForm');
+contactForm.addEventListener('submit', function(event) {
+    event.preventDefault();
 
-  // Get a reference to the specified folder in Firebase Storage
-  var folderRef = storage.ref(folderName);
+    // Get form values
+    var name = document.getElementById('name').value;
+    var email = document.getElementById('email').value;
+    var message = document.getElementById('message').value;
 
-  // Get all files in the folder
-  folderRef.listAll().then(function(result) {
-    result.items.forEach(function(itemRef) {
-      // Get the download URL for each file
-      itemRef.getDownloadURL().then(function(url) {
-        // Create a new image element
-        var img = document.createElement("img");
-        img.src = url;
-        img.className = "img-thumbnail";
+    // Send email
+    sendEmail(name, email, message);
 
-        // Create a new gallery item
-        var galleryItem = document.createElement("div");
-        galleryItem.className = "col-md-4 col-lg-3 mb-4 item";
-        galleryItem.appendChild(img);
+    // Store data in Firebase Realtime Database
+    saveData(name, email, message);
 
-        // Add the gallery item to the gallery container
-        gallery.appendChild(galleryItem);
-      });
+    // Reset form
+    contactForm.reset();
+});
+
+// Send email
+function sendEmail(name, email, message) {
+    // Configure your email service using your public key
+    emailjs.init("pJwMrOQHE7viiRAtn");
+
+    // Compose the email parameters
+    var emailParams = {
+        from_name: name,
+        from_email: email,
+        message: message,
+        cc: "egspjschool@gmail.com", 
+        bcc: "pradeep@bumblebees.co.in"
+    };
+
+    // Send the email
+    emailjs.send("service_13hnkw7", "template_iaohkfb", emailParams)
+        .then(function(response) {
+            console.log("Email sent successfully");
+        })
+        .catch(function(error) {
+            console.error("Error sending email:", error);
+        });
+}
+
+
+// Store data in Firebase Realtime Database
+function saveData(name, email, message) {
+    var newMessageRef = database.ref('messages').push();
+    newMessageRef.set({
+        name: name,
+        email: email,
+        message: message
     });
-  }).catch(function(error) {
-    console.error(error);
-  });
-}
-
-// Filter images based on the selected category
-function filterImages(category) {
-  var items = document.getElementsByClassName("item");
-
-  for (var i = 0; i < items.length; i++) {
-    var item = items[i];
-    var itemCategories = item.classList;
-
-    if (category === "*" || itemCategories.contains(category)) {
-      item.style.display = "block";
-    } else {
-      item.style.display = "none";
-    }
-  }
-}
-
-// Initialize the image gallery
-getImages();
-
-// Add event listener to the filter items
-var filterItems = document.getElementsByClassName("filter-item");
-
-for (var i = 0; i < filterItems.length; i++) {
-  var filterItem = filterItems[i];
-
-  filterItem.addEventListener("click", function() {
-    var selectedCategory = this.getAttribute("data-filter");
-    filterImages(selectedCategory);
-
-    // Update the active filter item
-    var activeItem = document.querySelector(".filter-item.active");
-    activeItem.classList.remove("active");
-    this.classList.add("active");
-  });
+    console.log('Data stored in Firebase Realtime Database.');
 }
 
 </script>

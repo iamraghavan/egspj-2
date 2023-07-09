@@ -293,7 +293,16 @@
                         </p>
                     </div>
 
-                </div>
+                </div>    <script>
+                    // Get the current year
+                    var currentYear = new Date().getFullYear();
+            
+                    // Set the current year in the HTML element with the specified ID
+                    var currentYearElement = document.getElementById('current-year');
+                    currentYearElement.textContent = currentYear.toString();
+            
+                </script>
+            
             </footer>
         </div>
     </div>
@@ -407,15 +416,6 @@
 
     </script>
 
-    <script>
-        // Get the current year
-        var currentYear = new Date().getFullYear();
-
-        // Set the current year in the HTML element with the specified ID
-        var currentYearElement = document.getElementById('current-year');
-        currentYearElement.textContent = currentYear.toString();
-
-    </script>
 
 
 
