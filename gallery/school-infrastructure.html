@@ -6,22 +6,72 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>EGSPJ INTERNATIONAL SCHOOL</title>
-  <link rel="shortcut icon" href="./assets/img/favicon.png">
-  <link rel="stylesheet" href="./assets/css/plugins.css">
-  <link rel="stylesheet" href="./assets/css/style.css">
-  <link rel="stylesheet" href="./assets/css/colors/navy.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="shortcut icon" href="../assets/img/favicon.png">
+  <link rel="stylesheet" href="../assets/css/plugins.css">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="stylesheet" href="../assets/css/colors/navy.css">
 
 
   <style>
-    @media only screen and (min-width : 1200px) {
+    @media only screen and (min-width: 1200px) {
       .imgLogo {
         margin: 10px 0px;
-
       }
     }
+
+    @media only screen and (min-width: 320px) {
+      .mobvield-container {
+        padding-top: 50px;
+      }
+    }
+
+    @media only screen and (min-width: 1200px) {
+      .mobvield-container {
+        margin-top: 0px;
+      }
+    }
+
+    @media only screen and (min-width: 1600px) {
+      .mobvield-container {
+        margin-top: 0px;
+      }
+    }
+
+    .lotboxing {
+      margin-bottom: 50px; /* Adjust this value as needed */
+    }
   </style>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css">
+<style>
+  .gallery {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 10px;
+  }
+
+  .gallery-item {
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px;
+  }
+
+  .gallery-item img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    cursor: pointer;
+    border-radius: 10px;
+  }
+
+  @media (max-width: 767px) {
+    .gallery {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+</style>
 </head>
+
 
 <body>
   <div class="content-wrapper">
@@ -29,9 +79,9 @@
       <nav class="navbar navbar-expand-lg classic transparent position-absolute navbar-light">
         <div class="container flex-lg-row flex-nowrap align-items-center">
           <div class="navbar-brand w-100">
-            <a href="./index.html">
-              <img width="auto" height="80px" src="./assets/img/EGSPJ-International-School-Nagapattinam-Logo.png"
-                srcset="./assets/img/EGSPJ-International-School-Nagapattinam-Logo.png" alt="" class="imgLogo" />
+            <a href="../index.html">
+              <img width="auto" height="80px" src="../assets/img/EGSPJ-International-School-Nagapattinam-Logo.png"
+                srcset="../assets/img/EGSPJ-International-School-Nagapattinam-Logo.png" alt="" class="imgLogo" />
             </a>
           </div>
           <div class="navbar-collapse offcanvas offcanvas-nav offcanvas-start">
@@ -50,30 +100,30 @@
                 <li class="nav-item dropdown">
                   <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">ABOUT US</a>
                   <ul class="dropdown-menu">
-                    <li class="nav-item"><a class="dropdown-item" href="./profile.html#profile">Profile</a></li>
-                    <li class="nav-item"><a class="dropdown-item" href="./profile.html#visionandmission">Vision &
+                    <li class="nav-item"><a class="dropdown-item" href="../profile.html#profile">Profile</a></li>
+                    <li class="nav-item"><a class="dropdown-item" href="../profile.html#visionandmission">Vision &
                         Mission</a></li>
-                    <li class="nav-item"><a class="dropdown-item" href="./profile.html#cmessage">Chairman Message</a>
+                    <li class="nav-item"><a class="dropdown-item" href="../profile.html#cmessage">Chairman Message</a>
                     </li>
-                    <li class="nav-item"><a class="dropdown-item" href="./profile.html#pmessage">Principal Message</a>
+                    <li class="nav-item"><a class="dropdown-item" href="../profile.html#pmessage">Principal Message</a>
                     </li>
                   </ul>
                 </li>
                 <li class="nav-item dropdown">
                   <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown"> ACADEMICS</a>
                   <ul class="dropdown-menu">
-                    <li class="nav-item"><a class="dropdown-item" href="./academic-support-system.html">Academic Support
+                    <li class="nav-item"><a class="dropdown-item" href="../academic-support-system.html">Academic Support
                         System</a></li>
-                    <li class="nav-item"><a class="dropdown-item" href="./academic-facilities.html">Academic
+                    <li class="nav-item"><a class="dropdown-item" href="../academic-facilities.html">Academic
                         Facilities</a></li>
-                    <li class="nav-item"><a class="dropdown-item" href="./languages.html">Languages</a></li>
-                    <li class="nav-item"><a class="dropdown-item" href="./teaching-methodology.html">Teaching
+                    <li class="nav-item"><a class="dropdown-item" href="../languages.html">Languages</a></li>
+                    <li class="nav-item"><a class="dropdown-item" href="../teaching-methodology.html">Teaching
                         Methodology</a></li>
-                    <li class="nav-item"><a class="dropdown-item" href="./examinations.html">Examinations</a></li>
-                    <li class="nav-item"><a class="dropdown-item" href="./assessment-and-reporting.html">Assessment And
+                    <li class="nav-item"><a class="dropdown-item" href="../examinations.html">Examinations</a></li>
+                    <li class="nav-item"><a class="dropdown-item" href="../assessment-and-reporting.html">Assessment And
                         Reporting</a></li>
                     <li class="nav-item"><a class="dropdown-item"
-                        href="./after-hours-independent-study.html">After-Hours Independent Study</a></li>
+                        href="../after-hours-independent-study.html">After-Hours Independent Study</a></li>
 
 
                   </ul>
@@ -81,21 +131,21 @@
                 <li class="nav-item dropdown">
                   <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown"> BEYOND ACADEMICS</a>
                   <ul class="dropdown-menu">
-                    <li class="nav-item"><a class="dropdown-item" href="./beyond-academics.html">Introduction</a></li>
-                    <li class="nav-item"><a class="dropdown-item" href="./no-bag-policy-no-stattionaries.html">NO BAG
+                    <li class="nav-item"><a class="dropdown-item" href="../beyond-academics.html">Introduction</a></li>
+                    <li class="nav-item"><a class="dropdown-item" href="../no-bag-policy-no-stattionaries.html">NO BAG
                         POLICY & NO STATIONARIES</a></li>
-                    <li class="nav-item"><a class="dropdown-item" href="./health-policy.html">Health Policy</a></li>
-                    <li class="nav-item"><a class="dropdown-item" href="./sports-and-games.html">Sports And Games</a>
+                    <li class="nav-item"><a class="dropdown-item" href="../health-policy.html">Health Policy</a></li>
+                    <li class="nav-item"><a class="dropdown-item" href="../sports-and-games.html">Sports And Games</a>
                     </li>
                     <li class="nav-item"><a class="dropdown-item"
-                        href="./extracurricular-activities.html">Extracurricular Activities</a></li>
-                    <li class="nav-item"><a class="dropdown-item" href="./trips-and-excursions.html">Trips And
+                        href="../extracurricular-activities.html">Extracurricular Activities</a></li>
+                    <li class="nav-item"><a class="dropdown-item" href="../trips-and-excursions.html">Trips And
                         Excursions</a></li>
-                    <li class="nav-item"><a class="dropdown-item" href="./religion.html">Religion</a></li>
-                    <li class="nav-item"><a class="dropdown-item" href="./school-timing.html">School Timing</a></li>
-                    <li class="nav-item"><a class="dropdown-item" href="./dress-code-and-uniform.html">Dress Code And
+                    <li class="nav-item"><a class="dropdown-item" href="../religion.html">Religion</a></li>
+                    <li class="nav-item"><a class="dropdown-item" href="../school-timing.html">School Timing</a></li>
+                    <li class="nav-item"><a class="dropdown-item" href="../dress-code-and-uniform.html">Dress Code And
                         Uniform</a></li>
-                    <li class="nav-item"><a class="dropdown-item" href="./discipline.html">Discipline</a></li>
+                    <li class="nav-item"><a class="dropdown-item" href="../discipline.html">Discipline</a></li>
 
                   </ul>
 
@@ -103,11 +153,11 @@
                 <li class="nav-item dropdown">
                   <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown"> ADMISSIONS & FEE POLICY</a>
                   <ul class="dropdown-menu">
-                    <li class="nav-item"><a class="dropdown-item" href="./admissions.html">Admissions</a></li>
-                    <li class="nav-item"><a class="dropdown-item" href="./selection-procedure.html">Selection
+                    <li class="nav-item"><a class="dropdown-item" href="../admissions.html">Admissions</a></li>
+                    <li class="nav-item"><a class="dropdown-item" href="../selection-procedure.html">Selection
                         Procedure</a></li>
-                    <li class="nav-item"><a class="dropdown-item" href="./fee-policy.html">Fee Policy</a></li>
-                    <li class="nav-item"><a class="dropdown-item" href="./insurance-withdrawals.html">Insurance /
+                    <li class="nav-item"><a class="dropdown-item" href="../fee-policy.html">Fee Policy</a></li>
+                    <li class="nav-item"><a class="dropdown-item" href="../insurance-withdrawals.html">Insurance /
                         Withdrawals</a></li>
 
 
@@ -218,10 +268,10 @@
           <div class="widget mb-8">
             <h4 class="widget-title text-white mb-3">Learn More</h4>
             <ul class="list-unstyled">
-              <li><a href="#">Gallery</a></li>
+              <li><a href="../gallery.html">Gallery</a></li>
               <li><a href="#">Events</a></li>
               <li><a href="#">Webmail</a></li>
-              <li><a href="./oauth/index.html">Admin Login</a></li>
+              <li><a href="../oauth/index.html">Admin Login</a></li>
               <li><a href="#">Admin Support</a></li>
             </ul>
           </div>
@@ -279,11 +329,13 @@ margin-top: 0px;
 }
 </style>
 
+
+
     <div class="wrapper bg-gray mobvield-container">
         <div class="container py-6 pt-md-4 text-center">
           <div class="row mobvield-container">
             <div class="col-lg-10 col-xxl-8 mx-auto">
-              <h1 class="display-1 mb-1 text-uppercase">School Gallery</h1>
+              <h1 class="display-1 mb-1 text-uppercase">School Infrastructure</h1>
             </div>
             <!-- /column -->
           </div>
@@ -295,62 +347,100 @@ margin-top: 0px;
   </div>
   <!-- /.content-wrapper -->
 
+  <!-- <section class="wrapper bg-dark">
+    <div class="container">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb pt-5 bg-dark text-white">
+          <li class="breadcrumb-item"><a href="#">Home</a></li>
+          <li class="breadcrumb-item"><a href="#">Library</a></li>
+          <li class="breadcrumb-item active" aria-current="page">Data</li>
+        </ol>
+      </nav>
+    </div>
+  </section> -->
+  
+  <div class="container mt-7 mb-5">
+    <nav aria-label="breadcrumb" class="bg-dark p-3 rounded">
+      <ol class="breadcrumb text-white mb-0">
+        <li class="breadcrumb-item"><a href="../gallery.html">Gallery</a></li>
+        <li class="breadcrumb-item active"><a href="./school-infrastructure.html">School Infrastructure</a></li>
+       
+      </ol>
+    </nav>
+  </div>
 
 
 
 
   <section class="wrapper bg-light">
-    <div class="container py-14 py-md-16">
-      <div class="projects-tiles">
-        <div class="project grid grid-view">
-          <div class="row gx-md-8 gx-xl-12 gy-10 gy-md-12 isotope">
-            <div class="item col-md-6 mt-md-7 mt-lg-15">
-              <div class="project-details d-flex justify-content-center align-self-end flex-column ps-0 pb-0">
-                <div class="post-header">
-                  <h2 class="display-4 mb-4 pe-xxl-15">Check out some of our recent Clicks <i class="fa fa-camera" aria-hidden="true"></i> below.</h2>
-                  <p class="lead fs-lg mb-0">We love to turn ideas into beautiful things.</p>
-                </div>
-                <!-- /.post-header -->
-              </div>
-              <!-- /.project-details -->
-            </div>
-            <!-- /.item -->
-            <div class="item col-md-6">
-              <figure class="lift rounded mb-6"><a href="./gallery/school-infrastructure.html"> <img src="https://firebasestorage.googleapis.com/v0/b/egspj-bumblebees.appspot.com/o/Annual%20Day%2F_S5D3861.jpg?alt=media&token=3972628f-3643-42ec-b635-d7e764215570" srcset="https://firebasestorage.googleapis.com/v0/b/egspj-bumblebees.appspot.com/o/Annual%20Day%2F_S5D3861.jpg?alt=media&token=3972628f-3643-42ec-b635-d7e764215570" alt="" /></a></figure>
-              <div class="post-category text-line mb-3 text-violet">School Infrastructure</div>
-             
-            </div>
-            <!-- /.item -->
-            <div class="item col-md-6">
-              <figure class="lift rounded mb-6"><a href="./gallery/annual-day.html"> <img src="https://firebasestorage.googleapis.com/v0/b/egspj-bumblebees.appspot.com/o/Annual%20Day%2F_S5D3766.jpg?alt=media&token=ec209837-b4d1-4f35-9ec8-395f47259490" srcset="https://firebasestorage.googleapis.com/v0/b/egspj-bumblebees.appspot.com/o/Annual%20Day%2F_S5D3766.jpg?alt=media&token=ec209837-b4d1-4f35-9ec8-395f47259490" alt="" /></a></figure>
-              <div class="post-category text-line mb-3 text-leaf">Annual Day</div>
-             
-            </div>
-            <!-- /.item -->
-            <div class="item col-md-6">
-              <figure class="lift rounded mb-6"><a href="./gallery/colors-day.html"> <img src="https://firebasestorage.googleapis.com/v0/b/egspj-bumblebees.appspot.com/o/Colors%20Day%2Fabout1.webp?alt=media&token=6ef21fef-434d-41ba-9ce7-6e3addaf0008" srcset="https://firebasestorage.googleapis.com/v0/b/egspj-bumblebees.appspot.com/o/Colors%20Day%2Fabout1.webp?alt=media&token=6ef21fef-434d-41ba-9ce7-6e3addaf0008" alt="" /></a></figure>
-              <div class="post-category text-line mb-3 text-purple">Colors Day</div>
-              
-            </div>
-            
-            <div class="item col-md-6">
-              <figure class="lift rounded mb-6"><a href="./gallery/thirukkural-recitation.html"> <img src="https://firebasestorage.googleapis.com/v0/b/egspj-bumblebees.appspot.com/o/Colors%20Day%2FS5D3949.webp?alt=media&token=f08d1ef2-2017-4bfe-9178-37924445c19e" srcset="https://firebasestorage.googleapis.com/v0/b/egspj-bumblebees.appspot.com/o/Colors%20Day%2FS5D3949.webp?alt=media&token=f08d1ef2-2017-4bfe-9178-37924445c19e" alt="" /></a></figure>
-              <div class="post-category text-line mb-3 text-purple">Thirukkural Recitation</div>
-             
-            </div>
-
-            
-            <!-- /.item -->
-          </div>
-          <!-- /.row -->
+    <div class="container py-md-10 pb-5 text-center">
+      <div class="grid grid-view projects-masonry">
+        <div class="row gx-md-6 gy-6 isotope">
         </div>
-        <!-- /.project -->
       </div>
-      <!-- /.projects-tiles -->
     </div>
-    <!-- /.container -->
   </section>
-  <!-- /section -->
+  
+
+  <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-storage.js"></script>
+  <script>
+    // Initialize Firebase
+    // Replace the Firebase configuration with your own
+    var firebaseConfig = {
+      authDomain: "egspj-bumblebees.firebaseapp.com",
+    databaseURL: "https://egspj-bumblebees-default-rtdb.firebaseio.com",
+    projectId: "egspj-bumblebees",
+    storageBucket: "egspj-bumblebees.appspot.com",
+    messagingSenderId: "3531307553",
+    appId: "1:3531307553:web:162f525f3ed82d7830c160",
+    measurementId: "G-6W931XY0SQ"
+    };
+    firebase.initializeApp(firebaseConfig);
+  
+    // Reference the specific folder in Firebase Storage (e.g., Annual Day)
+    var storageRef = firebase.storage().ref("School Infrastructure");
+  
+    // Get the container element
+    var galleryContainer = document.querySelector(".grid-view .isotope");
+  
+    // Get all the images in the folder
+    storageRef.listAll().then(function(result) {
+      result.items.forEach(function(imageRef) {
+        // Get the download URL for each image
+        imageRef.getDownloadURL().then(function(url) {
+          // Create the necessary elements
+          var galleryItem = document.createElement("div");
+          galleryItem.className = "project item col-md-6 col-xl-4 events";
+  
+          var figure = document.createElement("figure");
+          figure.className = "overlay overlay-1 rounded";
+  
+          var link = document.createElement("a");
+          link.href = url;
+          link.setAttribute("data-glightbox", "");
+          link.setAttribute("data-gallery", "shots-group");
+  
+          var image = document.createElement("img");
+          image.src = url;
+          image.alt = "Image";
+  
+          // Append the elements to the DOM
+          link.appendChild(image);
+          figure.appendChild(link);
+          galleryItem.appendChild(figure);
+          galleryContainer.appendChild(galleryItem);
+        }).catch(function(error) {
+          console.log("Error getting download URL:", error);
+        });
+      });
+    }).catch(function(error) {
+      console.log("Error listing images in Firebase Storage:", error);
+    });
+  </script>
+  
+
+
 
   
 <footer class="bg-dark text-inverse">
