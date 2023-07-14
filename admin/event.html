@@ -267,6 +267,7 @@
                                 <th>Description</th>
                                 <th>Date</th>
                                 <th>Place</th>
+                                <th>Images</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
@@ -308,6 +309,8 @@
     </div>
     </div>
 
+  
+
 
     <script src="./vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
     <script src="./js/bootstrap.bundle.min.js"></script>
@@ -321,6 +324,7 @@
     <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-database.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-storage.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.9.0/firebase-auth.js"></script>
     <script>
         // Initialize Firebase
         const firebaseConfig = {
@@ -336,6 +340,7 @@
 
         firebase.initializeApp(firebaseConfig);
         const database = firebase.database();
+        var auth = firebase.auth();
 const storage = firebase.storage();
 
 // Handle form submission
@@ -449,6 +454,25 @@ function deleteEvent(eventId) {
             eventDisplay.append(eventTitle, eventDescription, eventPlace, eventDate, eventImage);
         });
     });
+
+
+
+  
+
+  firebase.auth().onAuthStateChanged((user)=>{
+    if(!user){
+        location.replace("../index")
+    }else{
+        document.getElementById("user").innerHTML = "Hello, "+user.email    
+    }
+    
+})
+
+
+function logout(){
+    firebase.auth().signOut()
+}
+
 
     </script>
 

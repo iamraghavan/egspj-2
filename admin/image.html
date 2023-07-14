@@ -313,6 +313,7 @@
     <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-database.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.9.0/firebase-auth.js"></script>
     <script>
         // Initialize Firebase
         const firebaseConfig = {
@@ -331,6 +332,7 @@
 // Get a reference to the Firebase Storage
 var storage = firebase.storage();
 var storageRef = storage.ref();
+var auth = firebase.auth();
 
 
 
@@ -433,6 +435,21 @@ form.addEventListener('submit', function(event) {
 
       
 //     });
+
+  firebase.auth().onAuthStateChanged((user)=>{
+    if(!user){
+        location.replace("../index")
+    }else{
+        document.getElementById("user").innerHTML = "Hello, "+user.email    
+    }
+    
+})
+
+
+function logout(){
+    firebase.auth().signOut()
+}
+
   </script>
 
 
