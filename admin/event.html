@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -195,57 +194,57 @@
                                         < Bumble Bees oAuth />
                                     </span> </h4>
                             </div>
-
-
-
-
+                        
+                        
+                        
+                        
                             <div class="card-body">
-                                <form class="form" action="" method="POST" id="createEventForm">
-
-                                    <div class="row">
-                                        <div class="col-md-6 col-12">
-                                            <div class="form-group">
-                                                <label for="first-name-column ">Title</label>
-                                                <input type="text" inputmode="text" id="title" class="form-control"
-                                                    placeholder="Title" name="name">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6 col-12">
-                                            <div class="form-group">
-                                                <label for="last-name-column">Description</label>
-                                                <input inputmode="text" type="text" id="description"
-                                                    class="form-control " placeholder="Description" name="email">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6 col-12">
-                                            <div class="form-group">
-                                                <label for="last-name-column">Place / Location</label>
-                                                <input inputmode="text" value="EGSPJ SCHOOL" type="text" id="place"
-                                                    class="form-control " placeholder="Description" name="email">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6 col-12">
-                                            <div class="form-group">
-                                                <label for="last-name-column">Date & Time</label>
-                                                <input type="date" id="date" class="form-control " name="email">
-                                            </div>
-                                        </div>
-                                        <div class="col-12 d-flex justify-content-end">
-                                            <button class="btn btn-primary me-1 mb-1" type="submit">Submit</button>
-
-
-
-                                            <button type="reset"
-                                                class="btn btn-light-secondary me-1 mb-1">Reset</button>
-                                        </div>
-                                    </div>
+                        
+                        
+<form class="form" action="" method="POST" id="createEventForm" enctype="multipart/form-data">
+    <div class="row">
+        <div class="col-md-6 col-12">
+            <div class="form-group">
+                <label for="first-name-column">Title</label>
+                <input type="text" inputmode="text" id="title" class="form-control" placeholder="Title" name="title">
+            </div>
+        </div>
+        <div class="col-md-6 col-12">
+            <div class="form-group">
+                <label for="last-name-column">Description</label>
+                <input inputmode="text" type="text" id="description" class="form-control" placeholder="Description"
+                    name="description">
+            </div>
+        </div>
+        <div class="col-md-6 col-12">
+            <div class="form-group">
+                <label for="last-name-column">Place / Location</label>
+                <input inputmode="text" value="EGSPJ SCHOOL" type="text" id="place" class="form-control"
+                    placeholder="Place" name="place">
+            </div>
+        </div>
+        <div class="col-md-6 col-12">
+            <div class="form-group">
+                <label for="last-name-column">Date & Time</label>
+                <input type="date" id="date" class="form-control" name="date">
+            </div>
+        </div>
+        <div class="col-md-6 col-12">
+            <div class="form-group">
+                <label for="last-name-column">Event Image</label>
+                <input type="file" id="eventImage" class="form-control" name="eventImage">
+            </div>
+        </div>
+        <div class="col-12 d-flex justify-content-end">
+            <button class="btn btn-primary me-1 mb-1" type="submit">Submit</button>
+            <button type="reset" class="btn btn-light-secondary me-1 mb-1">Reset</button>
+        </div>
+    </div>
+</form>
+                        
+                        
                             </div>
-                            </form>
-
-
-
                         </div>
-                </div>
 
 
                 </section>
@@ -260,20 +259,20 @@
                         </tr>
                       </thead>
                     </table> -->
-                    <div class="container">
-                        <table id="eventTable" class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th>Title</th>
-                                    <th>Description</th>
-                                    <th>Date</th>
-                                    <th>Place</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody id="eventList"></tbody>
-                        </table>
-                    </div>
+                <div class="container">
+                    <table id="eventTable" class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Description</th>
+                                <th>Date</th>
+                                <th>Place</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="eventList"></tbody>
+                    </table>
+                </div>
 
 
             </div>
@@ -293,16 +292,17 @@
                         </p>
                     </div>
 
-                </div>    <script>
+                </div>
+                <script>
                     // Get the current year
                     var currentYear = new Date().getFullYear();
-            
+
                     // Set the current year in the HTML element with the specified ID
                     var currentYearElement = document.getElementById('current-year');
                     currentYearElement.textContent = currentYear.toString();
-            
+
                 </script>
-            
+
             </footer>
         </div>
     </div>
@@ -320,6 +320,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-storage.js"></script>
     <script>
         // Initialize Firebase
         const firebaseConfig = {
@@ -335,84 +336,119 @@
 
         firebase.initializeApp(firebaseConfig);
         const database = firebase.database();
+const storage = firebase.storage();
 
-        // Handle form submission
-        $('#createEventForm').submit(function (e) {
-            e.preventDefault();
+// Handle form submission
+$('#createEventForm').submit(function (e) {
+    e.preventDefault();
 
-            // Get form values
-            const title = $('#title').val();
-            const description = $('#description').val();
-            const date = $('#date').val();
-            const place = $('#place').val();
+    // Get form values
+    const title = $('#title').val();
+    const description = $('#description').val();
+    const date = $('#date').val();
+    const place = $('#place').val();
+    const eventImage = $('#eventImage').prop('files')[0];
 
-            // Save event to Firebase
-            const eventRef = database.ref('events').push();
-            eventRef.set({
-                title: title,
-                description: description,
-                date: date,
-                place: place
-            });
-
-            // Reset form
-            $('#title').val('');
-            $('#description').val('');
-            $('#date').val('');
-            $('#place').val('');
-        });
-
-        // Retrieve events from Firebase and display in table
-        const eventList = $('#eventList');
-        database.ref('events').on('value', function (snapshot) {
-            eventList.empty();
-
-            snapshot.forEach(function (childSnapshot) {
-                const event = childSnapshot.val();
-                const eventRow = $('<tr>');
-
-                eventRow.append($('<td>').text(event.title));
-                eventRow.append($('<td>').text(event.description));
-                eventRow.append($('<td>').text(event.date));
-                eventRow.append($('<td>').text(event.place));
-
-
-                // Add delete button
-                const deleteButton = $('<button>').text('Delete').html('<i class="fas fa-trash"></i> Delete').addClass('btn', 'btn-outline-primary');
-
-
-                deleteButton.click(function () {
-                    deleteEvent(childSnapshot.key);
+    if (eventImage) {
+        // Upload event image to storage
+        const storageRef = storage.ref('eventImages/' + eventImage.name);
+        storageRef
+            .put(eventImage)
+            .then((snapshot) => {
+                return snapshot.ref.getDownloadURL();
+            })
+            .then((imageUrl) => {
+                // Save event details to Firebase with image URL
+                const eventRef = database.ref('events').push();
+                eventRef.set({
+                    title: title,
+                    description: description,
+                    date: date,
+                    place: place,
+                    imageUrl: imageUrl
                 });
-                eventRow.append($('<td>').append(deleteButton));
-
-                eventList.append(eventRow);
+            })
+            .catch((error) => {
+                console.error('Error uploading event image:', error);
             });
+    } else {
+        // Save event details to Firebase with empty image URL
+        const eventRef = database.ref('events').push();
+        eventRef.set({
+            title: title,
+            description: description,
+            date: date,
+            place: place,
+            imageUrl: ''
         });
+    }
 
-        // Delete event
-        function deleteEvent(eventId) {
-            database.ref('events/' + eventId).remove();
-        }
+    // Reset form
+    $('#title').val('');
+    $('#description').val('');
+    $('#date').val('');
+    $('#place').val('');
+    $('#eventImage').val('');
+});
 
+// Retrieve events from Firebase and display in table
+const eventList = $('#eventList');
+database.ref('events').on('value', function (snapshot) {
+    eventList.empty();
 
-        // Retrieve events from Firebase and display in <h1> and <p> tags
-        const eventDisplay = $('#eventDisplay');
-        database.ref('events').on('value', function (snapshot) {
-            eventDisplay.empty();
+    snapshot.forEach(function (childSnapshot) {
+        const event = childSnapshot.val();
+        const eventRow = $('<tr>');
 
-            snapshot.forEach(function (childSnapshot) {
-                const event = childSnapshot.val();
+        eventRow.append($('<td>').text(event.title));
+        eventRow.append($('<td>').text(event.description));
+        eventRow.append($('<td>').text(event.date));
+        eventRow.append($('<td>').text(event.place));
+        eventRow.append($('<td>').html(event.imageUrl ? `<img src="${event.imageUrl}" alt="Event Image" width="100" height="100">` : ''));
 
-                // Create <h1> and <p> elements for title and description
-                const eventTitle = $('<h1>').text(event.title);
-                const eventDescription = $('<p>').text(event.description);
-                const eventDate = $('<p>').text(event.date);
-                const eventPlace = $('<p>').text(event.place);
-                // Append title and description to the event display container
-                eventDisplay.append(eventTitle, eventDescription, eventPlace, eventDate);
-            });
+        // Add delete button
+        const deleteButton = $('<button>').text('Delete').html('<i class="fas fa-trash"></i> Delete').addClass('btn', 'btn-outline-primary');
+
+        deleteButton.click(function () {
+            deleteEvent(childSnapshot.key);
         });
+        eventRow.append($('<td>').append(deleteButton));
+
+        eventList.append(eventRow);
+    });
+});
+
+// Delete event
+function deleteEvent(eventId) {
+    database.ref('events/' + eventId).remove();
+}
+
+
+
+    // Delete event
+    function deleteEvent(eventId) {
+        database.ref('events/' + eventId).remove();
+    }
+
+    // Retrieve events from Firebase and display in <h1> and <p> tags
+    const eventDisplay = $('#eventDisplay');
+    database.ref('events').on('value', function (snapshot) {
+        eventDisplay.empty();
+
+        snapshot.forEach(function (childSnapshot) {
+            const event = childSnapshot.val();
+
+            // Create <h1> and <p> elements for title and description
+            const eventTitle = $('<h1>').text(event.title);
+            const eventDescription = $('<p>').text(event.description);
+            const eventDate = $('<p>').text(event.date);
+            const eventPlace = $('<p>').text(event.place);
+            const eventImage = $('<img>').attr('src', event.imageUrl).attr('alt', 'Event Image').attr('width', '100').attr('height', '100');
+
+            // Append elements to the event display container
+            eventDisplay.append(eventTitle, eventDescription, eventPlace, eventDate, eventImage);
+        });
+    });
 
     </script>
 

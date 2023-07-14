@@ -334,99 +334,114 @@ margin-top: 0px;
     firebase.initializeApp(firebaseConfig);
     var database = firebase.database();
 
-  // Fetch events data from Firebase Realtime Database
-  database.ref('events').on('value', function(snapshot) {
-    var eventsContainer = document.getElementById('eventsContainer');
+// Fetch events data from Firebase Realtime Database
+database.ref('events').on('value', function(snapshot) {
+  var eventsContainer = document.getElementById('eventsContainer');
 
-    // Clear previous event data
-    eventsContainer.innerHTML = '';
+  // Clear previous event data
+  eventsContainer.innerHTML = '';
 
-    // Check if there are any events
-    if (!snapshot.exists()) {
-      // Show 404 error image
-      var article = document.createElement('article');
-      article.className = 'post';
+  // Check if there are any events
+  if (!snapshot.exists()) {
+    // Show 404 error image
+    var article = document.createElement('article');
+    article.className = 'post';
 
-      var card = document.createElement('div');
-      card.className = 'card';
+    var card = document.createElement('div');
+    card.className = 'card';
 
-      var cardBody = document.createElement('div');
-      cardBody.className = 'card-body';
-      cardBody.style.display = 'flex';
-      cardBody.style.justifyContent = 'center';
-      cardBody.style.alignItems = 'center';
+    var cardBody = document.createElement('div');
+    cardBody.className = 'card-body';
+    cardBody.style.display = 'flex';
+    cardBody.style.justifyContent = 'center';
+    cardBody.style.alignItems = 'center';
 
-      var errorImage = document.createElement('img');
-      errorImage.src = './assets/img/Events.gif';
-      errorImage.alt = '404 Error Image';
-      errorImage.setAttribute('style', 'max-width: 100%; max-height: 100%;');
+    var errorImage = document.createElement('img');
+    errorImage.src = './assets/img/Events.gif';
+    errorImage.alt = '404 Error Image';
+    errorImage.setAttribute('style', 'max-width: 100%; max-height: 100%;');
 
-      cardBody.appendChild(errorImage);
-      card.appendChild(cardBody);
-      article.appendChild(card);
+    cardBody.appendChild(errorImage);
+    card.appendChild(cardBody);
+    article.appendChild(card);
 
-      eventsContainer.appendChild(article);
+    eventsContainer.appendChild(article);
 
-      return;
+    return;
+  }
+
+  // Iterate over each event
+  snapshot.forEach(function(childSnapshot) {
+    var event = childSnapshot.val();
+    var eventKey = childSnapshot.key;
+
+    // Create HTML elements for event details
+    var article = document.createElement('article');
+    article.className = 'post';
+
+    var card = document.createElement('div');
+    card.className = 'card';
+
+    var cardBody = document.createElement('div');
+    cardBody.className = 'card-body';
+
+    var postHeader = document.createElement('div');
+    postHeader.className = 'post-header';
+
+    var h2 = document.createElement('h2');
+    h2.className = 'post-title mt-1 mb-0';
+    h2.innerText = event.title;
+
+    var postContent = document.createElement('div');
+    postContent.className = 'post-content';
+    postContent.innerText = event.description;
+
+    var cardFooter = document.createElement('div');
+    cardFooter.className = 'card-footer';
+
+    var ul = document.createElement('ul');
+    ul.className = 'post-meta d-flex mb-0';
+
+    var liDate = document.createElement('li');
+    liDate.className = 'post-date';
+    liDate.innerHTML = '<i class="uil uil-calendar-alt"></i><span>' + event.date + '</span>';
+
+    var liLocation = document.createElement('li');
+    liLocation.className = 'post-author';
+    liLocation.innerHTML = '<a href="#"><i class="uil uil-location-point"></i><span>' + event.place + '</span></a>';
+
+    // Append event details to HTML template
+    ul.appendChild(liDate);
+    ul.appendChild(liLocation);
+    cardFooter.appendChild(ul);
+    postHeader.appendChild(h2);
+    cardBody.appendChild(postHeader);
+    cardBody.appendChild(postContent);
+    card.appendChild(cardBody);
+    card.appendChild(cardFooter);
+    article.appendChild(card);
+
+    // Check if the imageUrl is not an empty string
+    if (event.imageUrl !== '') {
+      var figure = document.createElement('figure');
+      figure.className = 'card-img-top overlay overlay-1 hover-scale';
+  
+      var img = document.createElement('img');
+      img.src = event.imageUrl;
+      img.alt = '';
+  
+      var span = document.createElement('span');
+      span.className = 'eventimg';
+  
+      figure.appendChild(img);
+      figure.appendChild(span);
+  
+      card.insertBefore(figure, cardBody);
     }
 
-    // Iterate over each event
-    snapshot.forEach(function(childSnapshot) {
-      var event = childSnapshot.val();
-      var eventKey = childSnapshot.key;
-
-      // Create HTML elements for event details
-      var article = document.createElement('article');
-      article.className = 'post';
-
-      var card = document.createElement('div');
-      card.className = 'card';
-
-      var cardBody = document.createElement('div');
-      cardBody.className = 'card-body';
-
-      var postHeader = document.createElement('div');
-      postHeader.className = 'post-header';
-
-      var h2 = document.createElement('h2');
-      h2.className = 'post-title mt-1 mb-0';
-      h2.innerText = event.title;
-
-      var postContent = document.createElement('div');
-      postContent.className = 'post-content';
-      postContent.innerText = event.description;
-
-
-
-      var cardFooter = document.createElement('div');
-      cardFooter.className = 'card-footer';
-
-      var ul = document.createElement('ul');
-      ul.className = 'post-meta d-flex mb-0';
-
-      var liDate = document.createElement('li');
-      liDate.className = 'post-date';
-      liDate.innerHTML = '<i class="uil uil-calendar-alt"></i><span>' + event.date + '</span>';
-
-      var liLocation = document.createElement('li');
-      liLocation.className = 'post-author';
-      liLocation.innerHTML = '<a href="#"><i class="uil uil-location-point"></i><span>' + event.place + '</span></a>';
-
-      // Append event details to HTML template
-      ul.appendChild(liDate);
-      ul.appendChild(liLocation);
-      cardFooter.appendChild(ul);
-      postHeader.appendChild(h2);
-      cardBody.appendChild(postHeader);
-      cardBody.appendChild(postContent);
-   
-      card.appendChild(cardBody);
-      card.appendChild(cardFooter);
-      article.appendChild(card);
-
-      eventsContainer.appendChild(article);
-    });
+    eventsContainer.appendChild(article);
   });
+});
   </script>
 
 
