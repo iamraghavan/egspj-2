@@ -318,17 +318,19 @@
 
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <!-- Firebase App (the core Firebase SDK) -->
-<script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-app.js"></script>
 
-<!-- Firebase Realtime Database -->
-<script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-database.js"></script>
+    <!-- Firebase Realtime Database -->
+    <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-database.js"></script>
 
-<!-- Firebase Messaging -->
-<script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-messaging.js"></script>
+    <!-- Firebase Messaging -->
+    <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-messaging.js"></script>
+
+    <!-- Your other script includes -->
+
+    <script type="module" src="./firebase-messaging-sw.js"></script>
 
     <script>
-
 
         // Initialize Firebase
         const firebaseConfig = {
@@ -344,11 +346,9 @@
 
         firebase.initializeApp(firebaseConfig);
         const database = firebase.database();
-        
-
         const messaging = firebase.messaging();
 
-// Request permission for receiving notifications
+
 messaging.requestPermission()
     .then(() => {
         console.log('Notification permission granted.');
