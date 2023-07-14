@@ -256,108 +256,81 @@
           <div class="col-xl-10 mx-auto">
             <div class="row gy-10 gx-lg-8 gx-xl-12">
               <div class="col-lg-8">
-                <form class="contact-form needs-validation" enctype="multipart/form-data" id="contactForm"
-                  autocomplete="off">
+                <form class="contact-form needs-validation" enctype="multipart/form-data" id="contactForm" autocomplete="off">
                   <div class="messages"></div>
                   <div class="row gx-4">
                     <div class="col-md-6">
                       <div class="form-floating mb-4">
-                        <input id="fname" type="text" class="form-control" pattern="[a-zA-Z0-9s]+" required
-                          inputmode="none">
+                        <input id="fname" type="text" class="form-control" pattern="[a-zA-Z0-9s]+" required inputmode="none">
                         <label for="form_name">First Name *</label>
-                        <div class="valid-feedback"> Looks good! </div>
-                        <div class="invalid-feedback"> Please enter your first name. </div>
+                        <div class="valid-feedback">Looks good!</div>
+                        <div class="invalid-feedback">Please enter your first name.</div>
                       </div>
                     </div>
-                    <!-- /column -->
                     <div class="col-md-6">
                       <div class="form-floating mb-4">
-                        <input id="lname" type="text" class="form-control" pattern="[a-zA-Z0-9s]+"
-                          required inputmode="none">
+                        <input id="lname" type="text" class="form-control" pattern="[a-zA-Z0-9s]+" required inputmode="none">
                         <label for="form_lastname">Last Name *</label>
-                        <div class="valid-feedback"> Looks good! </div>
-                        <div class="invalid-feedback"> Please enter your last name. </div>
+                        <div class="valid-feedback">Looks good!</div>
+                        <div class="invalid-feedback">Please enter your last name.</div>
                       </div>
                     </div>
-
-
-
                     <div class="col-md-6">
                       <div class="form-floating mb-4">
-                        <input id="cnum" type="tel"class="form-control" pattern="[0-9]*" required
-                          inputmode="tel">
+                        <input id="cnum" type="tel" class="form-control" pattern="[0-9]*" required inputmode="tel">
                         <label for="form_name">Contact Number *</label>
-                        <div class="valid-feedback"> Looks good! </div>
-                        <div class="invalid-feedback"> Please enter your first name. </div>
+                        <div class="valid-feedback">Looks good!</div>
+                        <div class="invalid-feedback">Please enter your contact number.</div>
                       </div>
                     </div>
-
                     <div class="col-md-6">
                       <div class="form-floating mb-4">
-                        <input id="wnum" type="tel" name="name" class="form-control" pattern="[0-9]*" required
-                          inputmode="tel">
-                        <label for="form_name">Whatsapp Number *</label>
-                        <div class="valid-feedback"> Looks good! </div>
-                        <div class="invalid-feedback"> Please enter your first name. </div>
+                        <input id="wnum" type="tel" class="form-control" pattern="[0-9]*" required inputmode="tel">
+                        <label for="form_name">WhatsApp Number *</label>
+                        <div class="valid-feedback">Looks good!</div>
+                        <div class="invalid-feedback">Please enter your WhatsApp number.</div>
                       </div>
                     </div>
-
-                    <!-- /column -->
                     <div class="col-md-6">
                       <div class="form-floating mb-4">
-                        <input id="email" type="email" class="form-control"
-                          required inputmode="email">
+                        <input id="email" type="email" class="form-control" required inputmode="email">
                         <label for="form_email">Email *</label>
-                        <div class="valid-feedback"> Looks good! </div>
-                        <div class="invalid-feedback"> Please provide a valid email address. </div>
+                        <div class="valid-feedback">Looks good!</div>
+                        <div class="invalid-feedback">Please provide a valid email address.</div>
                       </div>
                     </div>
-                    <!-- /column -->
                     <div class="col-md-6">
                       <div class="form-select-wrapper">
                         <select class="form-select" id="needreq" required>
                           <option selected disabled value="">Select a Contact Need</option>
                           <option value="Admission">Admission</option>
                           <option value="Contact School">Contact School</option>
-                          
                         </select>
-                        <div class="valid-feedback"> Looks good! </div>
-                        <div class="invalid-feedback"> Please select a department. </div>
+                        <div class="valid-feedback">Looks good!</div>
+                        <div class="invalid-feedback">Please select a contact need.</div>
                       </div>
                     </div>
                     <br>
-                    <!-- /column -->
                     <div class="col-12">
                       <div class="form-floating mb-4">
-                        <textarea id="message" name="message" class="form-control" placeholder="Your message"
-                          style="height: 150px; margin-top: 20px;" required></textarea>
+                        <textarea id="message" name="message" class="form-control" placeholder="Your message" style="height: 150px; margin-top: 20px;" required></textarea>
                         <label for="form_message">Message *</label>
-                        <div class="valid-feedback"> Looks good! </div>
-                        <div class="invalid-feedback"> Please enter your messsage. </div>
+                        <div class="valid-feedback">Looks good!</div>
+                        <div class="invalid-feedback">Please enter your message.</div>
                       </div>
                     </div>
-                    <!-- /column -->
                     <div class="col-12">
-                      <script src="https://www.google.com/recaptcha/api.js"></script>
                       <div class="form-group">
-                        <input class="form-control d-none" data-recaptcha="true" required>
-                        <div class="g-recaptcha" data-sitekey="6LdB5E0lAAAAANIE_iX6D9IKk1ZLKTePnabRv0ZK" data-callback="verifyRecaptchaCallback" data-expired-callback="expiredRecaptchaCallback"></div>
-                        <div class="valid-feedback">
-                          Looks good!
-                        </div>
-                        <div class="invalid-feedback">
-                          Please complete the Captcha
-                        </div>
+                        <div class="g-recaptcha" data-sitekey="6LdB5E0lAAAAANIE_iX6D9IKk1ZLKTePnabRv0ZK" data-callback="submitForm" data-error-callback="recaptchaError"></div>
+                        <div class="valid-feedback">Captcha verified!</div>
+                        <div class="invalid-feedback">Please complete the reCAPTCHA verification.</div>
                       </div>
                     </div>
-                    <!-- /column -->
                     <div class="col-12">
-                      <input type="submit" value="Submit" class="btn btn-primary rounded-pill btn-send mb-3">
+                      <input type="submit" value="Submit" class="btn btn-primary rounded-pill btn-send mb-3" disabled>
                       <p class="text-muted"><strong>*</strong> These fields are required.</p>
                     </div>
-                    <!-- /column -->
                   </div>
-                  <!-- /.row -->
                 </form>
                 <!-- /form -->
               </div>
@@ -418,6 +391,7 @@
     <script src="https://www.gstatic.com/firebasejs/8.6.7/firebase-database.js"></script>
 
     <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <script>
       // Initialize Firebase
       var firebaseConfig = {
@@ -430,17 +404,39 @@
         appId: "1:3531307553:web:162f525f3ed82d7830c160",
         measurementId: "G-6W931XY0SQ"
       };
-
+    
       firebase.initializeApp(firebaseConfig);
-
+    
       // Reference to Firebase Realtime Database
       var database = firebase.database();
-
+    
+      var isCaptchaVerified = false;
+    
+      // Verify reCAPTCHA callback
+      function submitForm(response) {
+        if (response) {
+          isCaptchaVerified = true;
+          document.querySelector('.btn-send').disabled = false;
+        }
+      }
+    
+      // reCAPTCHA error callback
+      function recaptchaError() {
+        isCaptchaVerified = false;
+        document.querySelector('.btn-send').disabled = true;
+      }
+    
       // Handle form submission
       var contactForm = document.getElementById('contactForm');
-      contactForm.addEventListener('submit', function (event) {
+      contactForm.addEventListener('submit', function(event) {
         event.preventDefault();
-
+    
+        // Check if reCAPTCHA is verified
+        if (!isCaptchaVerified) {
+          alert("Please verify that you're not a robot.");
+          return;
+        }
+    
         // Get form values
         var Firstname = document.getElementById('fname').value;
         var Lastname = document.getElementById('lname').value;
@@ -449,22 +445,24 @@
         var email = document.getElementById('email').value;
         var Requirement = document.getElementById('needreq').value;
         var message = document.getElementById('message').value;
-
+    
         // Send email
         sendEmail(Firstname, Lastname, ContactNumber, WhatsappNumber, email, Requirement, message);
-
+    
         // Store data in Firebase Realtime Database
         saveData(Firstname, Lastname, ContactNumber, WhatsappNumber, email, Requirement, message);
-
+    
         // Reset form
         contactForm.reset();
+        isCaptchaVerified = false;
+        document.querySelector('.btn-send').disabled = true;
       });
-
+    
       // Send email
       function sendEmail(Firstname, Lastname, ContactNumber, WhatsappNumber, email, Requirement, message) {
         // Configure your email service using your public key
         emailjs.init("pJwMrOQHE7viiRAtn");
-
+    
         // Compose the email parameters
         var emailParams = {
           F_FIRSTNAME: Firstname,
@@ -477,18 +475,17 @@
           cc: "egspjschool@gmail.com",
           bcc: "pradeep@bumblebees.co.in"
         };
-
+    
         // Send the email
         emailjs.send("service_13hnkw7", "template_d4ik0im", emailParams)
-          .then(function (response) {
-            alert("Message sent successfully. Our Staff's / Admin Contact you soon !");
+          .then(function(response) {
+            alert("Message sent successfully. Our Staff/Admin will contact you soon!");
           })
-          .catch(function (error) {
+          .catch(function(error) {
             console.error("Error sending email:", error);
           });
       }
-
-
+    
       // Store data in Firebase Realtime Database
       function saveData(Firstname, Lastname, ContactNumber, WhatsappNumber, email, Requirement, message) {
         var newMessageRef = database.ref('Contact Form').push();
@@ -501,10 +498,8 @@
           F_REQUIREMENT: Requirement,
           F_MESSAGE: message
         });
-        console.log('Data stored in Firebase Realtime Database.').reset();
-       
+        console.log('Data stored in Firebase Realtime Database.');
       }
-
     </script>
 
   </div>
