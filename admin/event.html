@@ -194,61 +194,65 @@
                                         < Bumble Bees oAuth />
                                     </span> </h4>
                             </div>
-                        
-                        
-                        
-                        
+
+
+
+
                             <div class="card-body">
-                        
-                        
-<form class="form" action="" method="POST" id="createEventForm" enctype="multipart/form-data">
-    <div class="row">
-        <div class="col-md-6 col-12">
-            <div class="form-group">
-                <label for="first-name-column">Title</label>
-                <input type="text" inputmode="text" id="title" class="form-control" placeholder="Title" name="title">
-            </div>
-        </div>
-        <div class="col-md-6 col-12">
-            <div class="form-group">
-                <label for="last-name-column">Description</label>
-                <input inputmode="text" type="text" id="description" class="form-control" placeholder="Description"
-                    name="description">
-            </div>
-        </div>
-        <div class="col-md-6 col-12">
-            <div class="form-group">
-                <label for="last-name-column">Place / Location</label>
-                <input inputmode="text" value="EGSPJ SCHOOL" type="text" id="place" class="form-control"
-                    placeholder="Place" name="place">
-            </div>
-        </div>
-        <div class="col-md-6 col-12">
-            <div class="form-group">
-                <label for="last-name-column">Date & Time</label>
-                <input type="date" id="date" class="form-control" name="date">
-            </div>
-        </div>
-        <div class="col-md-6 col-12">
-            <div class="form-group">
-                <label for="last-name-column">Event Image</label>
-                <input type="file" id="eventImage" class="form-control" name="eventImage">
-            </div>
-        </div>
-        <div class="col-12 d-flex justify-content-end">
-            <button class="btn btn-primary me-1 mb-1" type="submit">Submit</button>
-            <button type="reset" class="btn btn-light-secondary me-1 mb-1">Reset</button>
-        </div>
-    </div>
-</form>
-                        
-                        
+
+
+                                <form class="form" action="" method="POST" id="createEventForm"
+                                    enctype="multipart/form-data">
+                                    <div class="row">
+                                        <div class="col-md-6 col-12">
+                                            <div class="form-group">
+                                                <label for="first-name-column">Title</label>
+                                                <input type="text" inputmode="text" id="title" class="form-control"
+                                                    placeholder="Title" name="title">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-12">
+                                            <div class="form-group">
+                                                <label for="last-name-column">Description</label>
+                                                <input inputmode="text" type="text" id="description"
+                                                    class="form-control" placeholder="Description" name="description">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-12">
+                                            <div class="form-group">
+                                                <label for="last-name-column">Place / Location</label>
+                                                <input inputmode="text" value="EGSPJ SCHOOL" type="text" id="place"
+                                                    class="form-control" placeholder="Place" name="place">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-12">
+                                            <div class="form-group">
+                                                <label for="last-name-column">Date & Time</label>
+                                                <input type="date" id="date" class="form-control" name="date">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-12">
+                                            <div class="form-group">
+                                                <label for="last-name-column">Event Image</label>
+                                                <input type="file" id="eventImage" class="form-control"
+                                                    name="eventImage">
+                                            </div>
+                                        </div>
+                                        <div class="col-12 d-flex justify-content-end">
+                                            <button class="btn btn-primary me-1 mb-1" type="submit">Submit</button>
+                                            <button type="reset"
+                                                class="btn btn-light-secondary me-1 mb-1">Reset</button>
+                                        </div>
+                                    </div>
+                                </form>
+
+
                             </div>
                         </div>
 
 
-                </section>
-                <!-- 
+                    </section>
+                    <!-- 
                     <table class="table table-striped" id="eventTable">
                       <thead>
                         <tr>
@@ -259,25 +263,26 @@
                         </tr>
                       </thead>
                     </table> -->
-                <div class="container">
-                    <table id="eventTable" class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th>Title</th>
-                                <th>Description</th>
-                                <th>Date</th>
-                                <th>Place</th>
-                                <th>Images</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody id="eventList"></tbody>
-                    </table>
+                    <div class="container">
+                        <table id="eventTable" class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Title</th>
+                                    <th>Description</th>
+                                    <th>Date</th>
+                                    <th>Place</th>
+                                    <th>Images</th>
+                                    <th>Edit <i class="fas fa-edit"></i> </th>
+                                    <th>Delete <i class="fas fa-trash"></i> </th>
+                                </tr>
+                            </thead>
+                            <tbody id="eventList"></tbody>
+                        </table>
+                    </div>
+
+
                 </div>
-
-
-            </div>
-            <!--                 
+                <!--                 
         <button onclick="swalelement">submit</button>
 
         <script>
@@ -285,31 +290,32 @@
             swal("Here's the title!", "...and here's the text!");
         </script> -->
 
-            <footer>
-                <div class="footer clearfix mb-0 text-muted">
-                    <div class="float-start">
-                        <p style="margin-left: 40px;"> <span id="current-year"></span> &copy;
-                            < Bumble Bees oAuth />
-                        </p>
+                <footer>
+                    <div class="footer clearfix mb-0 text-muted">
+                        <div class="float-start">
+                            <p style="margin-left: 40px;"> <span id="current-year"></span> &copy;
+                                < Bumble Bees oAuth />
+                            </p>
+                        </div>
+
                     </div>
+                    <script>
+                        // Get the current year
+                        var currentYear = new Date().getFullYear();
 
-                </div>
-                <script>
-                    // Get the current year
-                    var currentYear = new Date().getFullYear();
+                        // Set the current year in the HTML element with the specified ID
+                        var currentYearElement = document.getElementById('current-year');
+                        currentYearElement.textContent = currentYear.toString();
 
-                    // Set the current year in the HTML element with the specified ID
-                    var currentYearElement = document.getElementById('current-year');
-                    currentYearElement.textContent = currentYear.toString();
+                    </script>
 
-                </script>
-
-            </footer>
+                </footer>
+            </div>
         </div>
     </div>
-    </div>
 
-  
+
+
 
 
     <script src="./vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
@@ -317,8 +323,87 @@
     <script src="./js/main.js"></script>
 
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <!-- A modal form to edit events -->
+    <div id="editEventModal" class="modal">
+        <div class="modal-dialog modal-dialog-centered modal-md">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Edit Event</h5>
+                    <button class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
 
+            </div>
+        </div>
+    </div>
+
+    <style>
+        /* Style the background overlay for the modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background-color: rgba(0, 0, 0, 0.6);
+            /* Dim background color */
+        }
+
+        /* Style the modal content */
+        .modal-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Style the modal header */
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid #ccc;
+        }
+
+        /* Style the modal title */
+        .modal-title {
+            margin: 0;
+            font-size: 18px;
+        }
+
+        /* Style the close button */
+        .btn-close {
+            cursor: pointer;
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: #000;
+            opacity: 0.5;
+        }
+
+        .btn-close:hover {
+            opacity: 1;
+        }
+
+        /* Style the modal footer */
+        .modal-footer {
+            display: flex;
+            justify-content: flex-end;
+            padding: 10px;
+            border-top: 1px solid #ccc;
+        }
+    </style>
+
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-app.js"></script>
@@ -341,137 +426,301 @@
         firebase.initializeApp(firebaseConfig);
         const database = firebase.database();
         var auth = firebase.auth();
-const storage = firebase.storage();
+        const storage = firebase.storage();
 
-// Handle form submission
-$('#createEventForm').submit(function (e) {
-    e.preventDefault();
+        // Handle form submission
+        $('#createEventForm').submit(function (e) {
+            e.preventDefault();
 
-    // Get form values
-    const title = $('#title').val();
-    const description = $('#description').val();
-    const date = $('#date').val();
-    const place = $('#place').val();
-    const eventImage = $('#eventImage').prop('files')[0];
+            // Get form values
+            const title = $('#title').val();
+            const description = $('#description').val();
+            const date = $('#date').val();
+            const place = $('#place').val();
+            const eventImage = $('#eventImage').prop('files')[0];
 
-    if (eventImage) {
-        // Upload event image to storage
-        const storageRef = storage.ref('eventImages/' + eventImage.name);
-        storageRef
-            .put(eventImage)
-            .then((snapshot) => {
-                return snapshot.ref.getDownloadURL();
-            })
-            .then((imageUrl) => {
-                // Save event details to Firebase with image URL
+            if (eventImage) {
+                // Upload event image to storage
+                const storageRef = storage.ref('eventImages/' + eventImage.name);
+                storageRef
+                    .put(eventImage)
+                    .then((snapshot) => {
+                        return snapshot.ref.getDownloadURL();
+                    })
+                    .then((imageUrl) => {
+                        // Save event details to Firebase with image URL
+                        const eventRef = database.ref('events').push();
+                        eventRef.set({
+                            title: title,
+                            description: description,
+                            date: date,
+                            place: place,
+                            imageUrl: imageUrl
+                        });
+                    })
+                    .catch((error) => {
+                        console.error('Error uploading event image:', error);
+                    });
+            } else {
+                // Save event details to Firebase with empty image URL
                 const eventRef = database.ref('events').push();
                 eventRef.set({
                     title: title,
                     description: description,
                     date: date,
                     place: place,
-                    imageUrl: imageUrl
+                    imageUrl: ''
                 });
-            })
-            .catch((error) => {
-                console.error('Error uploading event image:', error);
+            }
+
+            // Reset form
+            $('#title').val('');
+            $('#description').val('');
+            $('#date').val('');
+            $('#place').val('');
+            $('#eventImage').val('');
+        });
+
+        // Retrieve events from Firebase and display in table
+        const eventList = $('#eventList');
+        database.ref('events').on('value', function (snapshot) {
+            eventList.empty();
+
+            snapshot.forEach(function (childSnapshot) {
+                const event = childSnapshot.val();
+                const eventRow = $('<tr>');
+
+                eventRow.append($('<td>').text(event.title));
+                eventRow.append($('<td>').text(event.description));
+                eventRow.append($('<td>').text(event.date));
+                eventRow.append($('<td>').text(event.place));
+                eventRow.append($('<td>').html(event.imageUrl ? `<img src="${event.imageUrl}" alt="Event Image" width="100" height="100">` : ''));
+
+                // Add edit button
+                const editButton = $('<button>').text('Edit').html('<i class="fas fa-edit"></i> Edit').addClass('btn btn-outline-success');
+                editButton.click(function () {
+                    displayEditEventForm(childSnapshot.key);
+                });
+                eventRow.append($('<td>').append(editButton));
+
+                // Add delete button
+                const deleteButton = $('<button>').text('Delete').html('<i class="fas fa-trash"></i> Delete').addClass('btn btn-outline-danger');
+
+                deleteButton.click(function () {
+                    deleteEvent(childSnapshot.key);
+                });
+                eventRow.append($('<td>').append(deleteButton));
+
+                eventList.append(eventRow);
             });
-    } else {
-        // Save event details to Firebase with empty image URL
-        const eventRef = database.ref('events').push();
-        eventRef.set({
-            title: title,
-            description: description,
-            date: date,
-            place: place,
-            imageUrl: ''
         });
-    }
 
-    // Reset form
-    $('#title').val('');
-    $('#description').val('');
-    $('#date').val('');
-    $('#place').val('');
-    $('#eventImage').val('');
-});
 
-// Retrieve events from Firebase and display in table
-const eventList = $('#eventList');
-database.ref('events').on('value', function (snapshot) {
-    eventList.empty();
 
-    snapshot.forEach(function (childSnapshot) {
-        const event = childSnapshot.val();
-        const eventRow = $('<tr>');
 
-        eventRow.append($('<td>').text(event.title));
-        eventRow.append($('<td>').text(event.description));
-        eventRow.append($('<td>').text(event.date));
-        eventRow.append($('<td>').text(event.place));
-        eventRow.append($('<td>').html(event.imageUrl ? `<img src="${event.imageUrl}" alt="Event Image" width="100" height="100">` : ''));
 
-        // Add delete button
-        const deleteButton = $('<button>').text('Delete').html('<i class="fas fa-trash"></i> Delete').addClass('btn', 'btn-outline-primary');
+        // Function to display event details in the modal form
+        function displayEditEventForm(eventId) {
+            database.ref('events/' + eventId).once('value').then(function (snapshot) {
+                const event = snapshot.val();
 
-        deleteButton.click(function () {
-            deleteEvent(childSnapshot.key);
+                // Create a form for editing event details
+                const editForm = `
+      
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Edit Event</h5>
+               <button class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form>
+                <div class="mb-3">
+                  <label for="editTitle" class="form-label">Title</label>
+                  <input type="text" class="form-control" id="editTitle" value="${event.title}" required>
+                </div>
+                <div class="mb-3">
+                  <label for="editDescription" class="form-label">Description</label>
+                  <textarea class="form-control" id="editDescription" required>${event.description}</textarea>
+                </div>
+                <div class="mb-3">
+                  <label for="editDate" class="form-label">Date</label>
+                  <input type="date" class="form-control" id="editDate" value="${event.date ? event.date : ''}" required>
+                </div>
+                <div class="mb-3">
+                  <label for="editPlace" class="form-label">Place</label>
+                  <input type="text" class="form-control" id="editPlace" value="${event.place}" required>
+                </div>
+                <div class="mb-3">
+                  <label for="editImage" class="form-label">Image</label>
+                  <input type="file" class="form-control" id="editImage">
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" id=closeButton>Close</button>
+              <button type="button" class="btn btn-primary" id="updateEventButton" data-event-id="${eventId}">Update</button>
+            </div>
+          </div>
+ 
+    `;
+
+
+
+
+
+                // Set the form content in the modal
+                const modalContent = $('#editEventModal .modal-content');
+                modalContent.html(editForm);
+
+                // Open the modal
+                $('#editEventModal').css('display', 'block');
+
+                // Handle the "Update" button click
+                $('#updateEventButton').on('click', function () {
+                    // Get updated values from the form
+                    const updatedTitle = $('#editTitle').val();
+                    const updatedDescription = $('#editDescription').val();
+                    const updatedDate = $('#editDate').val();
+                    const updatedPlace = $('#editPlace').val();
+                    const updatedImage = $('#editImage').prop('files')[0];
+
+                    // Check for duplicate events before updating
+                    isDuplicateEvent(updatedTitle).then((isDuplicate) => {
+                        if (isDuplicate && updatedTitle !== event.title) {
+                            alert('Event with the updated title already exists.');
+                            return;
+                        }
+
+                        const eventData = {
+                            title: updatedTitle,
+                            description: updatedDescription,
+                            date: updatedDate,
+                            place: updatedPlace
+                        };
+
+                        if (updatedImage) {
+                            // Upload updated event image to storage
+                            const storageRef = storage.ref('eventImages/' + updatedImage.name);
+                            storageRef
+                                .put(updatedImage)
+                                .then((snapshot) => {
+                                    return snapshot.ref.getDownloadURL();
+                                })
+                                .then((imageUrl) => {
+                                    eventData.imageUrl = imageUrl;
+                                    // Update the event data in the database
+                                    database.ref('events/' + eventId).update(eventData)
+                                        .then(() => {
+                                            // Close the modal after updating
+                                            $('#editEventModal').css('display', 'none');
+                                            // Refresh the table to reflect the changes
+                                            displayEventsInTable();
+                                        })
+                                        .catch((error) => {
+                                            console.error('Error updating event data:', error);
+                                        });
+                                })
+                                .catch((error) => {
+                                    console.error('Error uploading updated event image:', error);
+                                });
+                        } else {
+                            // Update event data without changing the image
+                            // Update the event data in the database
+                            database.ref('events/' + eventId).update(eventData)
+                                .then(() => {
+                                    // Close the modal after updating
+                                    $('#editEventModal').css('display', 'none');
+                                    // Refresh the table to reflect the changes
+                                    displayEventsInTable();
+                                })
+                                .catch((error) => {
+                                    console.error('Error updating event data:', error);
+                                });
+                        }
+                    });
+                });
+            });
+        }
+
+        // Function to close the modal form
+        function closeModalForm() {
+            const editEventModal = document.getElementById('editEventModal');
+            if (editEventModal) {
+                editEventModal.style.display = 'none';
+            }
+        }
+
+        // Call the function when the "Close" button is clicked
+        document.getElementById('closeButton').addEventListener('click', closeModalForm);
+
+
+
+
+        // Function to check for duplicate events based on the title
+        function isDuplicateEvent(title) {
+            return new Promise((resolve, reject) => {
+                // Retrieve events from the database
+                database.ref('events').orderByChild('title').equalTo(title).once('value')
+                    .then((snapshot) => {
+                        const eventExists = snapshot.exists();
+                        resolve(eventExists);
+                    })
+                    .catch((error) => {
+                        reject(error);
+                    });
+            });
+        }
+
+
+        // Delete event
+        function deleteEvent(eventId) {
+            database.ref('events/' + eventId).remove();
+        }
+
+
+
+        // Delete event
+        function deleteEvent(eventId) {
+            database.ref('events/' + eventId).remove();
+        }
+
+        // Retrieve events from Firebase and display in <h1> and <p> tags
+        const eventDisplay = $('#eventDisplay');
+        database.ref('events').on('value', function (snapshot) {
+            eventDisplay.empty();
+
+            snapshot.forEach(function (childSnapshot) {
+                const event = childSnapshot.val();
+
+                // Create <h1> and <p> elements for title and description
+                const eventTitle = $('<h1>').text(event.title);
+                const eventDescription = $('<p>').text(event.description);
+                const eventDate = $('<p>').text(event.date);
+                const eventPlace = $('<p>').text(event.place);
+                const eventImage = $('<img>').attr('src', event.imageUrl).attr('alt', 'Event Image').attr('width', '100').attr('height', '100');
+
+                // Append elements to the event display container
+                eventDisplay.append(eventTitle, eventDescription, eventPlace, eventDate, eventImage);
+            });
         });
-        eventRow.append($('<td>').append(deleteButton));
-
-        eventList.append(eventRow);
-    });
-});
-
-// Delete event
-function deleteEvent(eventId) {
-    database.ref('events/' + eventId).remove();
-}
 
 
 
-    // Delete event
-    function deleteEvent(eventId) {
-        database.ref('events/' + eventId).remove();
-    }
-
-    // Retrieve events from Firebase and display in <h1> and <p> tags
-    const eventDisplay = $('#eventDisplay');
-    database.ref('events').on('value', function (snapshot) {
-        eventDisplay.empty();
-
-        snapshot.forEach(function (childSnapshot) {
-            const event = childSnapshot.val();
-
-            // Create <h1> and <p> elements for title and description
-            const eventTitle = $('<h1>').text(event.title);
-            const eventDescription = $('<p>').text(event.description);
-            const eventDate = $('<p>').text(event.date);
-            const eventPlace = $('<p>').text(event.place);
-            const eventImage = $('<img>').attr('src', event.imageUrl).attr('alt', 'Event Image').attr('width', '100').attr('height', '100');
-
-            // Append elements to the event display container
-            eventDisplay.append(eventTitle, eventDescription, eventPlace, eventDate, eventImage);
-        });
-    });
 
 
+        firebase.auth().onAuthStateChanged((user) => {
+            if (!user) {
+                location.replace("../index")
+            } else {
+                document.getElementById("user").innerHTML = "Hello, " + user.email
+            }
 
-  
-
-  firebase.auth().onAuthStateChanged((user)=>{
-    if(!user){
-        location.replace("../index")
-    }else{
-        document.getElementById("user").innerHTML = "Hello, "+user.email    
-    }
-    
-})
+        })
 
 
-function logout(){
-    firebase.auth().signOut()
-}
+        function logout() {
+            firebase.auth().signOut()
+        }
 
 
     </script>
