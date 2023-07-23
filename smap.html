@@ -1,38 +1,181 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-  <title>Search in Website</title>
-  <script>
-    function search() {
-      var input = document.getElementById('searchInput').value;
-      var content = document.getElementById('websiteContent').innerHTML;
-      var pattern = new RegExp(input, 'gi');
-      var matches = content.match(pattern);
-      
-      if (matches) {
-        var highlightedContent = content.replace(pattern, '<span class="highlight">$&</span>');
-        document.getElementById('searchResults').innerHTML = highlightedContent;
-      } else {
-        document.getElementById('searchResults').innerHTML = 'No results found.';
-      }
-    }
-  </script>
+  <title>Firebase Storage Gallery</title>
+  <!-- Add Firebase SDK -->
+  <!-- Your Firebase SDK configuration goes here -->
+
+  <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-storage.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-database.js"></script>
+
   <style>
-    .highlight {
-      background-color: yellow;
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+
+    h1,
+    h2 {
+      margin-bottom: 10px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th,
+    td {
+      padding: 8px;
+      border-bottom: 1px solid #ddd;
+      text-align: left;
+    }
+
+    th {
+      background-color: #f2f2f2;
+    }
+
+    img {
+      max-width: 100px;
     }
   </style>
 </head>
+
 <body>
-  <h1>Search in Website</h1>
-  <input type="text" id="searchInput" placeholder="Enter search term">
-  <button onclick="search()">Search</button>
-  <div id="searchResults"></div>
-  
-  <h2>Website Content</h2>
-  <div id="websiteContent">
-    <p>This is some sample content. It can contain text, images, and other HTML elements.</p>
-    <p>Feel free to modify this content to match your website.</p>
+  <h1>Firebase Storage Gallery</h1>
+  <div>
+    <h2>Available Folders:</h2>
+    <select id="folderSelect">
+      <!-- Folder options will be dynamically added here using JavaScript -->
+    </select>
   </div>
+  <div>
+    <h2>Images in Selected Folder:</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>File Name</th>
+          <th>Image</th>
+          <th>Image Type</th>
+          <th>Delete</th>
+        </tr>
+      </thead>
+      <tbody id="imageTableBody">
+        <!-- Images and their details will be dynamically added here using JavaScript -->
+      </tbody>
+    </table>
+  </div>
+  <script>
+    // Initialize Firebase
+    // Your Firebase SDK configuration goes here
+    // Initialize Firebase
+    const firebaseConfig = {
+      apiKey: "AIzaSyC7EsiaYH-tJj-wNEQl8ZrrmdvKCWS7ztY",
+      authDomain: "egspj-bumblebees.firebaseapp.com",
+      databaseURL: "https://egspj-bumblebees-default-rtdb.firebaseio.com",
+      projectId: "egspj-bumblebees",
+      storageBucket: "egspj-bumblebees.appspot.com",
+      messagingSenderId: "3531307553",
+      appId: "1:3531307553:web:162f525f3ed82d7830c160",
+      measurementId: "G-6W931XY0SQ"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+
+    // Get a reference to Firebase Storage and Realtime Database
+    var storage = firebase.storage();
+    var storageRef = storage.ref();
+    var database = firebase.database();
+
+    // Get references to HTML elements
+    var folderSelect = document.getElementById("folderSelect");
+    var imageTableBody = document.getElementById("imageTableBody");
+
+    // Function to dynamically create a row for each image in the table
+    function createImageTableRow(imageUrl, imageName, imageType) {
+      var newRow = document.createElement("tr");
+
+      var fileNameCell = document.createElement("td");
+      fileNameCell.textContent = imageName;
+
+      var imageCell = document.createElement("td");
+      var imageElement = document.createElement("img");
+      imageElement.src = imageUrl;
+      imageCell.appendChild(imageElement);
+
+      var imageTypeCell = document.createElement("td");
+      imageTypeCell.textContent = imageType;
+
+      var deleteCell = document.createElement("td");
+      var deleteButton = document.createElement("button");
+      deleteButton.textContent = "Delete";
+      deleteButton.addEventListener("click", function () {
+        // Delete image from Firebase Storage and remove row from the table
+        storageRef.child(imageUrl).delete().then(function () {
+          newRow.remove();
+          alert("Image deleted successfully!");
+        }).catch(function (error) {
+          console.error("Error deleting image:", error);
+        });
+      });
+      deleteCell.appendChild(deleteButton);
+
+      newRow.appendChild(fileNameCell);
+      newRow.appendChild(imageCell);
+      newRow.appendChild(imageTypeCell);
+      newRow.appendChild(deleteCell);
+
+      imageTableBody.appendChild(newRow);
+    }
+
+    // Function to populate the folder select dropdown with available folders
+    function populateFolderSelect() {
+      storageRef.listAll().then(function (result) {
+        result.prefixes.forEach(function (folderRef) {
+          var folderName = folderRef.name;
+          var option = document.createElement("option");
+          option.value = folderName;
+          option.textContent = folderName;
+          folderSelect.appendChild(option);
+        });
+      }).catch(function (error) {
+        console.error("Error listing folders:", error);
+      });
+    }
+
+    // Function to display images in the selected folder
+    function displayImagesInFolder(folderName) {
+      imageTableBody.innerHTML = ""; // Clear the existing table rows
+
+      storageRef.child(folderName).listAll().then(function (result) {
+        result.items.forEach(function (itemRef) {
+          itemRef.getDownloadURL().then(function (imageUrl) {
+            itemRef.getMetadata().then(function (metadata) {
+              var imageName = metadata.name;
+              var imageType = metadata.contentType;
+              createImageTableRow(imageUrl, imageName, imageType);
+            });
+          }).catch(function (error) {
+            console.error("Error getting image URL:", error);
+          });
+        });
+      }).catch(function (error) {
+        console.error("Error listing images in the folder:", error);
+      });
+    }
+
+    // Listen for changes in the folder select dropdown
+    folderSelect.addEventListener("change", function () {
+      var selectedFolder = folderSelect.value;
+      displayImagesInFolder(selectedFolder);
+    });
+
+    // Populate the folder select dropdown initially
+    populateFolderSelect();
+
+  </script>
 </body>
+
 </html>

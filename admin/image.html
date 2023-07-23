@@ -190,7 +190,9 @@
                     <section class="section">
                         <div class="card">
                             <div class="card-header">
-                                <h4 class="card-title"><i class="bi bi-upload" style="padding-right: 10px;"></i> <span style="padding-right: 5px;"> Upload Image </span> | <span style="color: #000000;">
+                                <h4 class="card-title"><i class="bi bi-upload" style="padding-right: 10px;"></i> <span
+                                        style="padding-right: 5px;"> Upload Image </span> | <span
+                                        style="color: #000000;">
                                         < Bumble Bees oAuth />
                                     </span> </h4>
                             </div>
@@ -205,7 +207,7 @@
                                         <div class="col-md-6 col-12">
                                             <div class="form-group">
                                                 <label for="first-name-column ">Title</label>
-                                                <input  class="form-control" type="file" name="images" multiple>
+                                                <input class="form-control" type="file" name="images" multiple>
                                             </div>
                                         </div>
 
@@ -216,242 +218,351 @@
                                                     <option value="Colors Day">Colors Day</option>
                                                     <option value="Annual Day">Annual Day</option>
                                                     <option value="School Infrastructure">School Infrastructure</option>
-                                                    <option value="Thirukkural Recitation">Thirukkural Recitation</option>
-                                                  </select>
+                                                    <option value="Thirukkural Recitation">Thirukkural Recitation
+                                                    </option>
+                                                </select>
                                             </div>
                                         </div>
 
 
-                                     
-                                      
+
+
                                         <div class="col-12 d-flex justify-content-end">
-                                            <button class="btn btn-primary me-1 mb-1" type="submit" value="Upload">Submit</button>
+                                            <button class="btn btn-primary me-1 mb-1" type="submit"
+                                                value="Upload">Submit</button>
 
 
 
-                                           
+
                                         </div>
                                     </div>
-                                    </form>
+                                </form>
                             </div>
-                         
+
+
 
 
 
 
                         </div>
-               
 
 
-       
 
-                </section>
 
-               
-                <!-- <form id="folderForm">
-                    <label for="folderSelect">Select Folder:</label>
-                    <select id="folderSelect">
-                      <option value="Colors Day">Colors Day</option>
-                      <option value="">Annual Day</option>
-                      <option value="">School Infrastructure</option>
-                      <option value="">Thirukkural Recitation</option>
-                    </select>
-                    <button type="submit">Submit</button>
-                  </form>
-                
-                  <table id="imageTable">
-                    <tr>
-                      <th>S.No</th>
-                      <th>File Name</th>
-                      <th>File Type</th>
-                      <th>Folder Location</th>
-                      <th>Actions</th>
-                    </tr>
-                  </table> -->
-                
-                 
-            <!--                 
-        <button onclick="swalelement">submit</button>
 
-        <script>
+                    </section>
 
-            swal("Here's the title!", "...and here's the text!");
-        </script> -->
+                    <style>
+                        body {
+                            font-family: Arial, sans-serif;
+                            margin: 20px;
+                        }
 
-            <footer>
-                <div class="footer clearfix mb-0 text-muted">
-                    <div class="float-start">
-                        <p style="margin-left: 40px;"> <span id="current-year"></span> &copy;
-                            < Bumble Bees oAuth />
-                        </p>    <script>
-                            // Get the current year
-                            var currentYear = new Date().getFullYear();
-                    
-                            // Set the current year in the HTML element with the specified ID
-                            var currentYearElement = document.getElementById('current-year');
-                            currentYearElement.textContent = currentYear.toString();
-                    
-                        </script>
-                    
+                        h1,
+                        h2 {
+                            margin-bottom: 10px;
+                        }
+
+                        table {
+                            width: 100%;
+                            border-collapse: collapse;
+                        }
+
+                        th,
+                        td {
+                            padding: 8px;
+                            border-bottom: 1px solid #ddd;
+                            text-align: left;
+                        }
+
+                        th {
+                            background-color: #f2f2f2;
+                        }
+
+                        img {
+                            max-width: 100px;
+                        }
+                    </style>
+
+                    <h1>Firebase Storage Gallery</h1>
+                    <div>
+                        <h2>Available Folders:</h2>
+                        <select id="isFolderSelectByPradeep">
+                            <!-- Folder options will be dynamically added here using JavaScript -->
+                        </select>
+                    </div>
+                    <div>
+                        <h2>Images in Selected Folder:</h2>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>File Name</th>
+                                    <th>Image</th>
+                                    <th>Image Type</th>
+                                    <th>Delete</th>
+                                </tr>
+                            </thead>
+                            <tbody id="imageTableBody">
+                                <!-- Images and their details will be dynamically added here using JavaScript -->
+                            </tbody>
+                        </table>
                     </div>
 
+
+                    <footer>
+                        <div class="footer clearfix mb-0 text-muted">
+                            <div class="float-start">
+                                <p style="margin-left: 40px;"> <span id="current-year"></span> &copy;
+                                    < Bumble Bees oAuth />
+                                </p>
+                                <script>
+                                    // Get the current year
+                                    var currentYear = new Date().getFullYear();
+
+                                    // Set the current year in the HTML element with the specified ID
+                                    var currentYearElement = document.getElementById('current-year');
+                                    currentYearElement.textContent = currentYear.toString();
+
+                                </script>
+
+                            </div>
+
+                        </div>
+                    </footer>
                 </div>
-            </footer>
+            </div>
         </div>
-    </div>
-    </div>
 
 
-    <script src="./vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
-    <script src="./js/bootstrap.bundle.min.js"></script>
-    <script src="./js/main.js"></script>
+        <script src="./vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+        <script src="./js/bootstrap.bundle.min.js"></script>
+        <script src="./js/main.js"></script>
 
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-storage.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-database.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.9.0/firebase-auth.js"></script>
-    <script>
-        // Initialize Firebase
-        const firebaseConfig = {
-            apiKey: "AIzaSyC7EsiaYH-tJj-wNEQl8ZrrmdvKCWS7ztY",
-            authDomain: "egspj-bumblebees.firebaseapp.com",
-            databaseURL: "https://egspj-bumblebees-default-rtdb.firebaseio.com",
-            projectId: "egspj-bumblebees",
-            storageBucket: "egspj-bumblebees.appspot.com",
-            messagingSenderId: "3531307553",
-            appId: "1:3531307553:web:162f525f3ed82d7830c160",
-            measurementId: "G-6W931XY0SQ"
-        };
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+        <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-storage.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-database.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.9.0/firebase-auth.js"></script>
+        <script>
+            // Initialize Firebase
+            const firebaseConfig = {
+                apiKey: "AIzaSyC7EsiaYH-tJj-wNEQl8ZrrmdvKCWS7ztY",
+                authDomain: "egspj-bumblebees.firebaseapp.com",
+                databaseURL: "https://egspj-bumblebees-default-rtdb.firebaseio.com",
+                projectId: "egspj-bumblebees",
+                storageBucket: "egspj-bumblebees.appspot.com",
+                messagingSenderId: "3531307553",
+                appId: "1:3531307553:web:162f525f3ed82d7830c160",
+                measurementId: "G-6W931XY0SQ"
+            };
 
-        firebase.initializeApp(firebaseConfig);
+            firebase.initializeApp(firebaseConfig);
 
-// Get a reference to the Firebase Storage
-var storage = firebase.storage();
-var storageRef = storage.ref();
-var auth = firebase.auth();
-
-
-
-// Handle form submission
-var form = document.getElementById('uploadForm');
-form.addEventListener('submit', function(event) {
-  event.preventDefault();
-
-  // Get the selected images
-  var fileInput = document.querySelector('input[name="images"]');
-  var files = fileInput.files;
-
-  // Get the selected folder name
-  var folderSelect = document.getElementById('folderSelect');
-  var folderName = folderSelect.value;
-
-  // Upload each image to the selected folder
-  for (var i = 0; i < files.length; i++) {
-    var file = files[i];
-    var filePath = folderName + '/' + file.name;
-    var fileRef = storageRef.child(filePath);
-    var uploadTask = fileRef.put(file);
-
-    // Monitor the upload progress
-    uploadTask.on('state_changed', null, null, function() {
-      alert('Image uploaded successfully!');
-    });
-  }
-});
-
-//     // Function to display the image details in the table
-//     function displayImageDetails(sno, fileName, fileType, folderLocation) {
-//       var table = document.getElementById("imageTable");
-//       var row = table.insertRow();
-//       var cell1 = row.insertCell();
-//       var cell2 = row.insertCell();
-//       var cell3 = row.insertCell();
-//       var cell4 = row.insertCell();
-//       var cell5 = row.insertCell();
-
-//       cell1.innerHTML = sno;
-//       cell2.innerHTML = fileName;
-//       cell3.innerHTML = fileType;
-//       cell4.innerHTML = folderLocation;
-//       cell5.innerHTML = '<button onclick="deleteImage(\'' + fileName + '\', \'' + folderLocation + '\')">Delete</button>';
-//     }
-
-//     // Function to delete an image
-//     function deleteImage(fileName, folderLocation) {
-//   var storageRef = storage.ref(folderLocation + "/" + fileName);
-//   storageRef.delete().then(function() {
-//     var table = document.getElementById("imageTable");
-//     var rows = table.rows;
-
-//     // Find the row with the matching fileName and folderLocation
-//     for (var i = 1; i < rows.length; i++) {
-//       var row = rows[i];
-//       if (row.cells[1].innerHTML === fileName && row.cells[3].innerHTML === folderLocation) {
-//         table.deleteRow(i);
-//         break;
-//       }
-//     }
-//     alert("Image deleted successfully.");
-//   }).catch(function(error) {
-//     alert("Error deleting image:", error.message);
-//   });
-// }
-
-//     // Folder form submit event listener
-//     document.getElementById("folderForm").addEventListener("submit", function(event) {
-//       event.preventDefault();
-//       var folderName = document.getElementById("folderSelect").value;
-//       var table = document.getElementById("imageTable");
-//       // Clear existing table rows
-//       while (table.rows.length > 1) {
-//         table.deleteRow(1);
-//       }
+            // Get a reference to the Firebase Storage
+            var storage = firebase.storage();
+            var storageRef = storage.ref();
+            var auth = firebase.auth();
 
 
+            // Get references to HTML elements
+            var folderSelect = document.getElementById("isFolderSelectByPradeep");
+            var imageTableBody = document.getElementById("imageTableBody");
+
+            // Function to dynamically create a row for each image in the table
+            function createImageTableRow(imageUrl, imageName, imageType) {
+                var newRow = document.createElement("tr");
+
+                var fileNameCell = document.createElement("td");
+                fileNameCell.textContent = imageName;
+
+                var imageCell = document.createElement("td");
+                var imageElement = document.createElement("img");
+                imageElement.src = imageUrl;
+                imageCell.appendChild(imageElement);
+
+                var imageTypeCell = document.createElement("td");
+                imageTypeCell.textContent = imageType;
+
+                var deleteCell = document.createElement("td");
+                var deleteButton = document.createElement("button");
+                deleteButton.textContent = "Delete";
+                deleteButton.addEventListener("click", function () {
+                    // Delete image from Firebase Storage and remove row from the table
+                    storageRef.child(imageUrl).delete().then(function () {
+                        newRow.remove();
+                        alert("Image deleted successfully!");
+                    }).catch(function (error) {
+                        console.error("Error deleting image:", error);
+                    });
+                });
+                deleteCell.appendChild(deleteButton);
+
+                newRow.appendChild(fileNameCell);
+                newRow.appendChild(imageCell);
+                newRow.appendChild(imageTypeCell);
+                newRow.appendChild(deleteCell);
+
+                imageTableBody.appendChild(newRow);
+            }
+
+            // Function to populate the folder select dropdown with available folders
+            function populateFolderSelect() {
+                storageRef.listAll().then(function (result) {
+                    result.prefixes.forEach(function (folderRef) {
+                        var folderName = folderRef.name;
+                        var option = document.createElement("option");
+                        option.value = folderName;
+                        option.textContent = folderName;
+                        folderSelect.appendChild(option);
+                    });
+                }).catch(function (error) {
+                    console.error("Error listing folders:", error);
+                });
+            }
+
+            // Function to display images in the selected folder
+            function displayImagesInFolder(folderName) {
+                imageTableBody.innerHTML = ""; // Clear the existing table rows
+
+                storageRef.child(folderName).listAll().then(function (result) {
+                    result.items.forEach(function (itemRef) {
+                        itemRef.getDownloadURL().then(function (imageUrl) {
+                            itemRef.getMetadata().then(function (metadata) {
+                                var imageName = metadata.name;
+                                var imageType = metadata.contentType;
+                                createImageTableRow(imageUrl, imageName, imageType);
+                            });
+                        }).catch(function (error) {
+                            console.error("Error getting image URL:", error);
+                        });
+                    });
+                }).catch(function (error) {
+                    console.error("Error listing images in the folder:", error);
+                });
+            }
+
+            // Listen for changes in the folder select dropdown
+            folderSelect.addEventListener("change", function () {
+                var selectedFolder = folderSelect.value;
+                displayImagesInFolder(selectedFolder);
+            });
+
+            // Populate the folder select dropdown initially
+            populateFolderSelect();
 
 
-//       // Get a reference to the selected folder
-//       var folderRef = storage.ref(folderName);
 
-//       // List all images in the selected folder
-//       folderRef.listAll().then(function(result) {
-//         result.items.forEach(function(item, index) {
-//           item.getMetadata().then(function(metadata) {
-//             var fileName = item.name;
-//             var fileType = metadata.contentType;
-//             var folderLocation = metadata.fullPath;
-//             displayImageDetails(index + 1, fileName, fileType, folderLocation);
-//           }).catch(function(error) {
-//             console.log("Error getting image metadata:", error);
-//           });
-//         });
-//       }).catch(function(error) {
-//         console.log("Error listing images in folder:", error);
-//       });
+            // Global variable to keep track of the current serial number
+            var currentSerialNumber = 1;
 
-      
-//     });
+            // Function to generate a unique name for each image
+            function generateUniqueName(file) {
+                var prefix = "EGSPJ_SCHOOL ";
+                var date = new Date();
+                var dateFormatted = date.toISOString().slice(0, 10);
+                var timeFormatted = date.toTimeString().slice(0, 8).replace(/:/g, "-");
+                var fileName = `${prefix}${dateFormatted}_${timeFormatted}_${currentSerialNumber}.jpg`;
+                currentSerialNumber++; // Increment the serial number for the next upload
+                return fileName;
+            }
 
-  firebase.auth().onAuthStateChanged((user)=>{
-    if(!user){
-        location.replace("../index")
-    }else{
-        document.getElementById("user").innerHTML = "Hello, "+user.email    
-    }
-    
-})
+            // Function to compress and convert image to web-supported type
+            function compressAndConvertImage(file) {
+                return new Promise(function (resolve, reject) {
+                    var image = new Image();
+                    var canvas = document.createElement('canvas');
+                    var ctx = canvas.getContext('2d');
+
+                    image.src = URL.createObjectURL(file);
+                    image.onload = function () {
+                        var maxWidth = 1920; // Maximum width for the image
+                        var maxHeight = 1080; // Maximum height for the image
+                        var width = image.width;
+                        var height = image.height;
+
+                        // Resize the image if it exceeds the maximum dimensions while maintaining aspect ratio
+                        if (width > maxWidth || height > maxHeight) {
+                            var aspectRatio = width / height;
+                            if (aspectRatio > 1) {
+                                width = maxWidth;
+                                height = width / aspectRatio;
+                            } else {
+                                height = maxHeight;
+                                width = height * aspectRatio;
+                            }
+                        }
+
+                        canvas.width = width;
+                        canvas.height = height;
+                        ctx.drawImage(image, 0, 0, width, height);
+
+                        // Convert canvas to blob with specified quality (0.8 means 80% image quality)
+                        canvas.toBlob(function (blob) {
+                            resolve(blob);
+                        }, 'image/jpeg', 0.8);
+                    };
+
+                    image.onerror = function (error) {
+                        reject(error);
+                    };
+                });
+            }
 
 
-function logout(){
-    firebase.auth().signOut()
-}
+            // Handle form submission
+            var form = document.getElementById('uploadForm');
+            form.addEventListener('submit', function (event) {
+                event.preventDefault();
 
-  </script>
+                // Get the selected images
+                var fileInput = document.querySelector('input[name="images"]');
+                var files = fileInput.files;
 
+                // Get the selected folder name
+                var folderSelect = document.getElementById('folderSelect');
+                var folderName = folderSelect.value;
+
+                // Upload each image to the selected folder
+                for (var i = 0; i < files.length; i++) {
+                    var file = files[i];
+                    var newFileName = generateUniqueName(file);
+
+                    compressAndConvertImage(file).then(function (compressedBlob) {
+                        var filePath = folderName + '/' + newFileName;
+                        var fileRef = storageRef.child(filePath);
+                        var uploadTask = fileRef.put(compressedBlob);
+
+                        // Monitor the upload progress
+                        uploadTask.on('state_changed', null, null, function () {
+                            alert('Image uploaded successfully!');
+                        });
+                    }).catch(function (error) {
+                        console.error('Error compressing and uploading image:', error);
+                    });
+                }
+            });
+
+
+
+
+            firebase.auth().onAuthStateChanged((user) => {
+                if (!user) {
+                    location.replace("../index")
+                } else {
+                    document.getElementById("user").innerHTML = "Hello, " + user.email
+                }
+
+            })
+
+
+            function logout() {
+                firebase.auth().signOut()
+            }
+
+        </script>
 
 
 

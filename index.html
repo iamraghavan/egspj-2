@@ -314,10 +314,17 @@
 
 
     <section class="wrapper bg-light">
-      <div class="container py-5 py-mb-0 mt-5">
+      <div class="container py-5 py-mb-0 mt-5 col-lg-12 " style="text-align: justify;
+              text-justify: inter-word;">
         <h2 class="display-4 mb-3">Events & Updates</h2>
 
         <div id="eventDisplay" class="mt-5"></div>
+
+
+        <div class="project item col-md-6 col-xl-4 events">
+          <a href="./events.html"
+            class="btn btn-outline-gradient gradient-1 rounded-pill me-1 mb-2 mb-md-0  text-black-50">View Events</a>
+        </div>
 
         <!--/column -->
       </div>
@@ -826,9 +833,34 @@
 
   </script>
 
+  <style>
+    .event-info-container {
+      display: flex;
+      /* Use flexbox to display elements in a row */
+      align-items: center;
+      /* Center items vertically */
+    }
+
+    .event-info-container p {
+      margin-right: 10px;
+      /* Add some space between the description and date */
+    }
+  </style>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Comic+Neue:wght@700&display=swap');
+
+    .eventinfo {
+      font-family: 'Comic Neue', cursive;
+    }
+  </style>
+
+
+
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-database.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 
   <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-storage.js"></script>
   <script>
@@ -904,23 +936,58 @@
       snapshot.forEach(function (childSnapshot) {
         const event = childSnapshot.val();
 
+        // Assuming you have the event date stored in the 'eventDate' variable
+        // and the event description in the 'eventDescription' variable
+
         // Create <h1> and <p> elements for title and description
         const eventTitle = document.createElement('h1');
         eventTitle.textContent = event.title;
-        eventTitle.classList.add('fs-23', 'rotator-fade');
+        eventTitle.classList.add('fs-23', 'rotator-fade', 'text-uppercase', 'eventinfo');
 
         const eventDescription = document.createElement('p');
-        eventDescription.textContent = event.description;
-        eventDescription.classList.add('fs-15', 'text-navy');
+        eventDescription.textContent = event.description; // Assign the text content, not the element itself
+        eventDescription.classList.add('fs-18', 'text-purple', 'eventinfo');
 
-        // Append title and description to the event display container
+        // Create a <span> element to hold the calendar icon
+        const calendarIconSpan = document.createElement('span');
+        calendarIconSpan.innerHTML = '<i class="fas fa-calendar"></i>';
+        calendarIconSpan.classList.add('calendar-icon', 'fs-18', 'text-green', 'eventinfo'); // Add a class for styling
+
+        const eventDate = document.createElement('p');
+        eventDate.textContent = event.date; // Assign the text content, not the element itself
+        eventDate.classList.add('fs-18', 'text-success');
+
+        // Create a parent container (div) to hold the event description, calendar icon, and date elements
+        const eventInfoContainer = document.createElement('div');
+        eventInfoContainer.classList.add('event-info-container'); // Add a class for styling
+
+        // Append description, calendar icon, and date elements to the event info container
+        // eventInfoContainer.appendChild(eventDescription);
+        eventInfoContainer.appendChild(calendarIconSpan);
+        eventInfoContainer.appendChild(eventDate);
+
+        // Append title and the event info container to the main event display container
+        const eventDisplay = document.getElementById('eventDisplay');
         eventDisplay.appendChild(eventTitle);
         eventDisplay.appendChild(eventDescription);
+        eventDisplay.appendChild(eventInfoContainer);
+
+
       });
     });
 
 
   </script>
+  <!-- <a href="" class="text-green">hi</a> -->
+
+  <style>
+    .calendar-icon {
+      margin-right: 10px;
+      margin-bottom: 20px;
+      margin-left: 5px;
+    }
+  </style>
+
 
 
 
