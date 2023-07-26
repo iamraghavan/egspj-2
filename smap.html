@@ -1,179 +1,135 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-  <title>Firebase Storage Gallery</title>
-  <!-- Add Firebase SDK -->
-  <!-- Your Firebase SDK configuration goes here -->
-
-  <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-storage.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-database.js"></script>
-
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 20px;
-    }
-
-    h1,
-    h2 {
-      margin-bottom: 10px;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-    }
-
-    th,
-    td {
-      padding: 8px;
-      border-bottom: 1px solid #ddd;
-      text-align: left;
-    }
-
-    th {
-      background-color: #f2f2f2;
-    }
-
-    img {
-      max-width: 100px;
-    }
-  </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
 </head>
 
 <body>
-  <h1>Firebase Storage Gallery</h1>
-  <div>
-    <h2>Available Folders:</h2>
-    <select id="folderSelect">
-      <!-- Folder options will be dynamically added here using JavaScript -->
-    </select>
-  </div>
-  <div>
-    <h2>Images in Selected Folder:</h2>
-    <table>
-      <thead>
-        <tr>
-          <th>File Name</th>
-          <th>Image</th>
-          <th>Image Type</th>
-          <th>Delete</th>
-        </tr>
-      </thead>
-      <tbody id="imageTableBody">
-        <!-- Images and their details will be dynamically added here using JavaScript -->
-      </tbody>
-    </table>
-  </div>
+  <form class="form" id="uploadForm" enctype="multipart/form-data">
+
+    <div class="row">
+      <div class="col-md-6 col-12">
+        <div class="form-group">
+          <label for="first-name-column ">Title</label>
+          <input class="form-control" type="file" name="images" multiple>
+        </div>
+      </div>
+
+
+
+
+
+
+      <div class="col-12 d-flex justify-content-end">
+        <button class="btn btn-primary me-1 mb-1" type="submit" value="Upload">Submit</button>
+
+
+
+
+      </div>
+    </div>
+  </form>
+
+
+  <script src="https://apis.google.com/js/api.js"></script>
+
+  <!-- egspjschool -->
+
+
   <script>
-    // Initialize Firebase
-    // Your Firebase SDK configuration goes here
-    // Initialize Firebase
-    const firebaseConfig = {
-      apiKey: "AIzaSyC7EsiaYH-tJj-wNEQl8ZrrmdvKCWS7ztY",
-      authDomain: "egspj-bumblebees.firebaseapp.com",
-      databaseURL: "https://egspj-bumblebees-default-rtdb.firebaseio.com",
-      projectId: "egspj-bumblebees",
-      storageBucket: "egspj-bumblebees.appspot.com",
-      messagingSenderId: "3531307553",
-      appId: "1:3531307553:web:162f525f3ed82d7830c160",
-      measurementId: "G-6W931XY0SQ"
+
+    // Define the service account key JSON obtained in Step 1.
+    const serviceAccountKey = {
+      "type": "service_account",
+      "project_id": "egspj-bumblebees",
+      "private_key_id": "61e8c9bfdbee22281b5474268a806ac6ab43e4e9",
+      "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQCrKbc1sAjGaNqM\nqeN96NVSJaqiNs8V/JWkHZuEQm1RoVClXZxfeebkLK8zw7ScRQX2QWuhD7IYuhg9\nQHHB0FzGHJqvrDim5qC0cUFMgQGD/78Yt8SXDK+fssbABQBnGt0cz6P2baFKGSW/\nFuS+NYnA4RCIM6Ay713e0rK/2lOl6i8L0ymrgehuIl3UggS0/yxERphgo//n6fQ0\nqfze5qBGJCMy7nrtksRnJ8SiFQ9hisPvkByZnkwXybUSfxU+72cZy8iRiBPEz6jo\nQq+vO1bcYsWmQYXYz/ty62LEXNNWMUlc22US3JzTYOzIiZPvPSb+SiAUrXv9T0dn\nndeypzf7AgMBAAECggEAI300SBT2VNFD01ucWCxxIqW9sgGkQX5MNqmO58bwLLdC\nZe85b5Byf8gGEbkX1zj2if85hj0fY8IeKYEVtSZzPf6LUjZmzrBODOvYqriq7EgY\nQtNDl0Ahn/6s9/5xfW9T/lfNOtizUw5QxcTE6+1k4RGpYFw38Kex8nQEbQQjSOil\nR1ys0yGX+8bIm8/ws6l0KNsLB+zJxvHUZ80zS5fXlH6cQOfKKf7MX+hzR950NQfj\nkLs9XY6/Ui7z4DTmhKqrLVHtm+a11Lj/ZNfgBT2iwyWU3xBk+kIWOK52W20imZBj\nfG1XiRZ88v6dI8I8R3Fy8wjxqUpuy4RxKSlDhKTC0QKBgQDRuffXDQ1w14TpEgz+\nSCm6eDC1vbYCMiVTD3A8XCbPfp3mNmcVkWoD7GS1AKcmWtS9jlfX+wu44Fp3m37y\nSwapdL8xdKJbgCR2NZlIa3fKIsc/mhmNvnfB08kcv4IBl+DKi+F5zIwLeoK3cYYB\nlew+5oCOHKGV62opM+CmlUEvSwKBgQDQ7Y5qoi1iOhITEz/NqPApiFqTe6mGT4Fn\nV+4U2+BNCcKkbJg34EzEFVo5rwSAhiYUiQzSinf+sALnFTpbC8Z0t6ayypAZeMDv\nw6jGWs00conhUABeKa3Bsai2DzA31KiDK/SKhDrrp4fuNsNdt624ovmutqmQhVa3\ncLlJ6Mi8EQKBgEXHVzOg7yDlRB572ADep6uYA7TkOuN+Jbb+AvzCOFN/MDABV8jw\nSdKmW1dxsStsuy2aZ5W/vEW1t8Pl45Xf6oaFBnwA72f8OaVu7eIPh5qkeaCqt+fW\nQGgn+9jpyuqWyr75TXrF2K6VA1rflZN/e0vuS0V9NzH3UqoEzbD/JeIDAoGAFnjG\nra995CfM0+JpJWy7UCxLWbueU0Tv7Tam8/VmXcLj/Z10jeYBO8H0L2okuNI0/FZ1\nW5vrJii2VzaQTUSp9tneAzMIZsT3M5K+737KvY5oSCS7tWUUPFYoiFR/4jFsYpdy\nuQdZ8wjU9QlM4CKme8qDwogBGvtMhXSJaWqxVJECgYBH0M1aJ7j5T1nNhV8B+AZw\nqFhFy3NA06I3YacwKuvVBAe0US5s/u8U7TawZk/Tx3YZn2Q0PA6XoDSmk2UYKAH/\nmhRJboFdb+rBJ8cu5fCfV5UOYdwRIcSfXixB9W9fNBaNphSbk/a8uomfgzQgz+/f\n11pBcHJt949QgqeLm6NjIg==\n-----END PRIVATE KEY-----\n",
+      "client_email": "egspjschool@egspj-bumblebees.iam.gserviceaccount.com",
+      "client_id": "109180638569920188900",
+      "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+      "token_uri": "https://oauth2.googleapis.com/token",
+      "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+      "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/egspjschool%40egspj-bumblebees.iam.gserviceaccount.com",
+      "universe_domain": "googleapis.com"
     };
 
-    firebase.initializeApp(firebaseConfig);
-
-    // Get a reference to Firebase Storage and Realtime Database
-    var storage = firebase.storage();
-    var storageRef = storage.ref();
-    var database = firebase.database();
-
-    // Get references to HTML elements
-    var folderSelect = document.getElementById("folderSelect");
-    var imageTableBody = document.getElementById("imageTableBody");
-
-    // Function to dynamically create a row for each image in the table
-    function createImageTableRow(imageUrl, imageName, imageType) {
-      var newRow = document.createElement("tr");
-
-      var fileNameCell = document.createElement("td");
-      fileNameCell.textContent = imageName;
-
-      var imageCell = document.createElement("td");
-      var imageElement = document.createElement("img");
-      imageElement.src = imageUrl;
-      imageCell.appendChild(imageElement);
-
-      var imageTypeCell = document.createElement("td");
-      imageTypeCell.textContent = imageType;
-
-      var deleteCell = document.createElement("td");
-      var deleteButton = document.createElement("button");
-      deleteButton.textContent = "Delete";
-      deleteButton.addEventListener("click", function () {
-        // Delete image from Firebase Storage and remove row from the table
-        storageRef.child(imageUrl).delete().then(function () {
-          newRow.remove();
-          alert("Image deleted successfully!");
-        }).catch(function (error) {
-          console.error("Error deleting image:", error);
-        });
-      });
-      deleteCell.appendChild(deleteButton);
-
-      newRow.appendChild(fileNameCell);
-      newRow.appendChild(imageCell);
-      newRow.appendChild(imageTypeCell);
-      newRow.appendChild(deleteCell);
-
-      imageTableBody.appendChild(newRow);
-    }
-
-    // Function to populate the folder select dropdown with available folders
-    function populateFolderSelect() {
-      storageRef.listAll().then(function (result) {
-        result.prefixes.forEach(function (folderRef) {
-          var folderName = folderRef.name;
-          var option = document.createElement("option");
-          option.value = folderName;
-          option.textContent = folderName;
-          folderSelect.appendChild(option);
-        });
-      }).catch(function (error) {
-        console.error("Error listing folders:", error);
+    // Function to authenticate using the service account key and return a Google Drive client
+    function authenticate() {
+      return gapi.auth.authorize({
+        'client_id': serviceAccountKey.client_id,
+        'scope': 'https://www.googleapis.com/auth/drive',
+        'immediate': true
       });
     }
 
-    // Function to display images in the selected folder
-    function displayImagesInFolder(folderName) {
-      imageTableBody.innerHTML = ""; // Clear the existing table rows
+    // Function to create a file in the specified folder using the Google Drive API
+    function createFileInFolder(folderId, fileMetadata, fileData) {
+      return gapi.client.drive.files.create({
+        'resource': fileMetadata,
+        'media': fileData,
+        'fields': 'id'
+      });
+    }
 
-      storageRef.child(folderName).listAll().then(function (result) {
-        result.items.forEach(function (itemRef) {
-          itemRef.getDownloadURL().then(function (imageUrl) {
-            itemRef.getMetadata().then(function (metadata) {
-              var imageName = metadata.name;
-              var imageType = metadata.contentType;
-              createImageTableRow(imageUrl, imageName, imageType);
+    // Handle form submission
+    var form = document.getElementById('uploadForm');
+    form.addEventListener('submit', function (event) {
+      event.preventDefault();
+
+      // Get the selected images
+      var fileInput = document.querySelector('input[name="images"]');
+      var files = fileInput.files;
+
+      // Get the selected folder ID (you can find the ID using the Google Drive API)
+      var folderId = '1TQSJf2ZLNNnMiUZvARHHk_b0xrqB_1vU';
+
+      // Initialize the Google Drive API
+      gapi.load('client', function () {
+        gapi.client.init({
+          apiKey: 'AIzaSyC5eOW9ceK_ZQoG83Ir8J6pv_haP0CNH7w'
+        }).then(function () {
+          return authenticate();
+        }).then(function () {
+          // Upload each image to the selected folder
+          for (var i = 0; i < files.length; i++) {
+            var file = files[i];
+            var newFileName = generateUniqueName(file);
+
+            compressAndConvertImage(file).then(function (compressedBlob) {
+              var fileMetadata = {
+                'name': newFileName,
+                'parents': [folderId]
+              };
+              var fileData = new gapi.client.Request({
+                'path': '/upload/drive/v3/files',
+                'method': 'POST',
+                'params': {
+                  'uploadType': 'multipart'
+                },
+                'headers': {
+                  'Content-Type': 'image/jpeg'
+                },
+                'body': compressedBlob
+              });
+
+              createFileInFolder(folderId, fileMetadata, fileData).then(function (response) {
+                alert('Image uploaded successfully!');
+              }).catch(function (error) {
+                console.error('Error uploading image:', error);
+              });
+            }).catch(function (error) {
+              console.error('Error compressing image:', error);
             });
-          }).catch(function (error) {
-            console.error("Error getting image URL:", error);
-          });
+          }
+        }).catch(function (error) {
+          console.error('Error initializing Google Drive API:', error);
         });
-      }).catch(function (error) {
-        console.error("Error listing images in the folder:", error);
       });
-    }
-
-    // Listen for changes in the folder select dropdown
-    folderSelect.addEventListener("change", function () {
-      var selectedFolder = folderSelect.value;
-      displayImagesInFolder(selectedFolder);
     });
 
-    // Populate the folder select dropdown initially
-    populateFolderSelect();
 
   </script>
 </body>

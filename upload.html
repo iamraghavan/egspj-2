@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Upload Image & Update Text</title>
+    <!-- Add your Firebase SDK and configuration here -->
+    <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-storage.js"></script>
+</head>
+
+<body>
+    <h1>Upload Image & Update Text</h1>
+
+
+    <form id="uploadForm">
+        <input type="file" accept="image/*" onchange="handleImageUpload(event)">
+        <br>
+        <button type="submit">Submit</button>
+    </form>
+
+    <script>
+        // Initialize Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyC7EsiaYH-tJj-wNEQl8ZrrmdvKCWS7ztY",
+            authDomain: "egspj-bumblebees.firebaseapp.com",
+            databaseURL: "https://egspj-bumblebees-default-rtdb.firebaseio.com",
+            projectId: "egspj-bumblebees",
+            storageBucket: "egspj-bumblebees.appspot.com",
+            messagingSenderId: "3531307553",
+            appId: "1:3531307553:web:162f525f3ed82d7830c160",
+            measurementId: "G-6W931XY0SQ"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+
+        // References to Firebase Storage
+        const storage = firebase.storage();
+
+        // Function to handle image upload
+        async function handleImageUpload(event) {
+            const file = event.target.files[0];
+            if (!file || !file.type.startsWith('image/')) {
+                alert('Please select an image file.');
+                return;
+            }
+
+            try {
+                // Upload the image to the "popAds" folder in Firebase Storage
+                const storageRef = storage.ref('popAds').child(file.name);
+                const snapshot = await storageRef.put(file);
+                const imageUrl = await snapshot.ref.getDownloadURL();
+
+                // You can do something with the image URL if needed
+                console.log('Image URL:', imageUrl);
+                alert('Image uploaded successfully!');
+            } catch (error) {
+                console.error('Error uploading image:', error);
+                alert('Error uploading image. Please try again.');
+            }
+        }
+
+    </script>
+</body>
+
+</html>

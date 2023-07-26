@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Pop-up Modal Example</title>
+    <!-- Add your Firebase SDK and configuration here -->
+    <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-storage.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-firestore.js"></script>
+    <style>
+        /* Styles for the modal overlay */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: none;
+        }
+
+        /* Styles for the modal content */
+        .modal-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        /* Styles for the close button */
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
+        }
+
+        /* Styling for the images */
+        .image-container {
+            margin: 10px;
+            cursor: pointer;
+        }
+
+        img {
+            max-width: 200px;
+            max-height: 200px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Pop-up Ads</h1>
+
+    <!-- Container to display the pop-up ads images -->
+    <div id="imageContainer">
+        <!-- The images will be dynamically added here -->
+    </div>
+
+    <!-- Modal overlay for pop-up ads -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal-content" id="modalContent">
+            <span class="close-btn" id="closeBtn">&times;</span>
+            <img id="modalImage">
+        </div>
+    </div>
+
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyC7EsiaYH-tJj-wNEQl8ZrrmdvKCWS7ztY",
+            authDomain: "egspj-bumblebees.firebaseapp.com",
+            databaseURL: "https://egspj-bumblebees-default-rtdb.firebaseio.com",
+            projectId: "egspj-bumblebees",
+            storageBucket: "egspj-bumblebees.appspot.com",
+            messagingSenderId: "3531307553",
+            appId: "1:3531307553:web:162f525f3ed82d7830c160",
+            measurementId: "G-6W931XY0SQ"
+        };
+
+
+        firebase.initializeApp(firebaseConfig);
+
+        // References to Firebase Storage
+        const storage = firebase.storage();
+
+        // Function to display the pop-up ads images
+        async function displayImages() {
+            try {
+                // Fetch the images from the "popAds" folder in Firebase Storage
+                const storageRef = storage.ref('popAds');
+                const images = await storageRef.listAll();
+
+                // Display each image in the "imageContainer" div
+                const imageContainer = document.getElementById('imageContainer');
+                images.items.forEach(imageRef => {
+                    // Create an image element for each image
+                    const imageElement = document.createElement('img');
+                    imageElement.src = imageRef.getDownloadURL();
+                    imageElement.classList.add('image-container');
+
+                    // Add an event listener to each image element to open the modal with the image
+                    imageElement.addEventListener('click', () => openModal(imageRef));
+
+                    // Append the image element to the image container
+                    imageContainer.appendChild(imageElement);
+                });
+            } catch (error) {
+                console.error('Error fetching images:', error);
+                alert('Error fetching images. Please try again.');
+            }
+        }
+
+        // Function to open the modal with the image
+        async function openModal(imageRef) {
+            const modalOverlay = document.getElementById('modalOverlay');
+            const modalContent = document.getElementById('modalContent');
+            const modalImage = document.getElementById('modalImage');
+            const closeBtn = document.getElementById('closeBtn');
+
+            modalImage.src = await imageRef.getDownloadURL();
+            modalOverlay.style.display = 'block';
+
+            // Close the modal when the "X" button is clicked
+            closeBtn.addEventListener('click', closeModal);
+
+            // Close the modal when clicking outside the modal content
+            window.addEventListener('click', event => {
+                if (event.target === modalOverlay) {
+                    closeModal();
+                }
+            });
+        }
+
+        // Function to close the modal
+        function closeModal() {
+            const modalOverlay = document.getElementById('modalOverlay');
+
+            modalOverlay.style.display = 'none';
+        }
+
+        // Display the pop-up ads images on page load
+        document.addEventListener('DOMContentLoaded', displayImages);
+    </script>
+</body>
+
+</html>
