@@ -1,7 +1,49 @@
 @charset "UTF-8";
 @import url(https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700);
 
-html{scroll-behavior:smooth}
+@media (max-width: 767px) {
+    .pod {
+        display: none;
+    }
+
+
+}
+
+.powered-by {
+    display: inline-block;
+}
+
+.powered-by img {
+    height: 50px;
+    /* Set the height of the logo as needed */
+    vertical-align: middle;
+    margin-left: 5px;
+    /* Adjust the margin as needed to separate the logo from the text */
+    /* filter: invert(10%); */
+}
+
+
+
+.pod {
+    height: 50px;
+    /* Set the height of the logo as needed */
+    vertical-align: middle;
+    margin: 5px;
+
+}
+
+.powered-by p {
+    display: inline;
+    font-size: 16px;
+    /* Adjust the font size as needed */
+    color: #ffffff;
+    /* Set your preferred text color */
+}
+
+
+html {
+    scroll-behavior: smooth
+}
 
 :root {
     --bs-gray-100: #fefefe;
