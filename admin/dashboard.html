@@ -16,19 +16,19 @@
     <link rel="stylesheet" href="./vendors/bootstrap-icons/bootstrap-icons.css">
     <link rel="stylesheet" href="./css/app.css">
     <link rel="shortcut icon" href="./image.htmls/favicon.svg" type="image/x-icon">
-</head>  
+</head>
 
 
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Comic+Neue:wght@700&display=swap');
-  
-      .header-logo-text {
+
+    .header-logo-text {
         font-family: 'Comic Neue', cursive;
         color: #FFF;
         font-size: 20px;
-      }
-     
-    </style>
+    }
+</style>
+
 <body>
     <div id="app">
         <div id="sidebar" class="active">
@@ -36,7 +36,9 @@
                 <div class="sidebar-header">
                     <div class="d-flex justify-content-between">
                         <div class="logo">
-                            <h3 class="header-logo-text">< Bumble Bees oAuth /></h3>
+                            <h3 class="header-logo-text">
+                                < Bumble Bees oAuth />
+                            </h3>
                         </div>
                         <div class="toggler">
                             <a href="#" class="sidebar-hide d-xl-none d-block"><i class="bi bi-x bi-middle"></i></a>
@@ -44,7 +46,7 @@
                     </div>
                 </div>
 
-             
+
                 <div class="sidebar-menu">
                     <ul class="menu">
                         <li class="sidebar-title">Menu</li>
@@ -68,7 +70,7 @@
                             </a>
                         </li>
   -->
-                     
+
                     </ul>
                 </div>
                 <button class="sidebar-toggler btn x"><i data-feather="x"></i></button>
@@ -89,7 +91,7 @@
                         </button>
                         <div class="collapse navbar-collapse" id="navbarSupportedContent">
                             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                                
+
                                 <li class="nav-item dropdown me-3">
                                     <a class="nav-link active dropdown-toggle" href="#" data-bs-toggle="dropdown"
                                         aria-expanded="false">
@@ -108,7 +110,8 @@
                                     <div class="user-menu d-flex">
                                         <div class="user-name text-end me-3">
                                             <h6 class="mb-0 text-gray-600">Administrator</h6>
-                                            <p class="mb-0 text-sm text-gray-600"><span id="user" class="message">Hello, <email-id></Email-id></span></p>
+                                            <p class="mb-0 text-sm text-gray-600"><span id="user" class="message">Hello,
+                                                    <email-id></Email-id></span></p>
                                         </div>
                                         <div class="user-img d-flex align-items-center">
                                             <div class="avatar avatar-md">
@@ -141,13 +144,13 @@
                                         Foreroom
                                     </a>
                                 </li> -->
-                                   
+
                                     <!-- <li><a class="dropdown-item" href="#"><i class="icon-mid bi bi-gear me-2"></i>
                                             Settings</a></li> -->
                                     <!-- <li><a class="dropdown-item" href="#"><i class="icon-mid bi bi-wallet me-2"></i>
                                             Wallet</a></li>
                                     <li> -->
-                                        <hr class="dropdown-divider">
+                                    <hr class="dropdown-divider">
                                     </li>
                                     <li onclick="logout()"><a class="dropdown-item" href="#"><i
                                                 class="icon-mid bi bi-box-arrow-left me-2"></i> Logout</a></li>
@@ -164,9 +167,9 @@
                         <div class="row">
                             <div class="col-12 col-md-6 order-md-1 order-last">
                                 <!-- <img width="200px" src="../assets/img/logo.png" alt="" srcset=""> -->
-                                
+
                             </div>
-                           
+
                             <!-- <div class="col-12 col-md-6 order-md-2 order-first">
                                 <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
                                     <ol class="breadcrumb">
@@ -184,17 +187,36 @@
                                 <!-- <h4 class="card-title">Trace, Connect, Collaborate</h4> -->
                             </div>
 
-                            <div id="chart-container"></div>
 
 
                             <div class="card-body">
-                                <!-- Vanshavali is the perfect tool to help you uncover the secrets of your family tree. We make it easier to explore and collect data, helping you go through records to quickly gain insights of your family. -->
+                                <div class="row">
+                                    <div class="col-lg-4 text-capitalize align-content-center text-success">
+                                        <div class="widget">
+                                            <p id="location" class=""></p>
+                                            <p class="" id="fingerprint"></p>
+                                            <p class="" id="visit-summary"></p>
+
+                                            <!-- visit-summary -->
+
+                                            <!-- /.newsletter-wrapper -->
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-4">
+                                        <div>
+                                            <p id="datetime" style="display: inline;"></p>
+                                        </div>
+                                    </div>
+                                </div>
+
+
 
                             </div>
                         </div>
                     </section>
                 </div>
-<!--                 
+                <!--                 
         <button onclick="swalelement">submit</button>
 
         <script>
@@ -202,12 +224,129 @@
             swal("Here's the title!", "...and here's the text!");
         </script> -->
 
+                <script>
+
+                    // Function to format the current date and time
+                    function getCurrentDateTime() {
+                        var currentDate = new Date();
+                        var options = { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: true };
+                        return currentDate.toLocaleString(undefined, options);
+                    }
+
+                    // Update the 'datetime' element with the current date and time
+                    function updateDateTime() {
+                        document.getElementById("datetime").innerHTML = getCurrentDateTime();
+                    }
+
+                    // Call the updateDateTime function every second
+                    setInterval(updateDateTime, 1000);
+
+
+                    window.onload = function () {
+                        // Load Font Awesome CSS dynamically
+                        loadFontAwesomeCSS();
+
+                        // Check if geolocation is available in the browser
+                        if ("geolocation" in navigator) {
+                            navigator.geolocation.getCurrentPosition(successCallback, errorCallback);
+                        } else {
+                            document.getElementById("location").innerHTML =
+                                "Geolocation is not available in your browser.";
+                        }
+                    };
+
+                    function loadFontAwesomeCSS() {
+                        const link = document.createElement("link");
+                        link.rel = "stylesheet";
+                        link.href =
+                            "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css";
+                        document.head.appendChild(link);
+                    }
+
+                    function successCallback(position) {
+                        const latitude = position.coords.latitude;
+                        const longitude = position.coords.longitude;
+
+                        // Call the reverse geocoding function to get the city name
+                        reverseGeocode(latitude, longitude);
+                    }
+
+                    function errorCallback(error) {
+                        document.getElementById("location").innerHTML =
+                            "Unable to retrieve your location.";
+                    }
+
+                    function reverseGeocode(latitude, longitude) {
+                        // Construct the API URL for reverse geocoding using Nominatim
+                        const apiUrl = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`;
+
+                        // Make an API request
+                        fetch(apiUrl)
+                            .then((response) => response.json())
+                            .then((data) => {
+                                const city = data.address.city;
+                                const country = data.address.country;
+                                const locationString = city ? `${city}, ${country}` : country;
+
+                                // Update the location element with the city and country information
+                                document.getElementById(
+                                    "location"
+                                ).innerHTML = `<i class="fas fa-map-marker-alt"></i> ${locationString}`;
+                            })
+                            .catch((error) => {
+                                document.getElementById("location").innerHTML =
+                                    "Error fetching location data.";
+                                console.error(error);
+                            });
+
+                        // Initialize the agent on page load.
+                        const fpPromise = import("https://fpjscdn.net/v3/Cvj1RAxgKnVqgk3t8p9H").then(
+                            (FingerprintJS) => FingerprintJS.load()
+                        );
+
+                        // Get the visitorId when you need it.
+                        fpPromise
+                            .then((fp) => fp.get())
+                            .then((result) => {
+                                const visitorId = result.visitorId;
+                                console.log(visitorId);
+
+                                const fingerprint = visitorId;
+                                const visitCount = getVisitCount(visitorId);
+                                document.getElementById(
+                                    "visit-summary"
+                                ).innerHTML = `<i class="fas fa-eye"></i> You visited  ${visitCount} Times.`;
+                                document.getElementById(
+                                    "fingerprint"
+                                ).innerHTML = `<i class="fas fa-fingerprint"></i> ${fingerprint}`;
+                            });
+
+                        function getVisitCount(visitorId) {
+                            // Check if the visitorId is already stored in the local storage
+                            const storedVisitCount = localStorage.getItem(visitorId);
+                            let visitCount = 0;
+
+                            if (storedVisitCount) {
+                                visitCount = parseInt(storedVisitCount);
+                            }
+
+                            // Increment the visit count and store it in the local storage
+                            visitCount++;
+                            localStorage.setItem(visitorId, visitCount);
+
+                            return visitCount;
+                        }
+                    }
+                </script>
+
                 <footer>
                     <div class="footer clearfix mb-0 text-muted">
                         <div class="float-start">
-                            <p> <span id="current-year"></span> &copy; < Bumble Bees oAuth /> </p>
+                            <p> <span id="current-year"></span> &copy;
+                                < Bumble Bees oAuth />
+                            </p>
                         </div>
-                        
+
                     </div>
                 </footer>
             </div>
@@ -220,62 +359,62 @@
 
     <script src="./js/main.js"></script>
 
-        <!-- The core Firebase JS SDK is always required and must be listed first -->
-        <script src="https://www.gstatic.com/firebasejs/8.6.7/firebase-app.js"></script>
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/8.6.7/firebase-app.js"></script>
 
-        <!-- TODO: Add SDKs for Firebase products that you want to use
+    <!-- TODO: Add SDKs for Firebase products that you want to use
             https://firebase.google.com/docs/web/setup#available-libraries -->
-        <script src="https://www.gstatic.com/firebasejs/8.6.7/firebase-analytics.js"></script>
-        <script src="https://www.gstatic.com/firebasejs/8.6.7/firebase-auth.js"></script>
-    
-    
-<script src="https://www.gstatic.com/firebasejs/8.9.0/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.9.0/firebase-auth.js"></script>
-<script>
-  // Your web app's Firebase configuration
-  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-  var firebaseConfig = {
-    apiKey: "AIzaSyC7EsiaYH-tJj-wNEQl8ZrrmdvKCWS7ztY",
-  authDomain: "egspj-bumblebees.firebaseapp.com",
-  projectId: "egspj-bumblebees",
-  storageBucket: "egspj-bumblebees.appspot.com",
-  messagingSenderId: "3531307553",
-  appId: "1:3531307553:web:162f525f3ed82d7830c160",
-  measurementId: "G-6W931XY0SQ"
-  };
-  // Initialize Firebase
-  firebase.initializeApp(firebaseConfig);
-  var auth = firebase.auth();
-
-  firebase.auth().onAuthStateChanged((user)=>{
-    if(!user){
-        location.replace("../index")
-    }else{
-        document.getElementById("user").innerHTML = "Hello, "+user.email    
-    }
-    
-})
+    <script src="https://www.gstatic.com/firebasejs/8.6.7/firebase-analytics.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.7/firebase-auth.js"></script>
 
 
-function logout(){
-    firebase.auth().signOut()
-}
+    <script src="https://www.gstatic.com/firebasejs/8.9.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.9.0/firebase-auth.js"></script>
+    <script>
+        // Your web app's Firebase configuration
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        var firebaseConfig = {
+            apiKey: "AIzaSyC7EsiaYH-tJj-wNEQl8ZrrmdvKCWS7ztY",
+            authDomain: "egspj-bumblebees.firebaseapp.com",
+            projectId: "egspj-bumblebees",
+            storageBucket: "egspj-bumblebees.appspot.com",
+            messagingSenderId: "3531307553",
+            appId: "1:3531307553:web:162f525f3ed82d7830c160",
+            measurementId: "G-6W931XY0SQ"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        var auth = firebase.auth();
 
-</script>
+        firebase.auth().onAuthStateChanged((user) => {
+            if (!user) {
+                location.replace("../index")
+            } else {
+                document.getElementById("user").innerHTML = "Hello, " + user.email
+            }
+
+        })
 
 
-     
-<script>
-    // Get the current year
-var currentYear = new Date().getFullYear();
+        function logout() {
+            firebase.auth().signOut()
+        }
 
-// Set the current year in the HTML element with the specified ID
-var currentYearElement = document.getElementById('current-year');
-currentYearElement.textContent = currentYear.toString();
+    </script>
 
-</script>
 
-            
+
+    <script>
+        // Get the current year
+        var currentYear = new Date().getFullYear();
+
+        // Set the current year in the HTML element with the specified ID
+        var currentYearElement = document.getElementById('current-year');
+        currentYearElement.textContent = currentYear.toString();
+
+    </script>
+
+
 
 
 
