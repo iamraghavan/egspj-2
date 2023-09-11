@@ -11,10 +11,11 @@
 
 .powered-by {
     display: inline-block;
+    margin: 0.5rem 0rem;
 }
 
 .powered-by img {
-    height: 50px;
+    height: 2rem;
     /* Set the height of the logo as needed */
     vertical-align: middle;
     margin-left: 5px;
