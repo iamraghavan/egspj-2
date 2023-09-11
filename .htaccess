@@ -1,27 +1,54 @@
-# Remove file extensions
+# Disable directory listing
+Options -Indexes
+
+# Prevent access to .htaccess file
+<Files .htaccess>
+    Order allow,deny
+    Deny from all
+</Files>
+
+# Remove file extensions like .html
 RewriteEngine On
+
+# Redirect URLs without extensions to the corresponding HTML files
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME}.html -f
-RewriteRule ^([^\.]+)/?$ $1.html [NC,L]
+RewriteRule ^(.+?)/?$ $1.html [L]
+
+# Redirect to HTTPS (if not already using SSL)
+# Replace example.com with your domain name
+RewriteCond %{HTTPS} !=on
+RewriteRule ^ https://www.example.com%{REQUEST_URI} [R,L]
+
+# Block common security threats (optional but recommended)
+RewriteCond %{QUERY_STRING} [a-zA-Z0-9_]=(http|https):// [NC,OR]
+RewriteCond %{QUERY_STRING} (|%3E) [NC,OR]
+RewriteCond %{QUERY_STRING} (|%3C) [NC,OR]
+RewriteRule ^(.*)$ - [F,L]
+
+# Block access to sensitive files and directories (adjust as needed)
+RewriteRule ^(?:config\.php|phpmyadmin|\.git|\.svn|\.htpasswd) - [F,L]
+
+# Add security headers (optional but recommended)
+Header set X-Content-Type-Options "nosniff"
+Header set X-Frame-Options "SAMEORIGIN"
+Header set X-XSS-Protection "1; mode=block"
+Header set Content-Security-Policy "default-src 'self'"
+
+# Protect against XML external entity (XXE) attacks (requires PHP configuration)
+#php_flag entity_bsp 1
+
+# Limit request methods to only necessary ones (GET, POST)
+<LimitExcept GET POST>
+    Order deny,allow
+    Deny from all
+</LimitExcept>
 
 
-# Redirect /directory/file/ to /directory/file.html
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteCond %{REQUEST_FILENAME}.html -f
-RewriteRule ^(.*)/$ $1.html [L,R=301]
+# Block access to specific directories
+<DirectoryMatch "^\.git">
+  Require all denied
+</DirectoryMatch>
 
-# Handle all request types (GET, POST, etc.)
-<IfModule mod_rewrite.c>
-    RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteCond %{REQUEST_FILENAME} !-d
-    RewriteRule ^(.*)$ index.html [L]
-</IfModule>
-
-# Enable HTTPS (SSL/TLS)
-# Redirect HTTP to HTTPS
-RewriteCond %{HTTPS} off
-RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
-
-# Form data encryption (requires SSL/TLS)
-# Enable HSTS (HTTP Strict Transport Security)
-Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+# Customize error handling
+ErrorDocument 404 /404.html
