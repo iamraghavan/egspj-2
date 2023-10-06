@@ -465,12 +465,14 @@
 
             // Function to generate a unique name for each image
             function generateUniqueName(file) {
-                var prefix = "EGSPJ_SCHOOL";
+                var prefix = "EGSPJ";
                 var date = new Date();
-                var dateFormatted = date.toISOString().slice(0, 10);
-                var timeFormatted = date.toTimeString().slice(0, 8).replace(/:/g, "-");
-                var fileName = `${prefix}${dateFormatted}_${timeFormatted}_${currentSerialNumber}.jpg`;
-                currentSerialNumber++; // Increment the serial number for the next upload
+                var year = date.getFullYear();
+                var month = (date.getMonth() + 1).toString().padStart(2, "0"); 
+                var day = date.getDate().toString().padStart(2, "0"); 
+                var serialNumber = currentSerialNumber.toString().padStart(4, "0"); 
+                var fileName = `${prefix}${year}${month}${day}${serialNumber}.jpg`;
+                currentSerialNumber++;
                 return fileName;
             }
 
