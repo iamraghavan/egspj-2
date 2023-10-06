@@ -6,6 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profile - Event - EGSPJ</title>
 
+     <!-- Include Font Awesome CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./css/bootstrap.css">
@@ -389,6 +392,8 @@
                 var deleteCell = document.createElement("td");
                 var deleteButton = document.createElement("button");
                 deleteButton.textContent = "Delete";
+                deleteButton.className="btn btn-danger"
+                deleteButton.innerHTML += " <i class='fas fa-trash'></i>"; 
                 deleteButton.addEventListener("click", function () {
                     // Delete image from Firebase Storage and remove row from the table
                     storageRef.child(imageUrl).delete().then(function () {
@@ -460,7 +465,7 @@
 
             // Function to generate a unique name for each image
             function generateUniqueName(file) {
-                var prefix = "EGSPJ_SCHOOL ";
+                var prefix = "EGSPJ_SCHOOL";
                 var date = new Date();
                 var dateFormatted = date.toISOString().slice(0, 10);
                 var timeFormatted = date.toTimeString().slice(0, 8).replace(/:/g, "-");
