@@ -238,6 +238,70 @@ form.addEventListener('submit', function(event) {
   window.onfocus = stopBlinkingTitle;
 </script>
  
+<script>
+  function generateFingerprint() {
+    const userAgent = navigator.userAgent;
+    const platform = navigator.platform;
+    const plugins = Array.from(navigator.plugins).map(plugin => {
+      return { name: plugin.name, filename: plugin.filename };
+    });
+    const languages = navigator.languages;
+    const screenResolution = `${window.screen.width}x${window.screen.height}`;
+    const colorDepth = window.screen.colorDepth;
+    
+    // Combine all the collected data into a single string
+    const fingerprintData = `${userAgent}${platform}${JSON.stringify(plugins)}${languages}${screenResolution}${colorDepth}`;
+    
+    // Generate a hash of the fingerprint data
+    const fingerprint = new TextEncoder().encode(fingerprintData);
+    crypto.subtle.digest('SHA-256', fingerprint).then(hashBuffer => {
+      const hashArray = Array.from(new Uint8Array(hashBuffer));
+      const fingerprintHash = hashArray.map(byte => byte.toString(16).padStart(2, '0')).join('');
+      
+      console.log("Browser Fingerprint:", fingerprintHash);
+    });
+  }
+
+  generateFingerprint();
+</script>
+
+<script>
+  function generateFingerprint() {
+    const fingerprintData = {
+      userAgent: navigator.userAgent,
+      language: navigator.language,
+      platform: navigator.platform,
+      pluginsCount: navigator.plugins.length,
+      timezone: new Date().getTimezoneOffset(),
+    };
+
+    return JSON.stringify(fingerprintData, null, 2);
+  }
+
+  // Call the function to generate the fingerprint and log it to the console
+  const fingerprint = generateFingerprint();
+  console.log('Browser Fingerprint:', fingerprint);
+
+  const userAgent = navigator.userAgent;
+
+// Using Regular Expressions
+const regex = /(Mozilla\/5.0) \((.*?)\)( (\w+\/\d+\.\d+)? )(.+?)\s(\S+)/;
+const [, platform, os, , browser, browserVersion, vendor] = userAgent.match(regex);
+
+console.log('Platform:', platform);
+console.log('Operating System:', os);
+console.log('Browser:', browser);
+console.log('Browser Version:', browserVersion);
+console.log('Vendor:', vendor);
+
+// Using String Split
+const components = userAgent.split(' ');
+console.log('Platform:', components[0]);
+console.log('Operating System:', components[1].slice(1, -1)); // Remove parentheses
+console.log('Browser:', components[2]);
+console.log('Browser Version:', components[3]);
+console.log('Vendor:', components[4]);
+</script>
 
 
 <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>

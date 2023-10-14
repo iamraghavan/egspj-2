@@ -5,12 +5,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profile - Dashboard - EGSPJ</title>
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
+</head>
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./css/bootstrap.css">
 
     <link rel="stylesheet" href="./vendors/iconly/bold.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.1/font/bootstrap-icons.min.css" integrity="sha512-oAvZuuYVzkcTc2dH5z1ZJup5OmSQ000qlfRvuoTTiyTBjwX1faoyearj8KdMq0LgsBTHMrRuMek7s+CxF8yE+w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <link rel="stylesheet" href="./vendors/perfect-scrollbar/perfect-scrollbar.css">
     <link rel="stylesheet" href="./vendors/bootstrap-icons/bootstrap-icons.css">
@@ -191,11 +193,13 @@
 
                             <div class="card-body">
                                 <div class="row">
-                                    <div class="col-lg-4 text-capitalize align-content-center text-success">
+                                    <div class="col-lg-6 text-capitalize align-content-center">
                                         <div class="widget">
                                             <p id="location" class=""></p>
-                                            <p class="" id="fingerprint"></p>
-                                            <p class="" id="visit-summary"></p>
+                                            <p id="platform" class=""><i class="icon fas fa-desktop"></i>Platform:</p>
+                                    <p id="os" class=""><i class="icon fas fa-laptop"></i>Operating System:</p>
+                                    <p id="browser" class=""><i class="icon fab fa-chrome"></i>Browser:</p>
+                                    <p id="browser-version" class=""><i class="icon fas fa-code"></i>Browser Version:</p>
 
                                             <!-- visit-summary -->
 
@@ -203,9 +207,14 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-lg-4">
-                                        <div>
-                                            <p id="datetime" style="display: inline;"></p>
+                                    <div class="col-lg-6 text-capitalize align-content-center">
+                                        <div class="widget">
+                                            <p id="visit-summary"></p>
+                                            <p id="fingerprint"></p>
+                                            
+                                            <p id="datetime"></p>
+                                            <p id="plt1" ></p>
+                                            <p id="plt2"></p>
                                         </div>
                                     </div>
                                 </div>
@@ -224,6 +233,25 @@
             swal("Here's the title!", "...and here's the text!");
         </script> -->
 
+        
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap');
+    .widget > p > i{
+
+        display: inline;
+        padding: 0.45rem;
+        margin-top: 0rem;
+        font-size: 1.3rem;
+
+    }
+    .widget > p{
+        font-family: 'Source Code Pro', monospace;
+
+font-size: 1.1rem;
+
+}
+</style>
+
                 <script>
 
                     // Function to format the current date and time
@@ -235,7 +263,7 @@
 
                     // Update the 'datetime' element with the current date and time
                     function updateDateTime() {
-                        document.getElementById("datetime").innerHTML = getCurrentDateTime();
+                        document.getElementById("datetime").innerHTML = `<i class="bi bi-calendar-date"></i> ` + getCurrentDateTime();
                     }
 
                     // Call the updateDateTime function every second
@@ -291,7 +319,7 @@
                                 // Update the location element with the city and country information
                                 document.getElementById(
                                     "location"
-                                ).innerHTML = `<i class="fas fa-map-marker-alt"></i> ${locationString}`;
+                                ).innerHTML = `<i class="fas fa-map-marker-alt"></i> Location :  ${locationString}`;
                             })
                             .catch((error) => {
                                 document.getElementById("location").innerHTML =
@@ -299,43 +327,45 @@
                                 console.error(error);
                             });
 
-                        // Initialize the agent on page load.
-                        const fpPromise = import("https://fpjscdn.net/v3/Cvj1RAxgKnVqgk3t8p9H").then(
-                            (FingerprintJS) => FingerprintJS.load()
-                        );
+                       // Get the visitorId (custom fingerprint)
+    const visitorId = getVisitorId();
 
-                        // Get the visitorId when you need it.
-                        fpPromise
-                            .then((fp) => fp.get())
-                            .then((result) => {
-                                const visitorId = result.visitorId;
-                                console.log(visitorId);
+// Update visit summary and display fingerprint
+const visitCount = getVisitCount(visitorId);
 
-                                const fingerprint = visitorId;
-                                const visitCount = getVisitCount(visitorId);
-                                document.getElementById(
-                                    "visit-summary"
-                                ).innerHTML = `<i class="fas fa-eye"></i> You visited  ${visitCount} Times.`;
-                                document.getElementById(
-                                    "fingerprint"
-                                ).innerHTML = `<i class="fas fa-fingerprint"></i> ${fingerprint}`;
-                            });
+document.getElementById("visit-summary").innerHTML = `<i class="bi bi-eye"></i> You visited ${visitCount} Times.`;
+document.getElementById("fingerprint").innerHTML = `<i class="bi bi-fingerprint"></i> Fingerprint: ${visitorId.substr(0, 23)}`;
 
-                        function getVisitCount(visitorId) {
-                            // Check if the visitorId is already stored in the local storage
-                            const storedVisitCount = localStorage.getItem(visitorId);
-                            let visitCount = 0;
+function getVisitorId() {
+    // You can create a custom visitor ID by combining various factors,
+    // such as user agent, screen resolution, and more.
+    const userAgent = window.navigator.userAgent;
+    const screenResolution = window.screen.width + 'x' + window.screen.height;
+    const combinedInfo = userAgent + screenResolution;
 
-                            if (storedVisitCount) {
-                                visitCount = parseInt(storedVisitCount);
-                            }
+    // You can hash the combined information to generate a visitor ID.
+    // Here, we use a simple example with the 'btoa' function, which encodes
+    // the information as base64.
+    const visitorId = btoa(combinedInfo);
+    
+    return visitorId;
+}
 
-                            // Increment the visit count and store it in the local storage
-                            visitCount++;
-                            localStorage.setItem(visitorId, visitCount);
+function getVisitCount(visitorId) {
+    // Check if the visitorId is already stored in the local storage
+    const storedVisitCount = localStorage.getItem(visitorId);
+    let visitCount = 0;
 
-                            return visitCount;
-                        }
+    if (storedVisitCount) {
+        visitCount = parseInt(storedVisitCount);
+    }
+
+    // Increment the visit count and store it in the local storage
+    visitCount++;
+    localStorage.setItem(visitorId, visitCount);
+
+    return visitCount;
+}
                     }
                 </script>
 
@@ -401,6 +431,75 @@
         }
 
     </script>
+
+<script>
+    function generateFingerprint() {
+      const userAgent = navigator.userAgent;
+      const platform = navigator.platform;
+      const plugins = Array.from(navigator.plugins).map(plugin => {
+        return { name: plugin.name, filename: plugin.filename };
+      });
+      const languages = navigator.languages;
+      const screenResolution = `${window.screen.width}x${window.screen.height}`;
+      const colorDepth = window.screen.colorDepth;
+      
+      // Combine all the collected data into a single string
+      const fingerprintData = `${userAgent}${platform}${JSON.stringify(plugins)}${languages}${screenResolution}${colorDepth}`;
+      
+      // Generate a hash of the fingerprint data
+      const fingerprint = new TextEncoder().encode(fingerprintData);
+      crypto.subtle.digest('SHA-256', fingerprint).then(hashBuffer => {
+        const hashArray = Array.from(new Uint8Array(hashBuffer));
+        const fingerprintHash = hashArray.map(byte => byte.toString(16).padStart(2, '0')).join('');
+        
+        console.log("Browser Fingerprint:", fingerprintHash);
+
+        // document.getElementById('fingerprint').innerHTML = fingerprintHash
+      });
+
+      let a = document.getElementById('plt1').innerHTML=`<i class="bi bi-windows"></i> OS Platform: ${platform}`;
+      let b = document.getElementById('plt2').innerHTML=`<i class="bi bi-translate"></i> Browser Language: ${languages}`;
+    }
+  
+    generateFingerprint();
+  </script>
+
+<script>
+    function generateFingerprint() {
+      const fingerprintData = {
+        userAgent: navigator.userAgent,
+        language: navigator.language,
+        platform: navigator.platform,
+        pluginsCount: navigator.plugins.length,
+        timezone: new Date().getTimezoneOffset(),
+      };
+  
+      return JSON.stringify(fingerprintData, null, 2);
+    }
+  
+    // Call the function to generate the fingerprint and log it to the console
+    const fingerprint = generateFingerprint();
+    console.log('Browser Fingerprint:', fingerprint);
+  
+    const userAgent = navigator.userAgent;
+
+// Extracting the browser information without regex
+const platform = 'Web Browser'; // The platform is typically constant for web browsers
+const osStart = userAgent.indexOf('(') + 1;
+const osEnd = userAgent.indexOf(')');
+const os = userAgent.substring(osStart, osEnd);
+const browserStart = userAgent.lastIndexOf(') ') + 2;
+const browserEnd = userAgent.indexOf(' ', browserStart);
+const browser = userAgent.substring(browserStart, browserEnd);
+const browserVersion = userAgent.substring(browserEnd + 1);
+
+// Set the text content of individual p elements
+document.getElementById('platform').innerHTML = `<i class="bi bi-globe-central-south-asia"></i> Platform: ${platform}`;
+document.getElementById('os').innerHTML = `<i class="bi bi-windows"></i> Operating System: ${os}`;
+document.getElementById('browser').innerHTML = `<i class="bi bi-browser-chrome"></i> Browser: ${browser}`;
+document.getElementById('browser-version').innerHTML = `<i class="bi bi-git"></i> Browser Version: ${browserVersion}`;
+
+  </script>
 
 
 
