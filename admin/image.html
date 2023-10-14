@@ -397,52 +397,37 @@
                 var imageTypeCell = document.createElement("td");
                 imageTypeCell.textContent = imageType;
 
-                // var deleteCell = document.createElement("td");
-                // var deleteButton = document.createElement("button");
-                // deleteButton.textContent = "Delete";
-                // deleteButton.className="btn btn-danger"
-                // deleteButton.innerHTML += " <i class='fas fa-trash'></i>"; 
-                // deleteButton.addEventListener("click", function () {
-                //     // Delete image from Firebase Storage and remove row from the table
-                //     storageRef.child(imageUrl).delete().then(function () {
-                //         newRow.remove();
-                //         alert("Image deleted successfully!");
-                //     }).catch(function (error) {
-                //         console.error("Error deleting image:", error);
-                //     });
-                // });
-                // deleteCell.appendChild(deleteButton);
+                function deleteImageInFolder(folderName, imageName) {
+    var imageRef = storageRef.child(folderName + '/' + imageName);
+    imageRef.delete().then(function () {
+        alert("Image deleted successfully!");
+        // Optionally, you can refresh the image list after deletion.
+        displayImagesInFolder(folderName);
+    }).catch(function (error) {
+        console.error("Error deleting image:", error);
+        alert("Error deleting image: " + error.message);
+    });
+}
+
 
                 var deleteCell = document.createElement("td");
-var deleteButton = document.createElement("button");
-deleteButton.textContent = "Delete";
-deleteButton.className = "btn btn-danger";
-deleteButton.innerHTML += " <i class='fas fa-trash'></i>";
+            var deleteButton = document.createElement("button");
+            deleteButton.textContent = "Delete";
+            deleteButton.className = "btn btn-danger";
+            deleteButton.innerHTML += " <i class='fas fa-trash'></i";
+                deleteButton.addEventListener("click", function () {
+    var selectedFolder = folderSelect.value;
+    
+    // Here, you should obtain the imageName from the selected row.
+    // The exact code depends on your table structure.
+    var row = this.closest("tr"); // Get the closest row to the delete button
+    var cells = row.getElementsByTagName("td"); // Get the table cells in the row
+    var imageName = cells[0].textContent; // Assuming the image name is in the first cell
 
-deleteButton.addEventListener("click", function () {
-    // Verify the imageUrl and storageRef
-    console.log("Deleting image with URL:", imageUrl);
-    console.log("Storage Reference:", storageRef);
-    console.log("Current user:", firebase.auth().currentUser);
-
-
-    // Delete image from Firebase Storage and remove row from the table
-    storageRef.child(imageUrl).delete().then(function () {
-        console.log("Image deleted successfully!");
-
-        // Verify that newRow is correctly selected
-        console.log("Removing row:", newRow);
-        newRow.remove();
-    }).catch(function (error) {
-    console.error("Error deleting image:", error);
-    console.log("Error Code:", error.code);
-    console.log("Error Message:", error.message);
+    // Call the delete function with the selected folder and image name
+    deleteImageInFolder(selectedFolder, imageName);
 });
-
-});
-
-deleteCell.appendChild(deleteButton);
-
+            deleteCell.appendChild(deleteButton);
 
 
                 newRow.appendChild(fileNameCell);
@@ -501,7 +486,7 @@ deleteCell.appendChild(deleteButton);
 
 
             // Global variable to keep track of the current serial number
-            var currentSerialNumber = 1;
+            var currentSerialNumber = 90;
 
             // Function to generate a unique name for each image
             function generateUniqueName(file) {
