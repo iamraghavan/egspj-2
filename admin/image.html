@@ -290,13 +290,13 @@
                     <h1>Firebase Storage Gallery</h1>
                     <div>
                         <h2>Available Folders:</h2>
-                        <select id="isFolderSelectByPradeep">
+                        <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" id="isFolderSelectByPradeep">
                             <!-- Folder options will be dynamically added here using JavaScript -->
                         </select>
                     </div>
                     <div>
                         <h2>Images in Selected Folder:</h2>
-                        <table>
+                        <table class="table table-striped">
                             <thead>
                                 <tr>
                                     <th>File Name</th>
@@ -389,21 +389,53 @@
                 var imageTypeCell = document.createElement("td");
                 imageTypeCell.textContent = imageType;
 
+                // var deleteCell = document.createElement("td");
+                // var deleteButton = document.createElement("button");
+                // deleteButton.textContent = "Delete";
+                // deleteButton.className="btn btn-danger"
+                // deleteButton.innerHTML += " <i class='fas fa-trash'></i>"; 
+                // deleteButton.addEventListener("click", function () {
+                //     // Delete image from Firebase Storage and remove row from the table
+                //     storageRef.child(imageUrl).delete().then(function () {
+                //         newRow.remove();
+                //         alert("Image deleted successfully!");
+                //     }).catch(function (error) {
+                //         console.error("Error deleting image:", error);
+                //     });
+                // });
+                // deleteCell.appendChild(deleteButton);
+
                 var deleteCell = document.createElement("td");
-                var deleteButton = document.createElement("button");
-                deleteButton.textContent = "Delete";
-                deleteButton.className="btn btn-danger"
-                deleteButton.innerHTML += " <i class='fas fa-trash'></i>"; 
-                deleteButton.addEventListener("click", function () {
-                    // Delete image from Firebase Storage and remove row from the table
-                    storageRef.child(imageUrl).delete().then(function () {
-                        newRow.remove();
-                        alert("Image deleted successfully!");
-                    }).catch(function (error) {
-                        console.error("Error deleting image:", error);
-                    });
-                });
-                deleteCell.appendChild(deleteButton);
+var deleteButton = document.createElement("button");
+deleteButton.textContent = "Delete";
+deleteButton.className = "btn btn-danger";
+deleteButton.innerHTML += " <i class='fas fa-trash'></i>";
+
+deleteButton.addEventListener("click", function () {
+    // Verify the imageUrl and storageRef
+    console.log("Deleting image with URL:", imageUrl);
+    console.log("Storage Reference:", storageRef);
+    console.log("Current user:", firebase.auth().currentUser);
+
+
+    // Delete image from Firebase Storage and remove row from the table
+    storageRef.child(imageUrl).delete().then(function () {
+        console.log("Image deleted successfully!");
+
+        // Verify that newRow is correctly selected
+        console.log("Removing row:", newRow);
+        newRow.remove();
+    }).catch(function (error) {
+    console.error("Error deleting image:", error);
+    console.log("Error Code:", error.code);
+    console.log("Error Message:", error.message);
+});
+
+});
+
+deleteCell.appendChild(deleteButton);
+
+
 
                 newRow.appendChild(fileNameCell);
                 newRow.appendChild(imageCell);

@@ -207,7 +207,36 @@ form.addEventListener('submit', function(event) {
 
 
 
+<script>
+  let intervalId;
+  let originalTitle = document.title;
+  let isBlinking = false;
 
+  // Function to start blinking the title
+  function startBlinkingTitle() {
+    if (!isBlinking) {
+      isBlinking = true;
+      intervalId = setInterval(function() {
+        document.title = (document.title === originalTitle) ? 'Login Page is Open Please Login !' : originalTitle;
+      }, 500); // 500ms (half a second) interval for blinking
+    }
+  }
+
+  // Function to stop blinking the title
+  function stopBlinkingTitle() {
+    if (isBlinking) {
+      clearInterval(intervalId);
+      document.title = originalTitle;
+      isBlinking = false;
+    }
+  }
+
+  // Event handler for when the window loses focus (user goes to another page)
+  window.onblur = startBlinkingTitle;
+
+  // Event handler for when the window regains focus (user comes back to the page)
+  window.onfocus = stopBlinkingTitle;
+</script>
  
 
 
