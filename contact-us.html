@@ -261,60 +261,55 @@
           <div class="col-xl-10 mx-auto">
             <div class="row gy-10 gx-lg-8 gx-xl-12">
               <div class="col-lg-8">
-                <form class="contact-form needs-validation" enctype="multipart/form-data" id="contactForm" autocomplete="off">
+            
+
+                <form class="contact-form" enctype="multipart/form-data" id="contactForm" autocomplete="off">
                   <div class="messages"></div>
-                  <div class="row gx-4">
+                  <div class="row g-4">
                     <div class="col-md-6">
                       <div class="form-floating mb-4">
-                        <input id="fname" type="text" class="form-control" pattern="[a-zA-Z0-9s]+" required inputmode="none">
-                        <label for="form_name">First Name *</label>
-                    
+                        <input id="fname" type="text" class="form-control" pattern="[a-zA-Z0-9s]+" required>
+                        <label for="fname">First Name *</label>
                       </div>
                     </div>
                     <div class="col-md-6">
                       <div class="form-floating mb-4">
-                        <input id="lname" type="text" class="form-control" pattern="[a-zA-Z0-9s]+" required inputmode="none">
-                        <label for="form_lastname">Last Name *</label>
-                        
+                        <input id="lname" type="text" class="form-control" pattern="[a-zA-Z0-9s]+" required>
+                        <label for="lname">Last Name *</label>
                       </div>
                     </div>
                     <div class="col-md-6">
                       <div class="form-floating mb-4">
-                        <input id="cnum" type="tel" class="form-control" pattern="[0-9]*" required inputmode="tel">
-                        <label for="form_name">Contact Number *</label>
-                      
+                        <input id="cnum" type="tel" class="form-control" pattern="[0-9]*" required>
+                        <label for="cnum">Contact Number *</label>
                       </div>
                     </div>
                     <div class="col-md-6">
                       <div class="form-floating mb-4">
-                        <input id="wnum" type="tel" class="form-control" pattern="[0-9]*" required inputmode="tel">
-                        <label for="form_name">WhatsApp Number *</label>
-                     
+                        <input id="wnum" type="tel" class="form-control" pattern="[0-9]*" required>
+                        <label for="wnum">WhatsApp Number *</label>
                       </div>
                     </div>
                     <div class="col-md-6">
                       <div class="form-floating mb-4">
-                        <input id="email" type="email" class="form-control" required inputmode="email">
-                        <label for="form_email">Email *</label>
-                        
+                        <input id="email" type="email" class="form-control" required>
+                        <label for="email">Email *</label>
                       </div>
                     </div>
                     <div class="col-md-6">
-                      <div class="form-select-wrapper">
+                      <div class="form-floating mb-4">
                         <select class="form-select" id="needreq" required>
                           <option selected disabled value="">Select a Contact Need</option>
                           <option value="Admission">Admission</option>
                           <option value="Contact School">Contact School</option>
                         </select>
-
+                        <label for="needreq">Contact Need *</label>
                       </div>
                     </div>
-                    <br>
                     <div class="col-12">
                       <div class="form-floating mb-4">
-                        <textarea id="message" name="message" class="form-control" placeholder="Your message" style="height: 150px; margin-top: 20px;" required></textarea>
-                        <label for="form_message">Message *</label>
-                       
+                        <textarea id="message" name="message" class="form-control" placeholder="Your message" style="height: 150px;" required></textarea>
+                        <label for="message">Message *</label>
                       </div>
                     </div>
                     <div class="col-12">
@@ -325,11 +320,14 @@
                       </div>
                     </div>
                     <div class="col-12">
-                      <input type="submit" value="Submit" class="btn btn-primary rounded-pill btn-send mb-3" disabled>
+                      <button type="submit" class="btn btn-primary rounded-pill btn-send mb-3" disabled>Submit</button>
                       <p class="text-muted"><strong>*</strong> These fields are required.</p>
                     </div>
                   </div>
                 </form>
+                
+
+                
                 <!-- /form -->
               </div>
               <!--/column -->
@@ -387,6 +385,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.6.7/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.6.7/firebase-database.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
     <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
@@ -426,78 +425,69 @@
     
       // Handle form submission
       var contactForm = document.getElementById('contactForm');
-      contactForm.addEventListener('submit', function(event) {
-        event.preventDefault();
-    
-        // Check if reCAPTCHA is verified
-        if (!isCaptchaVerified) {
-          alert("Please verify that you're not a robot.");
-          return;
-        }
-    
-        // Get form values
-        var Firstname = document.getElementById('fname').value;
-        var Lastname = document.getElementById('lname').value;
-        var ContactNumber = document.getElementById('cnum').value;
-        var WhatsappNumber = document.getElementById('wnum').value;
-        var email = document.getElementById('email').value;
-        var Requirement = document.getElementById('needreq').value;
-        var message = document.getElementById('message').value;
-    
-        // Send email
-        sendEmail(Firstname, Lastname, ContactNumber, WhatsappNumber, email, Requirement, message);
-    
-        // Store data in Firebase Realtime Database
-        saveData(Firstname, Lastname, ContactNumber, WhatsappNumber, email, Requirement, message);
-    
-        // Reset form
-        contactForm.reset();
-        isCaptchaVerified = false;
-        document.querySelector('.btn-send').disabled = true;
-      });
-    
-      // Send email
-      function sendEmail(Firstname, Lastname, ContactNumber, WhatsappNumber, email, Requirement, message) {
-        // Configure your email service using your public key
-        emailjs.init("pJwMrOQHE7viiRAtn");
-    
-        // Compose the email parameters
-        var emailParams = {
-          F_FIRSTNAME: Firstname,
-          F_LASTNAME: Lastname,
-          F_CONTACT: ContactNumber,
-          F_WHATSAPP: WhatsappNumber,
-          F_EMAIL: email,
-          F_REQUIREMENT: Requirement,
-          F_MESSAGE: message,
-          cc: "egspjschool@gmail.com",
-          bcc: "raghavanofficials@gmail.com"
-        };
-    
-        // Send the email
-        emailjs.send("service_vnw12mo", "template_d4ik0im", emailParams)
-          .then(function(response) {
-            alert("Message sent successfully. Our Staff/Admin will contact you soon!");
-          })
-          .catch(function(error) {
-            console.error("Error sending email:", error);
-          });
-      }
-    
-      // Store data in Firebase Realtime Database
-      function saveData(Firstname, Lastname, ContactNumber, WhatsappNumber, email, Requirement, message) {
-        var newMessageRef = database.ref('Contact Form').push();
-        newMessageRef.set({
-          F_FIRSTNAME: Firstname,
-          F_LASTNAME: Lastname,
-          F_CONTACT: ContactNumber,
-          F_WHATSAPP: WhatsappNumber,
-          F_EMAIL: email,
-          F_REQUIREMENT: Requirement,
-          F_MESSAGE: message
+  contactForm.addEventListener('submit', function (event) {
+    event.preventDefault();
+
+    // Check if reCAPTCHA is verified
+    if (!isCaptchaVerified) {
+      alert("Please verify that you're not a robot.");
+      return;
+    }
+
+    // Get form values
+    var Firstname = document.getElementById('fname').value;
+    var Lastname = document.getElementById('lname').value;
+    var ContactNumber = document.getElementById('cnum').value;
+    var WhatsappNumber = document.getElementById('wnum').value;
+    var email = document.getElementById('email').value;
+    var Requirement = document.getElementById('needreq').value;
+    var message = document.getElementById('message').value;
+
+    // Send email
+    sendEmail(Firstname, Lastname, ContactNumber, WhatsappNumber, email, Requirement, message);
+  });
+
+  // Send email
+  function sendEmail(Firstname, Lastname, ContactNumber, WhatsappNumber, email, Requirement, message) {
+    // Configure your email service using your public key
+    emailjs.init("LHEzahpPnpyu_0R-s");
+
+    // Compose the email parameters
+    var emailParams = {
+      F_FIRSTNAME: Firstname,
+      F_LASTNAME: Lastname,
+      F_CONTACT: ContactNumber,
+      F_WHATSAPP: WhatsappNumber,
+      F_EMAIL: email,
+      F_REQUIREMENT: Requirement,
+      F_MESSAGE: message,
+      cc: "egspjschool@gmail.com",
+      bcc: "raghavanofficials@gmail.com"
+    };
+
+    // Send the email
+    emailjs.send("service_unswcvb", "template_9bdtrwr", emailParams)
+      .then(function (response) {
+        // Show success message using SweetAlert
+        Swal.fire({
+          title: 'Success!',
+          text: 'Message sent successfully. Our Staff/Admin will contact you soon!',
+          icon: 'success',
+          confirmButtonText: 'OK'
+        }).then((result) => {
+          // Reset form after user clicks OK
+          if (result.isConfirmed || result.isDismissed) {
+            contactForm.reset();
+            isCaptchaVerified = false;
+            document.querySelector('.btn-send').disabled = true;
+          }
         });
-        console.log('Data stored in Firebase Realtime Database.');
-      }
+      })
+      .catch(function (error) {
+        console.error("Error sending email:", error);
+      });
+  }
+
     </script>
 
   </div>
