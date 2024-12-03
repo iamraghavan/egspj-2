@@ -381,115 +381,6 @@
     </section>
 
 
-
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.6.7/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.6.7/firebase-database.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-
-    <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
-    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
-     <script>
-      // Initialize Firebase
-      var firebaseConfig = {
-        apiKey: "AIzaSyC7EsiaYH-tJj-wNEQl8ZrrmdvKCWS7ztY",
-        authDomain: "egspj-bumblebees.firebaseapp.com",
-        databaseURL: "https://egspj-bumblebees-default-rtdb.firebaseio.com",
-        projectId: "egspj-bumblebees",
-        storageBucket: "egspj-bumblebees.appspot.com",
-        messagingSenderId: "3531307553",
-        appId: "1:3531307553:web:162f525f3ed82d7830c160",
-        measurementId: "G-6W931XY0SQ"
-      };
-    
-      firebase.initializeApp(firebaseConfig);
-    
-      // Reference to Firebase Realtime Database
-      var database = firebase.database();
-    
-      var isCaptchaVerified = false;
-    
-      // Verify reCAPTCHA callback
-      function submitForm(response) {
-        if (response) {
-          isCaptchaVerified = true;
-          document.querySelector('.btn-send').disabled = false;
-        }
-      }
-    
-      // reCAPTCHA error callback
-      function recaptchaError() {
-        isCaptchaVerified = false;
-        document.querySelector('.btn-send').disabled = true;
-      }
-    
-      // Handle form submission
-      var contactForm = document.getElementById('contactForm');
-  contactForm.addEventListener('submit', function (event) {
-    event.preventDefault();
-
-    // Check if reCAPTCHA is verified
-    if (!isCaptchaVerified) {
-      alert("Please verify that you're not a robot.");
-      return;
-    }
-
-    // Get form values
-    var Firstname = document.getElementById('fname').value;
-    var Lastname = document.getElementById('lname').value;
-    var ContactNumber = document.getElementById('cnum').value;
-    var WhatsappNumber = document.getElementById('wnum').value;
-    var email = document.getElementById('email').value;
-    var Requirement = document.getElementById('needreq').value;
-    var message = document.getElementById('message').value;
-
-    // Send email
-    sendEmail(Firstname, Lastname, ContactNumber, WhatsappNumber, email, Requirement, message);
-  });
-
-  // Send email
-  function sendEmail(Firstname, Lastname, ContactNumber, WhatsappNumber, email, Requirement, message) {
-    // Configure your email service using your public key
-    emailjs.init("LHEzahpPnpyu_0R-s");
-
-    // Compose the email parameters
-    var emailParams = {
-      F_FIRSTNAME: Firstname,
-      F_LASTNAME: Lastname,
-      F_CONTACT: ContactNumber,
-      F_WHATSAPP: WhatsappNumber,
-      F_EMAIL: email,
-      F_REQUIREMENT: Requirement,
-      F_MESSAGE: message,
-      cc: "egspjschool@gmail.com",
-      bcc: "raghavanofficials@gmail.com"
-    };
-
-    // Send the email
-    emailjs.send("service_unswcvb", "template_9bdtrwr", emailParams)
-      .then(function (response) {
-        // Show success message using SweetAlert
-        Swal.fire({
-          title: 'Success!',
-          text: 'Message sent successfully. Our Staff/Admin will contact you soon!',
-          icon: 'success',
-          confirmButtonText: 'OK'
-        }).then((result) => {
-          // Reset form after user clicks OK
-          if (result.isConfirmed || result.isDismissed) {
-            contactForm.reset();
-            isCaptchaVerified = false;
-            document.querySelector('.btn-send').disabled = true;
-          }
-        });
-      })
-      .catch(function (error) {
-        console.error("Error sending email:", error);
-      });
-  }
-
-    </script>
-
   </div>
   <!-- /.content-wrapper -->
   <footer class="bg-dark text-inverse">
@@ -592,6 +483,163 @@
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="./assets/js/plugins.js"></script>
   <script src="./assets/js/theme.js"></script>
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.6.7/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.6.7/firebase-database.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
+<script>
+  // Firebase configuration and initialization
+  const firebaseConfig = {
+    apiKey: "AIzaSyC7EsiaYH-tJj-wNEQl8ZrrmdvKCWS7ztY",
+    authDomain: "egspj-bumblebees.firebaseapp.com",
+    databaseURL: "https://egspj-bumblebees-default-rtdb.firebaseio.com",
+    projectId: "egspj-bumblebees",
+    storageBucket: "egspj-bumblebees.appspot.com",
+    messagingSenderId: "3531307553",
+    appId: "1:3531307553:web:162f525f3ed82d7830c160",
+    measurementId: "G-6W931XY0SQ"
+  };
+  firebase.initializeApp(firebaseConfig);
+  const database = firebase.database();
+
+  // Captcha verification state
+  let isCaptchaVerified = false;
+
+  // Handle reCAPTCHA success
+  function onCaptchaSuccess(response) {
+    if (response) {
+      isCaptchaVerified = true;
+      document.querySelector('.btn-send').disabled = false;
+    }
+  }
+
+  // Handle reCAPTCHA failure
+  function onCaptchaFailure() {
+    isCaptchaVerified = false;
+    document.querySelector('.btn-send').disabled = true;
+  }
+
+  // Validate and get form data
+  function getFormData() {
+    return {
+      Firstname: document.getElementById('fname').value.trim(),
+      Lastname: document.getElementById('lname').value.trim(),
+      ContactNumber: document.getElementById('cnum').value.trim(),
+      WhatsappNumber: document.getElementById('wnum').value.trim(),
+      email: document.getElementById('email').value.trim(),
+      Requirement: document.getElementById('needreq').value.trim(),
+      message: document.getElementById('message').value.trim(),
+    };
+  }
+
+  // Check if form data is valid
+  function validateFormData(data) {
+    const { Firstname, Lastname, ContactNumber, WhatsappNumber, email, Requirement, message } = data;
+
+    if (!Firstname || !Lastname || !ContactNumber || !WhatsappNumber || !email || !Requirement || !message) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Validation Failed',
+        text: 'Please fill out all required fields.',
+      });
+      return false;
+    }
+    if (!validateEmail(email)) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Invalid Email',
+        text: 'Please enter a valid email address.',
+      });
+      return false;
+    }
+    return true;
+  }
+
+  // Email validation
+  function validateEmail(email) {
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    return emailRegex.test(email);
+  }
+
+  // Handle form submission
+  function handleFormSubmit(event) {
+    event.preventDefault();
+
+    // Get form data
+    const formData = getFormData();
+
+    // Validate form data
+    if (!validateFormData(formData)) return;
+
+    // Check if reCAPTCHA is verified
+    if (!isCaptchaVerified) {
+      Swal.fire({
+        icon: 'error',
+        title: 'reCAPTCHA Error',
+        text: "Please verify that you're not a robot.",
+      });
+      return;
+    }
+
+    // Send email
+    sendEmail(formData);
+  }
+
+  // Send email using emailjs
+  function sendEmail({ Firstname, Lastname, ContactNumber, WhatsappNumber, email, Requirement, message }) {
+    emailjs.init("LHEzahpPnpyu_0R-s");
+
+    const emailParams = {
+      F_FIRSTNAME: Firstname,
+      F_LASTNAME: Lastname,
+      F_CONTACT: ContactNumber,
+      F_WHATSAPP: WhatsappNumber,
+      F_EMAIL: email,
+      F_REQUIREMENT: Requirement,
+      F_MESSAGE: message,
+      cc: "egspjschool@gmail.com",
+      bcc: "raghavanofficials@gmail.com"
+    };
+
+    emailjs.send("service_unswcvb", "template_9bdtrwr", emailParams)
+      .then((response) => {
+        Swal.fire({
+          title: 'Success!',
+          text: 'Message sent successfully. Our Staff/Admin will contact you soon!',
+          icon: 'success',
+          confirmButtonText: 'OK',
+        }).then(() => {
+          // Reset form and captcha
+          resetForm();
+        });
+      })
+      .catch((error) => {
+        console.error('Error sending email:', error);
+        Swal.fire({
+          icon: 'error',
+          title: 'Email Error',
+          text: 'There was an issue sending the email. Please try again later.',
+        });
+      });
+  }
+
+  // Reset the form and captcha state
+  function resetForm() {
+    const contactForm = document.getElementById('contactForm');
+    contactForm.reset();
+    isCaptchaVerified = false;
+    document.querySelector('.btn-send').disabled = true;
+  }
+
+  // Add event listener to form submission
+  document.getElementById('contactForm').addEventListener('submit', handleFormSubmit);
+
+</script>
+
 
 
   <!-- Script FILE -->
