@@ -1,54 +1,120 @@
 # Disable directory listing
+
 Options -Indexes
 
 # Prevent access to .htaccess file
+
 <Files .htaccess>
-    Order allow,deny
-    Deny from all
+Order allow,deny
+Deny from all
 </Files>
 
-# Remove file extensions like .html
+# Remove file extensions like .html, .php
+
 RewriteEngine On
 
-# Redirect URLs without extensions to the corresponding HTML files
-RewriteCond %{REQUEST_FILENAME} !-d
+# Redirect URLs without extensions to the corresponding HTML files (for HTML files)
+
+RewriteCond %{REQUEST*FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME}.html -f
-RewriteRule ^(.+?)/?$ $1.html [L]
+RewriteRule ^([a-zA-Z0-9*-]+)/?$ $1.html [L]
+
+# Redirect URLs without extensions to the corresponding PHP files (for PHP files)
+
+RewriteCond %{REQUEST*FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}.php -f
+RewriteRule ^([a-zA-Z0-9*-]+)/?$ $1.php [L]
 
 # Redirect to HTTPS (if not already using SSL)
+
 # Replace example.com with your domain name
+
 RewriteCond %{HTTPS} !=on
-RewriteRule ^ https://www.example.com%{REQUEST_URI} [R,L]
+RewriteRule ^ https://www.example.com%{REQUEST_URI} [R=301,L]
 
 # Block common security threats (optional but recommended)
-RewriteCond %{QUERY_STRING} [a-zA-Z0-9_]=(http|https):// [NC,OR]
-RewriteCond %{QUERY_STRING} (|%3E) [NC,OR]
+
+RewriteCond %{QUERY*STRING} [a-zA-Z0-9*]=(http|https):// [NC,OR]
+RewriteCond %{QUERY*STRING} (|%3E) [NC,OR]
 RewriteCond %{QUERY_STRING} (|%3C) [NC,OR]
-RewriteRule ^(.*)$ - [F,L]
+RewriteCond %{QUERY_STRING} (<|%3C).\_script.*(>|%3E) [NC]
+RewriteRule ^(.\*)$ - [F,L]
 
 # Block access to sensitive files and directories (adjust as needed)
-RewriteRule ^(?:config\.php|phpmyadmin|\.git|\.svn|\.htpasswd) - [F,L]
 
-# Add security headers (optional but recommended)
-Header set X-Content-Type-Options "nosniff"
-Header set X-Frame-Options "SAMEORIGIN"
-Header set X-XSS-Protection "1; mode=block"
-Header set Content-Security-Policy "default-src 'self'"
+RewriteRule ^(?:config\.php|phpmyadmin|\.git|\.svn|\.htpasswd|\.env) - [F,L]
 
-# Protect against XML external entity (XXE) attacks (requires PHP configuration)
-#php_flag entity_bsp 1
+# Protect sensitive files from direct access
 
-# Limit request methods to only necessary ones (GET, POST)
+<FilesMatch "(^\.|\.bak$|\.inc$|\.old$|\.log$|\.env$)">
+Order deny,allow
+Deny from all
+</FilesMatch>
+
+# Deny access to hidden files (files starting with a dot)
+
+RewriteRule ^\. - [F,L]
+
+# Block access to certain HTTP methods like PUT, DELETE, TRACE
+
 <LimitExcept GET POST>
-    Order deny,allow
+    Order Deny,Allow
     Deny from all
 </LimitExcept>
 
+# Add HTTP security headers (optional but recommended)
 
-# Block access to specific directories
-<DirectoryMatch "^\.git">
-  Require all denied
+Header set X-Content-Type-Options "nosniff"
+Header set X-Frame-Options "SAMEORIGIN"
+Header set X-XSS-Protection "1; mode=block"
+Header set Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self'; object-src 'none';"
+Header set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+Header set Referrer-Policy "strict-origin-when-cross-origin"
+Header set Permissions-Policy "geolocation=(self), microphone=()"
+
+# Block access to certain user-agents (for bots and scrapers)
+
+SetEnvIf User-Agent "libwww-perl" bad_bot
+SetEnvIf User-Agent "wget" bad_bot
+SetEnvIf User-Agent "curl" bad_bot
+SetEnvIf User-Agent "HTTrack" bad_bot
+SetEnvIf User-Agent "python-requests" bad_bot
+SetEnvIf bad_bot 1 Deny from all
+
+# Deny access to the PHPMyAdmin URL or any similar admin path
+
+RewriteCond %{REQUEST_URI} ^/phpmyadmin/ [NC,OR]
+RewriteCond %{REQUEST_URI} ^/admin/ [NC,OR]
+RewriteCond %{REQUEST_URI} ^/wp-admin/ [NC]
+RewriteRule ^(.\*)$ - [F,L]
+
+# Limit the size of uploaded files to prevent DDoS attacks
+
+LimitRequestBody 10485760
+
+# Protect against XML external entity (XXE) attacks (requires PHP configuration)
+
+# php_flag entity_bsp 1
+
+# Custom 404 error page for better user experience
+
+ErrorDocument 404 /404.html
+
+# Deny access to .git directories and files (this is for Git repository security)
+
+<DirectoryMatch "^/\.git">
+Require all denied
 </DirectoryMatch>
 
-# Customize error handling
-ErrorDocument 404 /404.html
+# Disable ETag headers for better privacy
+
+Header unset ETag
+FileETag None
+
+# Prevent Clickjacking (Block embedding of your site in an iframe)
+
+Header always append X-Frame-Options SAMEORIGIN
+
+# Hide server information to avoid revealing vulnerabilities
+
+ServerSignature Off
