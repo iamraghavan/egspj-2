@@ -72,7 +72,7 @@
                 <div class="d-flex align-items-center my-4">
                   <hr class="col-1 bg-dark-4"><span class="mx-3 text-2 text-muted">OR</span><hr class="flex-grow-1 bg-dark-4">
                 </div>
-                <form id="login-form" autocomplete="off" class="form-dark" method="post">
+                <form id="login-form" autocomplete="off" class="form-dark" method="post" onsubmit="return onSubmit();">
                   <div class="mb-3">
                     <label class="form-label text-light" for="emailAddress">Email Address</label>
                     <input type="email" autocomplete="nope" class="form-control" id="email" required placeholder="Enter Your Email">
@@ -82,12 +82,13 @@
                     <a class="float-end text-2" href="./forgot-password.html">Forgot Password ?</a>
                     <input type="password" autocomplete="nope" class="form-control" id="password" required placeholder="Enter Password">
                   </div>
-                  
+                
                   <!-- reCAPTCHA widget -->
-                  <div class="g-recaptcha" data-sitekey="6LdB5E0lAAAAANIE_iX6D9IKk1ZLKTePnabRv0ZK"></div>
+                  <div class="g-recaptcha" data-sitekey="6LdB5E0lAAAAANIE_iX6D9IKk1ZLKTePnabRv0ZK" data-callback="onCaptchaSolved"></div>
                   
                   <button class="btn btn-primary my-2" type="submit">Log in</button>
                 </form>
+                
               </div>
             </div>
           </div>
@@ -97,9 +98,10 @@
       </div>
     </div>
   </div>
-
+  
   <script src="https://www.gstatic.com/firebasejs/8.9.0/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.9.0/firebase-auth.js"></script>
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
 <script>
   // Firebase configuration
@@ -112,17 +114,25 @@
     appId: "1:3531307553:web:162f525f3ed82d7830c160",
     measurementId: "G-6W931XY0SQ"
   };
+  
+  // Initialize Firebase
   firebase.initializeApp(firebaseConfig);
   const auth = firebase.auth();
+
+  let recaptchaToken = ""; // This will store the reCAPTCHA response
+
+  // Function to handle reCAPTCHA completion
+  function onCaptchaSolved(token) {
+    recaptchaToken = token; // Store the reCAPTCHA token when it's solved
+  }
 
   // Handle login form submission
   document.getElementById('login-form').addEventListener('submit', async (e) => {
     e.preventDefault();
 
-    // Get the email, password, and reCAPTCHA response
+    // Get the email and password values
     const email = document.getElementById('email').value.trim();
     const password = document.getElementById('password').value.trim();
-    const recaptchaResponse = grecaptcha.getResponse(); // Get the reCAPTCHA response
 
     // Validate input (for security)
     if (!email || !password) {
@@ -131,7 +141,7 @@
     }
 
     // Check if reCAPTCHA is verified
-    if (!recaptchaResponse) {
+    if (!recaptchaToken) {
       swal('reCAPTCHA Error', 'Please complete the reCAPTCHA verification.', 'error');
       return;
     }
@@ -150,6 +160,7 @@
     }
   });
 </script>
+
 
   <script src="https://harnishdesign.net/demo/html/oxyy/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="https://harnishdesign.net/demo/html/oxyy/js/oxyy.js"></script>
